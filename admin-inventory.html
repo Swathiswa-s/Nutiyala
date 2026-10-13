@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory Management | Nutiyala Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --admin-bg: #F4F6F9;
+      --admin-sidebar: #1E2024;
+      --admin-card: #FFFFFF;
+      --admin-border: #E2E8F0;
+      --admin-text-main: #1A202C;
+      --admin-text-muted: #718096;
+      --admin-gold: #C59A45;
+      --admin-maroon: #5A161E;
+      --font-admin: 'Montserrat', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-admin); background-color: var(--admin-bg); color: var(--admin-text-main); display: flex; min-height: 100vh; }
+
+    .admin-sidebar { width: 260px; background-color: var(--admin-sidebar); color: #E2E8F0; display: flex; flex-direction: column; flex-shrink: 0; position: sticky; top: 0; height: 100vh; }
+    .admin-brand { padding: 1.5rem 1.4rem; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .admin-brand-logo { width: 32px; height: 32px; object-fit: contain; }
+    .admin-brand-text { font-size: 1rem; font-weight: 700; letter-spacing: 0.06em; color: #FAF6F0; }
+    .admin-brand-badge { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--admin-gold); display: block; }
+    .sidebar-nav { padding: 1.25rem 0; display: flex; flex-direction: column; gap: 0.25rem; flex: 1; }
+    .nav-header-title { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #718096; padding: 0.8rem 1.4rem 0.4rem; font-weight: 600; }
+    .admin-nav-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.75rem 1.4rem; color: #CBD5E0; text-decoration: none; font-size: 0.84rem; font-weight: 500; }
+    .admin-nav-item:hover, .admin-nav-item.active { background-color: #2C3036; color: #FFFFFF; font-weight: 600; }
+    .admin-nav-item i { width: 18px; height: 18px; color: var(--admin-gold); }
+
+    .admin-main { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; }
+    .admin-topbar { height: 68px; background: var(--admin-card); border-bottom: 1px solid var(--admin-border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+    .topbar-title { font-size: 1.25rem; font-weight: 700; color: var(--admin-text-main); }
+
+    .admin-content-area { padding: 2rem; display: flex; flex-direction: column; gap: 1.8rem; }
+
+    .table-container {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      overflow-x: auto;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.84rem;
+    }
+
+    .admin-table th {
+      background: #F8FAFC;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--admin-text-muted);
+      border-bottom: 1px solid var(--admin-border);
+    }
+
+    .admin-table td {
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--admin-border);
+      vertical-align: middle;
+    }
+
+    .prod-thumb {
+      width: 40px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 3px;
+      vertical-align: middle;
+      margin-right: 0.75rem;
+    }
+
+    .stock-input {
+      width: 75px;
+      padding: 0.4rem 0.6rem;
+      border: 1px solid var(--admin-border);
+      border-radius: 3px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .btn-update-stock {
+      padding: 0.4rem 0.85rem;
+      background: var(--admin-maroon);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-update-stock:hover { background: #400E14; }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.65rem;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .status-badge.in-stock { background: #D1FAE5; color: #065F46; }
+    .status-badge.low-stock { background: #FEF3C7; color: #92400E; }
+    .status-badge.out-of-stock { background: #FEE2E2; color: #991B1B; }
+  </style>
+</head>
+<body>
+
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <img src="/assets/nutiyala-emblem-gold.png" alt="Nutiyala Emblem" class="admin-brand-logo">
+      <div>
+        <div class="admin-brand-text">NUTIYALA</div>
+        <span class="admin-brand-badge">Atelier Enterprise</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-header-title">Catalog</span>
+      <a href="/admin/products" class="admin-nav-item">
+        <i data-lucide="hanger"></i>
+        <span>All Products</span>
+      </a>
+      <a href="/admin/products/new" class="admin-nav-item">
+        <i data-lucide="plus-circle"></i>
+        <span>Add New Product</span>
+      </a>
+            <a href="/admin/categories" class="admin-nav-item">
+        <i data-lucide="layers"></i>
+        <span>Categories</span>
+      </a>
+      <a href="/admin/inventory" class="admin-nav-item active">
+        <i data-lucide="boxes"></i>
+        <span>Inventory</span>
+      </a>
+
+      <span class="nav-header-title">Sales & Clients</span>
+      <a href="/admin/orders" class="admin-nav-item">
+        <i data-lucide="shopping-bag"></i>
+        <span>Orders</span>
+      </a>
+      <a href="/admin/customers" class="admin-nav-item">
+        <i data-lucide="users"></i>
+        <span>Customers</span>
+      </a>
+
+      <span class="nav-header-title">Promotions</span>
+      <a href="/admin/offers" class="admin-nav-item">
+        <i data-lucide="sparkles"></i>
+        <span>Update Offer</span>
+      </a>
+
+      <span class="nav-header-title">Settings</span>
+      <a href="/admin/details" class="admin-nav-item">
+        <i data-lucide="settings"></i>
+        <span>Admin Details</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <h1 class="topbar-title">Variant-Level Inventory & Stock Control</h1>
+      <span style="font-size: 0.8rem; color: #718096;">Single Source of Truth (SQLite)</span>
+    </header>
+
+    <div class="admin-content-area">
+      <div class="table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Creation</th>
+              <th>Code</th>
+              <th>Category</th>
+              <th>Variant Size</th>
+              <th>Color</th>
+              <th>Stock Quantity</th>
+              <th>Stock Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="inventory-tbody">
+            <tr><td colspan="8" style="text-align: center; padding: 3rem; color: #718096;">Loading inventory variants...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.lucide) lucide.createIcons();
+
+      // Check Admin Auth
+      try {
+        const authRes = await fetch('/api/auth/me');
+        const authData = await authRes.json();
+        if (!authData || !authData.user || authData.user.account_type !== 'ADMIN') {
+          window.location.href = '/login?redirect=/admin/inventory';
+          return;
+        }
+      } catch (err) {
+        window.location.href = '/login?redirect=/admin/inventory';
+        return;
+      }
+
+      loadInventory();
+
+      async function loadInventory() {
+        const tbody = document.getElementById('inventory-tbody');
+        try {
+          const res = await fetch('/api/admin/inventory');
+          const data = await res.json();
+          const items = data.inventory || [];
+
+          if (items.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 3rem;">No variants in inventory.</td></tr>`;
+            return;
+          }
+
+          tbody.innerHTML = items.map(itm => {
+            const statusClass = itm.status.toLowerCase().replace(/ /g, '-');
+            return `
+              <tr>
+                <td>
+                  <img src="/${itm.image || 'assets/model-beige.jpg'}" class="prod-thumb">
+                  <strong>${itm.product_name}</strong>
+                </td>
+                <td><code>${itm.product_code}</code></td>
+                <td>${itm.category_name}</td>
+                <td><strong>${itm.size}</strong></td>
+                <td>${itm.color}</td>
+                <td>
+                  <input type="number" min="0" class="stock-input" id="stock-val-${itm.variant_id}" value="${itm.stock_quantity}">
+                </td>
+                <td>
+                  <span class="status-badge ${statusClass}">
+                    ${itm.status}
+                  </span>
+                </td>
+                <td>
+                  <button class="btn-update-stock" data-id="${itm.variant_id}">Update</button>
+                </td>
+              </tr>
+            `;
+          }).join('');
+
+          // Update stock buttons
+          document.querySelectorAll('.btn-update-stock').forEach(btn => {
+            btn.addEventListener('click', async () => {
+              const vId = btn.dataset.id;
+              const newQty = parseInt(document.getElementById(`stock-val-${vId}`).value) || 0;
+              btn.disabled = true;
+              btn.textContent = 'Saving...';
+
+              try {
+                await fetch(`/api/admin/inventory/${vId}`, {
+                  method: 'PUT',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ stock_quantity: newQty })
+                });
+                loadInventory();
+              } catch (err) {
+                alert('Failed to update stock.');
+                btn.disabled = false;
+                btn.textContent = 'Update';
+              }
+            });
+          });
+
+        } catch (err) {
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 3rem; color: #C53030;">Failed to load inventory.</td></tr>`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add / Edit Product | Nutiyala Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <style>
+    :root {
+      --admin-bg: #F4F6F9;
+      --admin-sidebar: #1E2024;
+      --admin-card: #FFFFFF;
+      --admin-border: #E2E8F0;
+      --admin-text-main: #1A202C;
+      --admin-text-muted: #718096;
+      --admin-gold: #C59A45;
+      --admin-maroon: #5A161E;
+      --font-admin: 'Montserrat', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-admin);
+      background-color: var(--admin-bg);
+      color: var(--admin-text-main);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .admin-sidebar {
+      width: 260px;
+      background-color: var(--admin-sidebar);
+      color: #E2E8F0;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .admin-brand {
+      padding: 1.5rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .admin-brand-logo {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .admin-brand-text {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #FAF6F0;
+    }
+
+    .admin-brand-badge {
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--admin-gold);
+      display: block;
+    }
+
+    .sidebar-nav {
+      padding: 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .nav-header-title {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #718096;
+      padding: 0.8rem 1.4rem 0.4rem;
+      font-weight: 600;
+    }
+
+    .admin-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1.4rem;
+      color: #CBD5E0;
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 500;
+    }
+
+    .admin-nav-item:hover,
+    .admin-nav-item.active {
+      background-color: #2C3036;
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    .admin-nav-item i {
+      width: 18px;
+      height: 18px;
+      color: var(--admin-gold);
+    }
+
+    .admin-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-topbar {
+      height: 68px;
+      background: var(--admin-card);
+      border-bottom: 1px solid var(--admin-border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--admin-text-main);
+    }
+
+    .admin-content-area {
+      padding: 0px;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    /* Form Card Sections */
+    .form-section-card {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 6px;
+      padding: 1.8rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--admin-maroon);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--admin-border);
+      padding-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 768px) {
+
+      .form-row-2,
+      .form-row-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--admin-text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      padding: 0.75rem 0.9rem;
+      border: 1px solid var(--admin-border);
+      border-radius: 4px;
+      font-size: 0.88rem;
+      font-family: var(--font-admin);
+      outline: none;
+      background: #FAFAFA;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--admin-gold);
+      background: #FFFFFF;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 85px;
+    }
+
+    /* Variant Rows Table */
+    .variant-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      margin-top: 0.5rem;
+    }
+
+    .variant-table th {
+      background: #F8FAFC;
+      padding: 0.65rem 0.8rem;
+      font-size: 0.72rem;
+      color: var(--admin-text-muted);
+      text-align: left;
+    }
+
+    .variant-table td {
+      padding: 0.5rem 0.8rem;
+      border-bottom: 1px solid var(--admin-border);
+    }
+
+    .btn-add-variant {
+      align-self: flex-start;
+      padding: 0.5rem 1rem;
+      background: none;
+      border: 1px dashed var(--admin-gold);
+      color: var(--admin-gold);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-add-variant:hover {
+      background: #FFFBEB;
+    }
+
+    /* Form Action Buttons */
+    .form-actions-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .btn-save-prod {
+      padding: 0.85rem 2rem;
+      background: var(--admin-maroon);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .btn-save-prod:hover {
+      background: #400E14;
+    }
+
+    .btn-save-draft {
+      padding: 0.85rem 1.6rem;
+      background: #EDF2F7;
+      color: #4A5568;
+      border: 1px solid #CBD5E0;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .btn-save-draft:hover {
+      background: #E2E8F0;
+    }
+
+    /* Image Upload UI Components */
+    .upload-dropzone {
+      border: 2px dashed rgba(179, 138, 85, 0.45);
+      border-radius: 6px;
+      background: #FAF8F5;
+      padding: 1.8rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .upload-dropzone:hover,
+    .upload-dropzone.dragover {
+      border-color: var(--admin-gold);
+      background: #FFFDF9;
+      box-shadow: 0 4px 16px rgba(179, 138, 85, 0.15);
+    }
+
+    .dropzone-icon {
+      width: 36px;
+      height: 36px;
+      color: var(--admin-gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .dropzone-text {
+      font-size: 0.88rem;
+      color: var(--admin-text-main);
+      margin-bottom: 0.35rem;
+    }
+
+    .dropzone-text strong {
+      color: var(--admin-maroon);
+      text-decoration: underline;
+    }
+
+    .dropzone-hint {
+      font-size: 0.74rem;
+      color: var(--admin-text-muted);
+      display: block;
+    }
+
+    .upload-preview-pod {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(179, 138, 85, 0.3);
+      max-height: 280px;
+      background: #320C10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .preview-img {
+      max-width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .preview-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.65) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0.85rem;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .upload-preview-pod:hover .preview-overlay {
+      opacity: 1;
+    }
+
+    .preview-badge {
+      align-self: flex-start;
+      background: var(--admin-gold);
+      color: #320C10;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+
+    .preview-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    .btn-change-img {
+      background: #FFFFFF;
+      color: #320C10;
+      border: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .btn-remove-img {
+      background: #E53E3E;
+      color: #FFFFFF;
+      border: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .gallery-thumbs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+      gap: 0.85rem;
+      margin-top: 0.8rem;
+    }
+
+    .gallery-thumb-card {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--admin-border);
+      background: #320C10;
+    }
+
+    .gallery-thumb-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-thumb-card .btn-del-thumb {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(229, 62, 62, 0.9);
+      color: #FFFFFF;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .gallery-thumb-card:hover .btn-del-thumb {
+      opacity: 1;
+    }
+
+    .gallery-add-card {
+      aspect-ratio: 1;
+      border: 1.5px dashed rgba(179, 138, 85, 0.45);
+      border-radius: 4px;
+      background: #FAF8F5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      font-size: 0.72rem;
+      color: var(--admin-gold);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all 0.2s ease;
+    }
+
+    .gallery-add-card:hover {
+      background: #FFFDF9;
+      border-color: var(--admin-gold);
+    }
+
+    .btn-add-photos {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: none;
+      border: 1px solid var(--admin-gold);
+      color: var(--admin-gold);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 3px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .btn-add-photos:hover {
+      background: #FFFBEB;
+    }
+
+    .upload-status-indicator {
+      font-size: 0.78rem;
+      margin-top: 0.45rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 500;
+    }
+
+    .upload-status-indicator.uploading {
+      color: #D97706;
+    }
+
+    .upload-status-indicator.success {
+      color: #16A34A;
+    }
+
+    .upload-status-indicator.error {
+      color: #DC2626;
+    }
+
+    .manual-url-accordion {
+      margin-top: 1.2rem;
+      border-top: 1px solid var(--admin-border);
+      padding-top: 0.85rem;
+    }
+
+    .accordion-toggle-btn {
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--admin-text-muted);
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+    }
+
+    .accordion-toggle-btn:hover {
+      color: var(--admin-maroon);
+    }
+  </style>
+</head>
+
+<body>
+
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <img src="/assets/nutiyala-emblem-gold.png" alt="Nutiyala Emblem" class="admin-brand-logo">
+      <div>
+        <div class="admin-brand-text">NUTIYALA</div>
+        <span class="admin-brand-badge">Atelier Enterprise</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-header-title">Catalog</span>
+      <a href="/admin/products" class="admin-nav-item">
+        <i data-lucide="hanger"></i>
+        <span>All Products</span>
+      </a>
+      <a href="/admin/products/new" class="admin-nav-item active">
+        <i data-lucide="plus-circle"></i>
+        <span id="nav-action-text">Add New Product</span>
+      </a>
+      <a href="/admin/categories" class="admin-nav-item">
+        <i data-lucide="layers"></i>
+        <span>Categories</span>
+      </a>
+      <a href="/admin/inventory" class="admin-nav-item">
+        <i data-lucide="boxes"></i>
+        <span>Inventory</span>
+      </a>
+
+      <span class="nav-header-title">Sales & Clients</span>
+      <a href="/admin/orders" class="admin-nav-item">
+        <i data-lucide="shopping-bag"></i>
+        <span>Orders</span>
+      </a>
+      <a href="/admin/customers" class="admin-nav-item">
+        <i data-lucide="users"></i>
+        <span>Customers</span>
+      </a>
+
+      <span class="nav-header-title">Promotions</span>
+      <a href="/admin/offers" class="admin-nav-item">
+        <i data-lucide="sparkles"></i>
+        <span>Update Offer</span>
+      </a>
+
+      <span class="nav-header-title">Settings</span>
+      <a href="/admin/details" class="admin-nav-item">
+        <i data-lucide="settings"></i>
+        <span>Admin Details</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <h1 class="topbar-title" id="page-title">ADD NEW PRODUCT</h1>
+      <a href="/admin/products" style="color: var(--admin-text-muted); font-size: 0.82rem; text-decoration: none;">←
+        Back to Products</a>
+    </header>
+
+    <div class="admin-content-area">
+      <form id="product-form" style="display: flex; flex-direction: column; gap: 1.8rem;">
+
+        <div
+          style="display: grid; grid-template-columns: 1fr 1fr; gap:0px; align-items: stretch; width: 100%; max-width: 100%;">
+          <!-- 1. Product Information & Price -->
+          <div class="form-section-card" style="margin-bottom: 0; min-width: 0;">
+            <h2 class="section-title"><i data-lucide="info" style="width: 16px;"></i> Product Information</h2>
+            <div class="form-group">
+              <label class="form-label" for="p-name">Product Name *</label>
+              <input type="text" id="p-name" class="form-input" placeholder="e.g. Royal Maroon Velvet Kurti" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="p-code">Product Code *</label>
+              <input type="text" id="p-code" class="form-input" placeholder="e.g. NC-KT-009" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="p-category">Category *</label>
+              <select id="p-category" class="form-select" required>
+                <option value="">Loading categories...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="p-brand">Brand</label>
+              <input type="text" id="p-brand" class="form-input" placeholder="e.g. Nutiyala Atelier">
+            </div>
+
+            <div style="margin-top: 0.5rem; padding-top: 1rem; border-top: 1px dashed var(--admin-border);">
+              <div class="form-group">
+                <label class="form-label" for="p-price">Regular Price (₹) *</label>
+                <input type="number" id="p-price" class="form-input" placeholder="e.g. 14999" required min="1">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="p-discount">Discount Price (₹) (Optional)</label>
+                <input type="number" id="p-discount" class="form-input" placeholder="e.g. 13999" min="0">
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Product Details & Craftsmanship (Moved up) -->
+          <div class="form-section-card" style="margin-bottom: 0; display: flex; flex-direction: column; min-width: 0;">
+            <h2 class="section-title"><i data-lucide="file-text" style="width: 16px;"></i> Product Details &
+              Craftsmanship</h2>
+            <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
+              <label class="form-label" for="p-desc">Description</label>
+              <textarea id="p-desc" class="form-textarea" style="flex: 1; min-height: 100px;"
+                placeholder="Detailed description of silhouette, motifs, and drape..."></textarea>
+            </div>
+            <div class="form-group" style="margin-top: 0.5rem;">
+              <label class="form-label" for="p-fabric">Fabric & Weave</label>
+              <input type="text" id="p-fabric" class="form-input" placeholder="e.g. 100% Pure Mulberry Silk">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="p-care">Care Instructions</label>
+              <input type="text" id="p-care" class="form-input" placeholder="e.g. Specialist dry clean only.">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="p-fit">Fit/Style</label>
+              <input type="text" id="p-fit" class="form-input" placeholder="e.g. Regular Fit, A-Line">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="p-length">Length</label>
+              <input type="text" id="p-length" class="form-input" placeholder="e.g. 42 inches">
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Product Images & Photo Upload -->
+        <div class="form-section-card">
+          <div
+            style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.5rem;">
+            <h2 class="section-title" style="margin-bottom:0;"><i data-lucide="image" style="width: 16px;"></i> Product
+              Photos & Imagery</h2>
+            <span style="font-size:0.75rem; color:var(--admin-text-muted);">Direct Upload: JPG, PNG, WEBP (Max
+              10MB)</span>
+          </div>
+
+          <div class="image-upload-wrapper">
+            <p style="font-size: 0.82rem; margin-bottom: 1.2rem; color: var(--admin-text-muted); line-height: 1.5;">
+              Upload multiple images. Use the order inputs to sort them (1, 2, 3...) and select one as the Primary
+              Thumbnail. The Primary Thumbnail will be the catalog cover.</p>
+
+            <!-- Unified Gallery Grid -->
+            <input type="file" id="unified-file-input" accept="image/*" multiple style="display:none;">
+            <div class="gallery-thumbs-grid" id="unified-gallery-grid"
+              style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1.2rem;">
+
+              <!-- Upload Box placeholder (rendered by JS) -->
+
+            </div>
+            <div id="unified-upload-status" class="upload-status-indicator" style="display:none; margin-top: 1rem;">
+            </div>
+
+            <!-- Hidden inputs to maintain compatibility with save logic -->
+            <input type="hidden" id="p-img-primary" value="assets/model-beige.jpg" required>
+            <input type="hidden" id="manual-prim-input" value="assets/model-beige.jpg">
+            <input type="hidden" id="manual-add-input" value="">
+          </div>
+        </div>
+
+        <!-- The Product Details block has been moved up -->
+
+        <div
+          style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.8rem; align-items: stretch; width: 100%; max-width: 100%;">
+          <!-- 5. Product Variants -->
+          <div class="form-section-card"
+            style="margin-bottom: 0; display: flex; flex-direction: column; min-width: 0; overflow-x: auto;">
+            <h2 class="section-title"><i data-lucide="layers" style="width: 16px;"></i> Variants & Inventory Stock</h2>
+            <table class="variant-table" style="flex: 1;">
+              <thead>
+                <tr>
+                  <th>Size</th>
+                  <th>Color</th>
+                  <th>Stock Quantity</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="variants-tbody">
+                <!-- Default rows -->
+                <tr>
+                  <td><input type="text" class="form-input v-size" value="XS" style="padding: 0.4rem; max-width: 80px;">
+                  </td>
+                  <td><input type="text" class="form-input v-color" value="Maroon"
+                      style="padding: 0.4rem; max-width: 120px;"></td>
+                  <td><input type="number" class="form-input v-stock" value="5" min="0"
+                      style="padding: 0.4rem; max-width: 100px;"></td>
+                  <td><button type="button" class="btn-del-variant"
+                      style="color: #E53E3E; background:none; border:none; cursor:pointer;">✕</button></td>
+                </tr>
+                <tr>
+                  <td><input type="text" class="form-input v-size" value="S" style="padding: 0.4rem; max-width: 80px;">
+                  </td>
+                  <td><input type="text" class="form-input v-color" value="Maroon"
+                      style="padding: 0.4rem; max-width: 120px;"></td>
+                  <td><input type="number" class="form-input v-stock" value="8" min="0"
+                      style="padding: 0.4rem; max-width: 100px;"></td>
+                  <td><button type="button" class="btn-del-variant"
+                      style="color: #E53E3E; background:none; border:none; cursor:pointer;">✕</button></td>
+                </tr>
+                <tr>
+                  <td><input type="text" class="form-input v-size" value="M" style="padding: 0.4rem; max-width: 80px;">
+                  </td>
+                  <td><input type="text" class="form-input v-color" value="Maroon"
+                      style="padding: 0.4rem; max-width: 120px;"></td>
+                  <td><input type="number" class="form-input v-stock" value="10" min="0"
+                      style="padding: 0.4rem; max-width: 100px;"></td>
+                  <td><button type="button" class="btn-del-variant"
+                      style="color: #E53E3E; background:none; border:none; cursor:pointer;">✕</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="button" class="btn-add-variant" id="add-variant-row-btn" style="margin-top: 1rem;">
+              <i data-lucide="plus" style="width: 14px; height: 14px;"></i>
+              <span>+ Add Variant Row</span>
+            </button>
+          </div>
+
+          <!-- 6. Status & Featured -->
+          <div class="form-section-card" style="margin-bottom: 0; display: flex; flex-direction: column; min-width: 0;">
+            <h2 class="section-title"><i data-lucide="toggle-left" style="width: 16px;"></i> Product Status & Curation
+            </h2>
+            <div class="form-group">
+              <label class="form-label" for="p-status">Product Status</label>
+              <select id="p-status" class="form-select">
+                <option value="Active">Active (Visible in boutique)</option>
+                <option value="Draft">Draft (Hidden)</option>
+                <option value="Archived">Archived</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-top: 1.25rem;">
+              <label class="form-label" for="p-featured">Featured Product</label>
+              <select id="p-featured" class="form-select">
+                <option value="1">Yes (Showcase on homepage & top catalog)</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="form-actions-bar">
+          <button type="button" class="btn-save-draft" id="btn-save-draft">Save as Draft</button>
+          <button type="submit" class="btn-save-prod" id="btn-save-prod">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.lucide) lucide.createIcons();
+
+      // Check Admin Auth
+      try {
+        const authRes = await fetch('/api/auth/me');
+        const authData = await authRes.json();
+        if (!authData || !authData.user || authData.user.account_type !== 'ADMIN') {
+          window.location.href = '/login?redirect=/admin/products/new';
+          return;
+        }
+      } catch (err) {
+        window.location.href = '/login?redirect=/admin/products/new';
+        return;
+      }
+
+      // Dynamically load active categories into select dropdown
+      async function loadCategoriesDropdown() {
+        try {
+          const catRes = await fetch('/api/categories');
+          const catData = await catRes.json();
+          const pCatSelect = document.getElementById('p-category');
+          if (pCatSelect && catData.categories && catData.categories.length > 0) {
+            const currentVal = pCatSelect.value;
+            pCatSelect.innerHTML = catData.categories.map(c =>
+              `<option value="${c.id}">${c.name}</option>`
+            ).join('');
+            if (currentVal && Array.from(pCatSelect.options).some(o => o.value == currentVal)) {
+              pCatSelect.value = currentVal;
+            }
+          }
+        } catch (e) {
+          console.error('Failed to load categories', e);
+        }
+      }
+      await loadCategoriesDropdown();
+
+      // Check if Editing existing product
+      const urlParams = new URLSearchParams(window.location.search);
+      const editId = urlParams.get('id');
+
+      if (editId) {
+        document.getElementById('page-title').textContent = 'EDIT COUTURE CREATION';
+        document.getElementById('nav-action-text').textContent = 'Edit Product';
+        loadProductForEdit(editId);
+      }
+
+      // Variant row adder
+      const vTbody = document.getElementById('variants-tbody');
+      document.getElementById('add-variant-row-btn').addEventListener('click', () => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input type="text" class="form-input v-size" value="L" style="padding: 0.4rem; max-width: 80px;"></td>
+          <td><input type="text" class="form-input v-color" value="Maroon" style="padding: 0.4rem; max-width: 120px;"></td>
+          <td><input type="number" class="form-input v-stock" value="4" min="0" style="padding: 0.4rem; max-width: 100px;"></td>
+          <td><button type="button" class="btn-del-variant" style="color: #E53E3E; background:none; border:none; cursor:pointer;">✕</button></td>
+        `;
+        vTbody.appendChild(tr);
+        attachDelBtns();
+      });
+
+      function attachDelBtns() {
+        document.querySelectorAll('.btn-del-variant').forEach(b => {
+          b.onclick = () => {
+            if (vTbody.children.length > 1) b.closest('tr').remove();
+          };
+        });
+      }
+      attachDelBtns();
+
+      // Unified Image Gallery State
+      let galleryImages = [
+        { url: 'assets/model-beige.jpg', order: 1, isPrimary: true }
+      ];
+
+      const unifiedFileInput = document.getElementById('unified-file-input');
+      const unifiedGalleryGrid = document.getElementById('unified-gallery-grid');
+      const unifiedUploadStatus = document.getElementById('unified-upload-status');
+      const pImgPrimaryHidden = document.getElementById('p-img-primary');
+      const manualPrimInput = document.getElementById('manual-prim-input');
+      const manualAddInput = document.getElementById('manual-add-input');
+
+      async function handleUnifiedFiles(files) {
+        const fileArr = Array.from(files);
+        showStatus(unifiedUploadStatus, 'uploading', `Uploading ${fileArr.length} photo(s)...`);
+
+        for (const file of fileArr) {
+          try {
+            const data = await uploadUnifiedFile(file);
+            galleryImages.push({
+              url: data.url,
+              order: galleryImages.length + 1,
+              isPrimary: galleryImages.length === 0
+            });
+          } catch (err) {
+            console.error('Failed to upload', file.name, err);
+          }
+        }
+        showStatus(unifiedUploadStatus, 'success', `Successfully uploaded ${fileArr.length} photo(s).`);
+        renderUnifiedGallery();
+      }
+
+      function uploadUnifiedFile(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = async (event) => {
+            try {
+              const res = await fetch('/api/admin/upload', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ filename: file.name, data: event.target.result })
+              });
+              const data = await res.json();
+              if (!res.ok) throw new Error(data.error || 'Upload error');
+              resolve(data);
+            } catch (err) {
+              reject(err);
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function renderUnifiedGallery() {
+        galleryImages.sort((a, b) => a.order - b.order);
+
+        const primaryImg = galleryImages.find(img => img.isPrimary);
+        if (primaryImg) {
+          pImgPrimaryHidden.value = primaryImg.url;
+          manualPrimInput.value = primaryImg.url;
+        } else {
+          pImgPrimaryHidden.value = '';
+          manualPrimInput.value = '';
+        }
+
+        const additionalUrls = galleryImages.filter(img => !img.isPrimary).map(img => img.url);
+        manualAddInput.value = additionalUrls.join(',');
+
+        const cardsHtml = galleryImages.map((img, idx) => `
+          <div class="gallery-thumb-card" style="aspect-ratio: 4/5; display:flex; flex-direction:column; background:#fff; border: 2px solid ${img.isPrimary ? 'var(--admin-maroon)' : 'transparent'}; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-radius: 4px; overflow:hidden;">
+            <div style="position:relative; flex:1; overflow:hidden; background:#320C10;">
+              <img src="${img.url.startsWith('/') ? img.url : '/' + img.url}" style="width:100%; height:100%; object-fit:cover;">
+              <button type="button" class="btn-del-thumb" onclick="window.removeUnifiedImage(${idx})" title="Remove photo" style="opacity:1; background:#E53E3E; border-radius:50%; width:24px; height:24px; top:6px; right:6px; display:flex; align-items:center; justify-content:center; color:#fff; border:none; cursor:pointer; position:absolute; z-index:10;">✕</button>
+              ${img.isPrimary ? '<span style="position:absolute; top:6px; left:6px; background:var(--admin-maroon); color:#fff; font-size:0.6rem; padding:3px 6px; border-radius:3px; font-weight:bold; letter-spacing:0.05em;">PRIMARY</span>' : ''}
+            </div>
+            <div style="padding: 0.6rem; border-top:1px solid var(--admin-border); display:flex; flex-direction:column; gap:0.5rem; background:#FAF8F5;">
+              <label style="font-size:0.75rem; display:flex; align-items:center; justify-content:space-between; color:var(--admin-text-main); font-weight:600;">
+                Order
+                <input type="number" class="order-input" value="${img.order}" onchange="window.updateUnifiedOrder(${idx}, this.value)" style="width:45px; padding:3px 5px; border:1px solid #ccc; border-radius:3px; font-size:0.8rem; text-align:center; font-family:var(--font-admin);">
+              </label>
+              <label style="font-size:0.75rem; display:flex; align-items:center; gap:0.4rem; cursor:pointer; color:var(--admin-text-main); font-weight:500;">
+                <input type="radio" name="primary_selection" ${img.isPrimary ? 'checked' : ''} onchange="window.setUnifiedPrimary(${idx})" style="accent-color:var(--admin-maroon); width:14px; height:14px;"> Main Image
+              </label>
+            </div>
+          </div>
+        `).join('');
+
+        unifiedGalleryGrid.innerHTML = `
+          <div class="gallery-add-card" id="unified-add-placeholder" onclick="document.getElementById('unified-file-input').click()" style="aspect-ratio: 4/5; min-height: 200px; padding: 1rem; cursor:pointer;">
+            <i data-lucide="upload-cloud" style="width:36px; height:36px; color:var(--admin-gold); margin-bottom: 0.5rem;"></i>
+            <span style="text-align: center; font-size:0.75rem; line-height:1.4;">Drag & Drop or <br><strong style="color:var(--admin-maroon); text-decoration:underline; font-size:0.8rem;">Click to Upload</strong></span>
+          </div>
+          ${cardsHtml}
+        `;
+        if (window.lucide) lucide.createIcons();
+
+        // Initialize SortableJS
+        if (window.gallerySortable) { window.gallerySortable.destroy(); }
+        window.gallerySortable = new Sortable(unifiedGalleryGrid, {
+          animation: 150,
+          filter: '.gallery-add-card',
+          onEnd: function (evt) {
+            // Re-calculate orders based on DOM position
+            const cards = unifiedGalleryGrid.querySelectorAll('.gallery-thumb-card');
+            const newOrderImages = [];
+
+            // Rebuild the galleryImages array based on new DOM order
+            cards.forEach((card, index) => {
+              const url = card.querySelector('img').src.split(window.location.host)[1].replace(/^\//, '');
+              const imgObj = galleryImages.find(img => img.url === url || img.url === '/' + url);
+              if (imgObj) {
+                imgObj.order = index + 1;
+                newOrderImages.push(imgObj);
+              }
+            });
+
+            galleryImages = newOrderImages;
+            renderUnifiedGallery();
+          }
+        });
+
+        const newPlaceholder = document.getElementById('unified-add-placeholder');
+        newPlaceholder.addEventListener('dragover', (e) => { e.preventDefault(); newPlaceholder.style.border = '2px dashed var(--admin-maroon)'; });
+        newPlaceholder.addEventListener('dragleave', () => { newPlaceholder.style.border = '1.5px dashed rgba(179, 138, 85, 0.45)'; });
+        newPlaceholder.addEventListener('drop', (e) => {
+          e.preventDefault();
+          newPlaceholder.style.border = '1.5px dashed rgba(179, 138, 85, 0.45)';
+          if (e.dataTransfer.files && e.dataTransfer.files.length > 0) handleUnifiedFiles(e.dataTransfer.files);
+        });
+      }
+
+      window.removeUnifiedImage = function (index) {
+        const wasPrimary = galleryImages[index].isPrimary;
+        galleryImages.splice(index, 1);
+        if (wasPrimary && galleryImages.length > 0) {
+          galleryImages[0].isPrimary = true;
+        }
+        renderUnifiedGallery();
+      };
+
+      window.updateUnifiedOrder = function (index, newOrder) {
+        galleryImages[index].order = parseInt(newOrder) || 0;
+        renderUnifiedGallery();
+      };
+
+      window.setUnifiedPrimary = function (index) {
+        galleryImages.forEach((img, i) => { img.isPrimary = (i === index); });
+        renderUnifiedGallery();
+      };
+
+      // Add event listener to file input directly since it gets re-created when setting innerHTML? No, it's actually statically placed.
+      // Wait, the file input is INSIDE unifiedGalleryGrid which I'm replacing with innerHTML!
+      // I should place the file input outside the grid so it isn't destroyed!
+      // Since it's outside the script tag, I will just append the event listener dynamically or keep it outside. 
+      // Actually, my innerHTML replaces the input type="file". I will make sure the placeholder click uses the global unifiedFileInput if it exists, or I'll re-render it inside innerHTML and reattach the change event.
+      document.body.addEventListener('change', (e) => {
+        if (e.target.id === 'unified-file-input' && e.target.files.length > 0) {
+          handleUnifiedFiles(e.target.files);
+        }
+      });
+
+      function showStatus(el, type, msg) {
+        if (!el) return;
+        el.className = `upload-status-indicator ${type}`;
+        el.style.display = 'flex';
+        el.innerHTML = type === 'uploading'
+          ? `<i data-lucide="loader" class="spin" style="width:14px; height:14px;"></i> <span>${msg}</span>`
+          : (type === 'success' ? `<i data-lucide="check" style="width:14px; height:14px;"></i> <span>${msg}</span>`
+            : `<i data-lucide="alert-circle" style="width:14px; height:14px;"></i> <span>${msg}</span>`);
+        if (window.lucide) lucide.createIcons();
+      }
+
+      renderUnifiedGallery();
+
+      async function loadProductForEdit(id) {
+        try {
+          const res = await fetch(`/api/admin/products/${id}`);
+          const data = await res.json();
+          const p = data.product;
+          if (!p) return;
+
+          document.getElementById('p-name').value = p.name || '';
+          document.getElementById('p-code').value = p.code || '';
+          if (p.category_id) {
+            const catSelect = document.getElementById('p-category');
+            if (!Array.from(catSelect.options).some(o => o.value == p.category_id)) {
+              const opt = document.createElement('option');
+              opt.value = p.category_id;
+              opt.textContent = `${p.category_name || 'Category #' + p.category_id} (Currently Inactive)`;
+              catSelect.appendChild(opt);
+            }
+            catSelect.value = p.category_id;
+          }
+          document.getElementById('p-brand').value = p.brand || '';
+          document.getElementById('p-price').value = p.price || '';
+          document.getElementById('p-discount').value = p.discount_price || '';
+          document.getElementById('p-desc').value = p.description || '';
+          document.getElementById('p-fabric').value = p.fabric || '';
+          document.getElementById('p-care').value = p.care_instructions || '';
+          document.getElementById('p-fit').value = p.fit_style || '';
+          document.getElementById('p-length').value = p.length || '';
+          document.getElementById('p-status').value = p.status || 'Active';
+          document.getElementById('p-featured').value = p.is_featured ? '1' : '0';
+
+          if (p.images && p.images.length > 0) {
+            galleryImages = p.images.map((img, idx) => ({
+              url: img.image_url,
+              order: idx + 1,
+              isPrimary: idx === 0
+            }));
+            renderUnifiedGallery();
+          }
+
+          if (p.variants && p.variants.length > 0) {
+            vTbody.innerHTML = p.variants.map(v => `
+              <tr>
+                <td><input type="text" class="form-input v-size" value="${v.size}" style="padding: 0.4rem; max-width: 80px;"></td>
+                <td><input type="text" class="form-input v-color" value="${v.color}" style="padding: 0.4rem; max-width: 120px;"></td>
+                <td><input type="number" class="form-input v-stock" value="${v.stock_quantity}" min="0" style="padding: 0.4rem; max-width: 100px;"></td>
+                <td><button type="button" class="btn-del-variant" style="color: #E53E3E; background:none; border:none; cursor:pointer;">✕</button></td>
+              </tr>
+            `).join('');
+            attachDelBtns();
+          }
+
+        } catch (err) { }
+      }
+
+      // Submit Form
+      document.getElementById('product-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        saveProduct('Active');
+      });
+
+      document.getElementById('btn-save-draft').addEventListener('click', () => {
+        saveProduct('Draft');
+      });
+
+      async function saveProduct(overrideStatus) {
+        const name = document.getElementById('p-name').value.trim();
+        const code = document.getElementById('p-code').value.trim();
+        const category_id = parseInt(document.getElementById('p-category').value);
+        const brand = document.getElementById('p-brand').value.trim();
+        const price = parseFloat(document.getElementById('p-price').value);
+        const discount_val = document.getElementById('p-discount').value;
+        const discount_price = discount_val ? parseFloat(discount_val) : null;
+        const description = document.getElementById('p-desc').value.trim();
+        const fabric = document.getElementById('p-fabric').value.trim();
+        const care_instructions = document.getElementById('p-care').value.trim();
+        const fit_style = document.getElementById('p-fit').value.trim();
+        const length = document.getElementById('p-length').value.trim();
+        const status = overrideStatus || document.getElementById('p-status').value;
+        const is_featured = document.getElementById('p-featured').value === '1';
+
+        // Gather all uploaded images: primary cover first, then gallery angles
+        const images = [];
+        const primImg = document.getElementById('p-img-primary').value.trim();
+        if (primImg) images.push(primImg);
+
+        const addImgs = document.getElementById('manual-add-input').value.split(',').map(s => s.trim()).filter(Boolean);
+        addImgs.forEach(img => {
+          if (img && !images.includes(img)) images.push(img);
+        });
+
+        const variants = [];
+        vTbody.querySelectorAll('tr').forEach(tr => {
+          const s = tr.querySelector('.v-size').value.trim();
+          const c = tr.querySelector('.v-color').value.trim();
+          const stk = parseInt(tr.querySelector('.v-stock').value) || 0;
+          if (s && c) variants.push({ size: s, color: c, stock_quantity: stk });
+        });
+
+        const payload = {
+          name, code, category_id, brand, price, discount_price, description,
+          fabric, care_instructions, fit_style, length, status, is_featured, images, variants
+        };
+
+        const method = editId ? 'PUT' : 'POST';
+        const url = editId ? `/api/admin/products/${editId}` : '/api/admin/products';
+
+        try {
+          const res = await fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Failed to save product');
+
+          alert(editId ? 'Product updated successfully.' : 'Product created successfully with uploaded imagery.');
+          window.location.href = '/admin/products';
+        } catch (err) {
+          alert('Error: ' + err.message);
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

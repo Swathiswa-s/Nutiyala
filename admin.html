@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal | Nutiyala Couture Operations</title>
+  <script>window.location.replace('admin-orders.html');</script>
+  <meta http-equiv="refresh" content="0; url=admin-orders.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --admin-bg: #F4F6F9;
+      --admin-sidebar: #1E2024;
+      --admin-sidebar-active: #2C3036;
+      --admin-maroon: #5A161E;
+      --admin-card: #FFFFFF;
+      --admin-border: #E2E8F0;
+      --admin-text-main: #1A202C;
+      --admin-text-muted: #718096;
+      --admin-gold: #C59A45;
+      --admin-green: #2E7D32;
+      --admin-yellow: #B7791F;
+      --admin-red: #C53030;
+      --font-admin: 'Montserrat', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-admin);
+      background-color: var(--admin-bg);
+      color: var(--admin-text-main);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Enterprise Admin Sidebar */
+    .admin-sidebar {
+      width: 260px;
+      background-color: var(--admin-sidebar);
+      color: #E2E8F0;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .admin-brand {
+      padding: 1.5rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .admin-brand-logo {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .admin-brand-text {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #FAF6F0;
+    }
+
+    .admin-brand-badge {
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--admin-gold);
+      display: block;
+    }
+
+    .sidebar-nav {
+      padding: 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .nav-header-title {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #718096;
+      padding: 0.8rem 1.4rem 0.4rem;
+      font-weight: 600;
+    }
+
+    .admin-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1.4rem;
+      color: #CBD5E0;
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .admin-nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #FFFFFF;
+    }
+
+    .admin-nav-item.active {
+      background-color: var(--admin-sidebar-active);
+      color: #FFFFFF;
+      font-weight: 600;
+      border-left: 4px solid var(--admin-gold);
+    }
+
+    .admin-nav-item i {
+      width: 18px;
+      height: 18px;
+      color: var(--admin-gold);
+    }
+
+    .sidebar-footer {
+      padding: 1.25rem 1.4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .view-site-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      color: var(--admin-gold);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 0;
+    }
+
+    .view-site-link:hover {
+      color: #FFFFFF;
+    }
+
+    .logout-admin-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      color: #E53E3E;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      padding: 0.5rem 0;
+      text-align: left;
+    }
+
+    /* Main Admin Body */
+    .admin-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .admin-topbar {
+      height: 68px;
+      background: var(--admin-card);
+      border-bottom: 1px solid var(--admin-border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--admin-text-main);
+    }
+
+    .topbar-user {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--admin-maroon);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .admin-content-area {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .stat-card {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .stat-icon-pod {
+      width: 52px;
+      height: 52px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-icon-pod.gold { background: #FEF3C7; color: #B45309; }
+    .stat-icon-pod.blue { background: #DBEAFE; color: #1D4ED8; }
+    .stat-icon-pod.green { background: #D1FAE5; color: #047857; }
+    .stat-icon-pod.maroon { background: #FCE7F3; color: #9D174D; }
+
+    .stat-value {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--admin-text-main);
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--admin-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.2rem;
+      font-weight: 600;
+    }
+
+    /* Two Column Tables Section */
+    .dashboard-tables-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 1.8rem;
+    }
+
+    @media (max-width: 1100px) {
+      .dashboard-tables-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .table-card {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+
+    .table-card-header {
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid var(--admin-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .table-card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--admin-text-main);
+    }
+
+    .table-card-action {
+      font-size: 0.78rem;
+      color: var(--admin-maroon);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .table-card-action:hover {
+      text-decoration: underline;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.84rem;
+    }
+
+    .admin-table th {
+      background: #F8FAFC;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--admin-text-muted);
+      border-bottom: 1px solid var(--admin-border);
+    }
+
+    .admin-table td {
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--admin-border);
+      color: #2D3748;
+    }
+
+    .admin-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.65rem;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .status-badge.in-stock { background: #D1FAE5; color: #065F46; }
+    .status-badge.low-stock { background: #FEF3C7; color: #92400E; }
+    .status-badge.out-of-stock { background: #FEE2E2; color: #991B1B; }
+    .status-badge.processing { background: #E0E7FF; color: #3730A3; }
+    .status-badge.delivered { background: #D1FAE5; color: #065F46; }
+
+    .thumb-mini {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+      border-radius: 4px;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+
+    @media (max-width: 992px) {
+      .admin-layout {
+        flex-direction: column;
+      }
+      .admin-sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+      }
+      .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 0.5rem 1rem;
+      }
+      .nav-header-title {
+        display: none;
+      }
+      .admin-nav-item {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.78rem;
+      }
+      .admin-topbar {
+        padding: 0 1rem;
+      }
+      .admin-content {
+        padding: 1.25rem 1rem;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.85rem;
+      }
+      .table-card {
+        overflow-x: auto;
+      }
+      .admin-table {
+        min-width: 600px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Admin Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <img src="/assets/nutiyala-emblem-gold.png" alt="Nutiyala Emblem" class="admin-brand-logo">
+      <div>
+        <div class="admin-brand-text">NUTIYALA</div>
+        <span class="admin-brand-badge">Atelier Enterprise</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-header-title">Catalog</span>
+      <a href="admin-products.html" class="admin-nav-item">
+        <i data-lucide="hanger"></i>
+        <span>All Products</span>
+      </a>
+      <a href="admin-product-edit.html" class="admin-nav-item">
+        <i data-lucide="plus-circle"></i>
+        <span>Add New Product</span>
+      </a>
+      <a href="admin-categories.html" class="admin-nav-item">
+        <i data-lucide="layers"></i>
+        <span>Categories</span>
+      </a>
+      <a href="admin-inventory.html" class="admin-nav-item">
+        <i data-lucide="boxes"></i>
+        <span>Inventory</span>
+      </a>
+
+      <span class="nav-header-title">Sales & Clients</span>
+      <a href="admin-orders.html" class="admin-nav-item">
+        <i data-lucide="shopping-bag"></i>
+        <span>Orders</span>
+      </a>
+      <a href="admin-customers.html" class="admin-nav-item">
+        <i data-lucide="users"></i>
+        <span>Customers</span>
+      </a>
+
+      <span class="nav-header-title">Promotions</span>
+      <a href="admin-offers.html" class="admin-nav-item">
+        <i data-lucide="sparkles"></i>
+        <span>Update Offer</span>
+      </a>
+
+      <span class="nav-header-title">Settings</span>
+      <a href="admin-details.html" class="admin-nav-item">
+        <i data-lucide="settings"></i>
+        <span>Admin Details</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="index.html" target="_blank" class="view-site-link">
+        <i data-lucide="external-link" style="width: 16px; height: 16px;"></i>
+        <span>VIEW WEBSITE</span>
+      </a>
+      <button class="logout-admin-btn" id="admin-logout-btn">
+        <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+        <span>Logout Admin</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Admin Main Content -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <h1 class="topbar-title">Atelier Executive Dashboard</h1>
+      <div class="topbar-user">
+        <div class="user-avatar" id="admin-avatar">A</div>
+        <div>
+          <strong style="font-size: 0.85rem;" id="admin-name">Admin User</strong>
+          <span style="font-size: 0.72rem; color: #718096; display: block;">Super Administrator</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content-area">
+      <!-- 4 Key Stat Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon-pod maroon"><i data-lucide="hanger"></i></div>
+          <div>
+            <div class="stat-value" id="stat-products">0</div>
+            <div class="stat-label">Total Products</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-pod blue"><i data-lucide="shopping-cart"></i></div>
+          <div>
+            <div class="stat-value" id="stat-orders">0</div>
+            <div class="stat-label">Total Orders</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-pod gold"><i data-lucide="users"></i></div>
+          <div>
+            <div class="stat-value" id="stat-customers">0</div>
+            <div class="stat-label">Total Customers</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-pod green"><i data-lucide="banknote"></i></div>
+          <div>
+            <div class="stat-value" id="stat-sales">₹0</div>
+            <div class="stat-label">Total Sales</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tables Grid: Recent Orders & Low Stock Alerts -->
+      <div class="dashboard-tables-grid">
+        <!-- Recent Orders -->
+        <div class="table-card">
+          <div class="table-card-header">
+            <h2 class="table-card-title">Recent Customer Orders</h2>
+            <a href="admin-orders.html" class="table-card-action">View All Orders →</a>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Client</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="recent-orders-tbody">
+              <tr><td colspan="5" style="text-align: center; color: #718096;">Loading orders...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Low Stock Alerts -->
+        <div class="table-card">
+          <div class="table-card-header">
+            <h2 class="table-card-title">Low Stock Alert (≤ 3 units)</h2>
+            <a href="admin-inventory.html" class="table-card-action">Manage Inventory →</a>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Variant</th>
+                <th>Stock</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="low-stock-tbody">
+              <tr><td colspan="4" style="text-align: center; color: #718096;">Checking inventory...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Best Selling Products & Recent Customers -->
+      <div class="dashboard-tables-grid">
+        <div class="table-card">
+          <div class="table-card-header">
+            <h2 class="table-card-title">Best Selling Creations</h2>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Creation</th>
+                <th>Code</th>
+                <th>Units Sold</th>
+                <th>Revenue</th>
+              </tr>
+            </thead>
+            <tbody id="best-sellers-tbody">
+              <tr><td colspan="4" style="text-align: center; color: #718096;">Loading sales metrics...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-card">
+          <div class="table-card-header">
+            <h2 class="table-card-title">Recent Client Registrations</h2>
+            <a href="admin-customers.html" class="table-card-action">View All Clients →</a>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Registered</th>
+              </tr>
+            </thead>
+            <tbody id="recent-customers-tbody">
+              <tr><td colspan="3" style="text-align: center; color: #718096;">Loading customers...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.lucide) lucide.createIcons();
+
+      // Authorization Check
+      let adminUser = null;
+      try {
+        const authRes = await fetch('/api/auth/me');
+        const authData = await authRes.json();
+        if (authData && authData.user && authData.user.account_type === 'ADMIN') {
+          adminUser = authData.user;
+        } else {
+          throw new Error('Not admin');
+        }
+      } catch (err) {
+        try {
+          const stored = localStorage.getItem('nutiyala_user');
+          if (stored) {
+            const u = JSON.parse(stored);
+            if (u && u.account_type === 'ADMIN') adminUser = u;
+          }
+        } catch (e) {}
+      }
+
+      if (!adminUser) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      document.getElementById('admin-name').textContent = adminUser.name;
+      document.getElementById('admin-avatar').textContent = adminUser.name[0].toUpperCase();
+
+      // Logout Admin
+      document.getElementById('admin-logout-btn').addEventListener('click', async () => {
+        try { await fetch('/api/auth/logout', { method: 'POST' }); } catch (e) {}
+        localStorage.removeItem('nutiyala_token');
+        localStorage.removeItem('nutiyala_user');
+        window.location.href = 'login.html';
+      });
+
+      // Load Dashboard Metrics
+      loadDashboard();
+      async function loadDashboard() {
+        try {
+          const res = await fetch('/api/admin/dashboard');
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error);
+
+          const stats = data.stats;
+          document.getElementById('stat-products').textContent = stats.total_products;
+          document.getElementById('stat-orders').textContent = stats.total_orders;
+          document.getElementById('stat-customers').textContent = stats.total_customers;
+          document.getElementById('stat-sales').textContent = '₹' + Number(stats.total_sales).toLocaleString('en-IN');
+
+          // Recent Orders
+          const ordTbody = document.getElementById('recent-orders-tbody');
+          if (data.recent_orders.length === 0) {
+            ordTbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #718096;">No orders placed yet.</td></tr>`;
+          } else {
+            ordTbody.innerHTML = data.recent_orders.map(o => `
+              <tr>
+                <td><strong>${o.order_number}</strong></td>
+                <td>${o.customer_name}</td>
+                <td><strong>₹${Number(o.total_amount).toLocaleString('en-IN')}</strong></td>
+                <td><span class="status-badge ${o.order_status.toLowerCase()}">${o.order_status}</span></td>
+                <td>${new Date(o.created_at).toLocaleDateString('en-IN')}</td>
+              </tr>
+            `).join('');
+          }
+
+          // Low Stock
+          const lowTbody = document.getElementById('low-stock-tbody');
+          if (data.low_stock_products.length === 0) {
+            lowTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #2E7D32;">All inventory items healthy.</td></tr>`;
+          } else {
+            lowTbody.innerHTML = data.low_stock_products.map(p => `
+              <tr>
+                <td>
+                  <img src="/${p.image || 'assets/model-beige.jpg'}" class="thumb-mini">
+                  <strong>${p.name}</strong>
+                </td>
+                <td>${p.size} / ${p.color}</td>
+                <td><strong>${p.stock_quantity}</strong></td>
+                <td>
+                  <span class="status-badge ${p.stock_quantity === 0 ? 'out-of-stock' : 'low-stock'}">
+                    ${p.stock_quantity === 0 ? 'OUT OF STOCK' : 'LOW STOCK'}
+                  </span>
+                </td>
+              </tr>
+            `).join('');
+          }
+
+          // Best Sellers
+          const bsTbody = document.getElementById('best-sellers-tbody');
+          if (data.best_selling_products.length === 0) {
+            bsTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #718096;">No sales data available yet.</td></tr>`;
+          } else {
+            bsTbody.innerHTML = data.best_selling_products.map(b => `
+              <tr>
+                <td>
+                  <img src="/${b.product_image || 'assets/model-beige.jpg'}" class="thumb-mini">
+                  <strong>${b.product_name}</strong>
+                </td>
+                <td>${b.product_code}</td>
+                <td><strong>${b.units_sold}</strong></td>
+                <td>₹${Number(b.revenue).toLocaleString('en-IN')}</td>
+              </tr>
+            `).join('');
+          }
+
+          // Recent Customers
+          const custTbody = document.getElementById('recent-customers-tbody');
+          if (data.recent_customers.length === 0) {
+            custTbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: #718096;">No registered customers yet.</td></tr>`;
+          } else {
+            custTbody.innerHTML = data.recent_customers.map(c => `
+              <tr>
+                <td><strong>${c.name}</strong></td>
+                <td>${c.email}</td>
+                <td>${new Date(c.created_at).toLocaleDateString('en-IN')}</td>
+              </tr>
+            `).join('');
+          }
+
+        } catch (err) {}
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Categories | Nutiyala Atelier Admin</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    :root {
+      --admin-bg: #F4F6F9;
+      --admin-card: #FFFFFF;
+      --admin-border: #E2E8F0;
+      --admin-text-main: #1A202C;
+      --admin-text-muted: #718096;
+      --admin-maroon: #451217;
+      --admin-maroon-dark: #320C10;
+      --admin-gold: #C59A45;
+      --admin-gold-light: #EEDFA9;
+      --admin-sidebar-bg: #1A1208;
+      --admin-sidebar-active: #2A1D15;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--admin-bg);
+      color: var(--admin-text-main);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Layout */
+    .admin-sidebar {
+      width: 260px;
+      background-color: var(--admin-sidebar-bg);
+      color: #FAF6F0;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 100;
+    }
+    .admin-brand { padding: 1.5rem 1.4rem; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .admin-brand-logo { width: 32px; height: 32px; object-fit: contain; }
+    .admin-brand-text { font-size: 1rem; font-weight: 700; letter-spacing: 0.06em; color: #FAF6F0; }
+    .admin-brand-badge { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--admin-gold); display: block; }
+    
+    .sidebar-nav { padding: 1.25rem 0; display: flex; flex-direction: column; gap: 0.25rem; flex: 1; overflow-y: auto; }
+    .nav-header-title { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #718096; padding: 0.8rem 1.4rem 0.4rem; font-weight: 600; }
+    .admin-nav-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.75rem 1.4rem; color: #CBD5E0; text-decoration: none; font-size: 0.84rem; font-weight: 500; transition: background 0.2s, color 0.2s; }
+    .admin-nav-item:hover { background-color: rgba(255, 255, 255, 0.05); color: #FFFFFF; }
+    .admin-nav-item.active { background-color: var(--admin-sidebar-active); color: #FFFFFF; font-weight: 600; border-left: 4px solid var(--admin-gold); }
+    .admin-nav-item i { width: 18px; height: 18px; color: var(--admin-gold); }
+
+    .sidebar-footer { padding: 1.25rem 1.4rem; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; flex-direction: column; gap: 0.65rem; }
+    .view-site-link { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; color: var(--admin-gold); text-decoration: none; font-weight: 600; padding: 0.5rem 0; }
+
+    /* Main Area */
+    .admin-main { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; }
+    .admin-topbar { height: 68px; background: var(--admin-card); border-bottom: 1px solid var(--admin-border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+    .topbar-title { font-size: 1.25rem; font-weight: 700; color: var(--admin-text-main); }
+    
+    .admin-content-area { padding: 2rem; display: flex; flex-direction: column; gap: 1.8rem; }
+
+    /* Stats bar */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+    .stat-card {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .stat-info h4 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--admin-text-muted); margin-bottom: 0.35rem; }
+    .stat-info .stat-number { font-size: 1.8rem; font-weight: 700; color: var(--admin-maroon); }
+    .stat-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      background: rgba(69, 18, 23, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--admin-maroon);
+    }
+
+    /* Actions bar */
+    .catalog-actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: var(--admin-card);
+      padding: 1.25rem;
+      border: 1px solid var(--admin-border);
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .btn-create-category {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.4rem;
+      background: var(--admin-maroon);
+      color: #FFFFFF;
+      border: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-create-category:hover { background: #320C10; transform: translateY(-1px); }
+
+    .search-filter-inputs {
+      display: flex;
+      gap: 0.85rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .search-input {
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--admin-border);
+      border-radius: 4px;
+      font-size: 0.85rem;
+      width: 260px;
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--admin-gold); }
+
+    .filter-select {
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--admin-border);
+      border-radius: 4px;
+      font-size: 0.85rem;
+      background: #FFFFFF;
+      outline: none;
+    }
+
+    /* Category Cards Grid */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .category-card-item {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .category-card-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    }
+
+    .cat-thumb-wrapper {
+      position: relative;
+      height: 220px;
+      width: 100%;
+      background: #F8FAFC;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cat-thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease, filter 0.3s ease;
+    }
+    .category-card-item:hover .cat-thumb-img {
+      transform: scale(1.04);
+    }
+    .category-card-item.is-category-inactive .cat-thumb-img {
+      filter: grayscale(40%) contrast(90%);
+      opacity: 0.85;
+    }
+    .category-card-item.is-category-inactive {
+      border-color: #E2E8F0;
+      background: #FAFAFA;
+    }
+    /* Heavy overlay removed so uploaded category images are crystal clear */
+    .cat-thumb-overlay {
+      display: none !important;
+    }
+
+    /* Interactive Active / Inactive Switch */
+    .cat-status-switch-btn {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.3rem 0.75rem 0.3rem 0.35rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
+      z-index: 5;
+      user-select: none;
+    }
+    .cat-status-switch-btn.active {
+      background: rgba(236, 253, 245, 0.96);
+      border-color: #10B981;
+      color: #047857;
+    }
+    .cat-status-switch-btn.inactive {
+      background: rgba(243, 244, 246, 0.96);
+      border-color: #9CA3AF;
+      color: #4B5563;
+    }
+    .cat-switch-pill {
+      width: 26px;
+      height: 15px;
+      border-radius: 10px;
+      background: #D1D5DB;
+      position: relative;
+      transition: background 0.25s ease;
+      display: inline-block;
+    }
+    .cat-status-switch-btn.active .cat-switch-pill {
+      background: #10B981;
+    }
+    .cat-switch-thumb {
+      position: absolute;
+      top: 1.5px;
+      left: 1.5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cat-status-switch-btn.active .cat-switch-thumb {
+      transform: translateX(11px);
+    }
+    .cat-status-switch-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.22);
+    }
+
+    .cat-badge-order {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      color: var(--admin-gold-light);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid rgba(238, 223, 169, 0.2);
+    }
+
+    .cat-card-body {
+      padding: 1.25rem 1.4rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .cat-card-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--admin-maroon);
+    }
+    .cat-card-slug {
+      font-size: 0.76rem;
+      color: var(--admin-gold);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .cat-card-desc {
+      font-size: 0.82rem;
+      color: var(--admin-text-muted);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .cat-card-footer {
+      padding: 1rem 1.4rem;
+      background: #F8FAFC;
+      border-top: 1px solid var(--admin-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cat-prod-count {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--admin-text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .cat-prod-count a {
+      color: var(--admin-maroon);
+      text-decoration: underline;
+    }
+
+    .cat-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-cat-action {
+      padding: 0.45rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      border: 1px solid var(--admin-border);
+      background: #FFFFFF;
+      color: var(--admin-text-main);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn-cat-action.edit:hover { background: #FEF3C7; border-color: #B45309; color: #B45309; }
+    .btn-cat-action.delete:hover { background: #FEE2E2; border-color: #991B1B; color: #991B1B; }
+
+    /* Modal / Drawer */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    
+    .category-modal {
+      background: #FFFFFF;
+      width: 100%;
+      max-width: 580px;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalFadeIn 0.25s ease;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-head {
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid var(--admin-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #F8FAFC;
+    }
+    .modal-head h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.5rem;
+      color: var(--admin-maroon);
+    }
+    .modal-close-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--admin-text-muted);
+      display: flex;
+      align-items: center;
+    }
+
+    .modal-body {
+      padding: 1.75rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label { font-size: 0.8rem; font-weight: 600; color: var(--admin-text-main); text-transform: uppercase; letter-spacing: 0.05em; }
+    .form-input, .form-textarea, .form-select-modal {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--admin-border);
+      border-radius: 6px;
+      font-size: 0.88rem;
+      outline: none;
+      font-family: inherit;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select-modal:focus {
+      border-color: var(--admin-maroon);
+      box-shadow: 0 0 0 3px rgba(69, 18, 23, 0.1);
+    }
+    .form-textarea { min-height: 85px; resize: vertical; }
+
+    /* Image Upload Pod in Modal */
+    .image-upload-pod {
+      border: 2px dashed var(--admin-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: center;
+      cursor: pointer;
+      background: #FAF8F5;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .image-upload-pod:hover, .image-upload-pod.dragover {
+      border-color: var(--admin-maroon);
+      background: rgba(69, 18, 23, 0.04);
+    }
+    .preview-container {
+      margin-top: 0.75rem;
+      position: relative;
+      height: 160px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #2D0A0F;
+      display: none;
+    }
+    .preview-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-foot {
+      padding: 1.25rem 1.75rem;
+      border-top: 1px solid var(--admin-border);
+      background: #F8FAFC;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+    .btn-secondary {
+      padding: 0.65rem 1.2rem;
+      background: #FFFFFF;
+      border: 1px solid var(--admin-border);
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+    .btn-primary {
+      padding: 0.65rem 1.5rem;
+      background: var(--admin-maroon);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: #320C10; }
+
+    /* Toast Notification */
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1A202C;
+      color: #FFFFFF;
+      padding: 0.85rem 1.4rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      display: none;
+      z-index: 2000;
+      border-left: 4px solid var(--admin-gold);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ADMIN SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <img src="/assets/nutiyala-emblem-gold.png" alt="Nutiyala Emblem" class="admin-brand-logo">
+      <div>
+        <div class="admin-brand-text">NUTIYALA</div>
+        <span class="admin-brand-badge">Atelier Enterprise</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-header-title">Catalog</span>
+      <a href="/admin/products" class="admin-nav-item">
+        <i data-lucide="hanger"></i>
+        <span>All Products</span>
+      </a>
+      <a href="/admin/products/new" class="admin-nav-item">
+        <i data-lucide="plus-circle"></i>
+        <span>Add New Product</span>
+      </a>
+      <a href="/admin/categories" class="admin-nav-item active">
+        <i data-lucide="layers"></i>
+        <span>Categories</span>
+      </a>
+      <a href="/admin/inventory" class="admin-nav-item">
+        <i data-lucide="boxes"></i>
+        <span>Inventory</span>
+      </a>
+
+      <span class="nav-header-title">Sales & Clients</span>
+      <a href="/admin/orders" class="admin-nav-item">
+        <i data-lucide="shopping-bag"></i>
+        <span>Orders</span>
+      </a>
+      <a href="/admin/customers" class="admin-nav-item">
+        <i data-lucide="users"></i>
+        <span>Customers</span>
+      </a>
+
+      <span class="nav-header-title">Promotions</span>
+      <a href="/admin/offers" class="admin-nav-item">
+        <i data-lucide="sparkles"></i>
+        <span>Update Offer</span>
+      </a>
+
+      <span class="nav-header-title">Settings</span>
+      <a href="/admin/details" class="admin-nav-item">
+        <i data-lucide="settings"></i>
+        <span>Admin Details</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="/" target="_blank" class="view-site-link">
+        <i data-lucide="external-link" style="width: 16px; height: 16px;"></i>
+        <span>VIEW WEBSITE</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN VIEW -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <h1 class="topbar-title">CATEGORIES MANAGEMENT</h1>
+      <button class="btn-create-category" onclick="openCategoryModal()">
+        <i data-lucide="plus"></i>
+        <span>Add New Category</span>
+      </button>
+    </header>
+
+    <div class="admin-content-area">
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-info">
+            <h4>Total Categories</h4>
+            <div class="stat-number" id="stat-total-cats">0</div>
+          </div>
+          <div class="stat-icon-wrap"><i data-lucide="layers"></i></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <h4>Active on Website</h4>
+            <div class="stat-number" id="stat-active-cats">0</div>
+          </div>
+          <div class="stat-icon-wrap"><i data-lucide="check-circle-2"></i></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <h4>Catalog Products</h4>
+            <div class="stat-number" id="stat-linked-prods">0</div>
+          </div>
+          <div class="stat-icon-wrap"><i data-lucide="package"></i></div>
+        </div>
+      </div>
+
+      <!-- ACTIONS & SEARCH -->
+      <div class="catalog-actions-bar">
+        <div class="search-filter-inputs">
+          <input type="text" id="cat-search-input" class="search-input" placeholder="Search categories by name or slug...">
+          <select id="cat-status-filter" class="filter-select">
+            <option value="all">All Statuses</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+
+        <button class="btn-create-category" onclick="openCategoryModal()">
+          <i data-lucide="plus"></i>
+          <span>Add New Category</span>
+        </button>
+      </div>
+
+      <!-- CATEGORIES GRID -->
+      <div class="categories-grid" id="categories-grid-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL: ADD / EDIT CATEGORY -->
+  <div class="modal-overlay" id="category-modal-overlay">
+    <div class="category-modal" style="max-width: 480px; border-radius: 12px; overflow: hidden;">
+      <div class="modal-head">
+        <h3 id="modal-title">Add Category</h3>
+        <button class="modal-close-btn" onclick="closeCategoryModal()"><i data-lucide="x"></i></button>
+      </div>
+      <form id="category-form" onsubmit="handleSaveCategory(event)">
+        <div class="modal-body" style="padding: 1.5rem; gap: 1.25rem;">
+          <input type="hidden" id="form-cat-id" value="">
+          
+          <div class="form-group">
+            <label class="form-label">Category Name *</label>
+            <input type="text" id="form-cat-name" class="form-input" placeholder="e.g. Sarees, Kurtis, Co-ord Sets" required autofocus style="font-size: 1rem; padding: 0.85rem;">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Category Image *</label>
+            <div class="image-upload-pod" id="upload-pod" onclick="document.getElementById('cat-file-input').click()">
+              <input type="file" id="cat-file-input" accept="image/*" style="display: none;" onchange="handleImageFileSelect(this)">
+              <i data-lucide="upload-cloud" style="width: 32px; height: 32px; color: var(--admin-gold); margin: 0 auto 0.4rem; display: block;"></i>
+              <div style="font-size: 0.88rem; font-weight: 600;">Click to upload category image</div>
+              <div style="font-size: 0.74rem; color: var(--admin-text-muted); margin-top: 3px;">JPG, PNG, WEBP (Shown in Shop by Category on website)</div>
+            </div>
+
+            <!-- Optional Image URL -->
+            <input type="text" id="form-cat-image-url" class="form-input" style="margin-top: 0.6rem;" placeholder="Or paste image path (e.g. assets/maroon_velvet.png)" oninput="updateImagePreview(this.value)">
+
+            <!-- Live Image Preview -->
+            <div class="preview-container" id="image-preview-container" style="height: 150px; margin-top: 0.6rem; border-radius: 6px; overflow: hidden; display: none;">
+              <img id="image-preview" src="" alt="Category preview" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-foot" style="padding: 1.1rem 1.5rem; background: #F8FAFC; border-top: 1px solid var(--admin-border); display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" class="btn-secondary" onclick="closeCategoryModal()">Cancel</button>
+          <button type="submit" class="btn-primary" id="save-cat-btn" style="padding: 0.75rem 1.8rem;">Save Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-msg" id="toast-msg"></div>
+
+  <script>
+    let categoriesList = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Check admin authentication
+      try {
+        const authRes = await fetch('/api/auth/me');
+        const authData = await authRes.json();
+        if (!authData.user || authData.user.account_type !== 'ADMIN') {
+          window.location.href = '/login.html?redirect=/admin/categories';
+          return;
+        }
+      } catch (err) {
+        console.error('Auth verification error:', err);
+      }
+
+      await loadCategories();
+      setupFilters();
+      if (window.lucide) lucide.createIcons();
+    });
+
+    function formatImgUrl(url) {
+      if (!url) return '/assets/emerald_green.png';
+      url = url.trim();
+      if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url;
+      if (!url.startsWith('/')) url = '/' + url;
+      return url;
+    }
+
+    async function loadCategories() {
+      try {
+        const res = await fetch('/api/categories?all=true');
+        const data = await res.json();
+        categoriesList = data.categories || [];
+        renderCategories(categoriesList);
+        updateStats(categoriesList);
+      } catch (err) {
+        console.error('Error loading categories:', err);
+        showToast('Error loading categories from database.');
+      }
+    }
+
+    function renderCategories(list) {
+      const container = document.getElementById('categories-grid-container');
+      if (!list.length) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; background: #FFFFFF; border: 1px dashed var(--admin-border); border-radius: 8px; padding: 3rem; text-align: center;">
+            <i data-lucide="layers" style="width: 42px; height: 42px; color: var(--admin-gold); margin: 0 auto 0.75rem;"></i>
+            <h3 style="font-size: 1.15rem; color: var(--admin-maroon); margin-bottom: 0.35rem;">No Categories Found</h3>
+            <p style="font-size: 0.85rem; color: var(--admin-text-muted); margin-bottom: 1.25rem;">Create your first boutique category to organize products.</p>
+            <button class="btn-create-category" style="margin: 0 auto;" onclick="openCategoryModal()">Add New Category</button>
+          </div>
+        `;
+        if (window.lucide) lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = list.map((cat, idx) => {
+        const img = formatImgUrl(cat.image_url);
+        const isActive = (cat.status || 'Active') === 'Active';
+        const statusClass = isActive ? 'active' : 'inactive';
+        const displayOrder = cat.display_order || (idx + 1);
+        const prodCount = cat.product_count || 0;
+
+        return `
+          <div class="category-card-item ${isActive ? '' : 'is-category-inactive'}" data-id="${cat.id}">
+            <div class="cat-thumb-wrapper">
+              <img src="${img}" alt="${cat.name}" class="cat-thumb-img" onerror="this.onerror=null; this.src='/assets/emerald_green.png';">
+              <button type="button" class="cat-status-switch-btn ${statusClass}" onclick="toggleCategoryStatus(${cat.id}, '${cat.status || 'Active'}', event)" title="Click to switch between Active and Inactive">
+                <span class="cat-switch-pill"><span class="cat-switch-thumb"></span></span>
+                <span class="cat-switch-label">${cat.status || 'Active'}</span>
+              </button>
+              <span class="cat-badge-order">#Order ${displayOrder}</span>
+            </div>
+
+            <div class="cat-card-body">
+              <h3 class="cat-card-title">${cat.name}</h3>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.35rem;">
+                <span style="background: rgba(69, 18, 23, 0.08); color: var(--admin-maroon); font-weight: 700; font-size: 0.84rem; padding: 0.35rem 0.75rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.4rem;">
+                  <i data-lucide="package" style="width: 14px; height: 14px;"></i>
+                  ${prodCount} Product${prodCount === 1 ? '' : 's'}
+                </span>
+                <span style="font-size: 0.76rem; color: ${isActive ? '#059669' : '#6B7280'}; font-weight: 600;">
+                  ${isActive ? '● Live on Store' : '○ Hidden from Store'}
+                </span>
+              </div>
+            </div>
+
+            <div class="cat-card-footer">
+              <a href="/admin/products?category=${encodeURIComponent(cat.slug)}" style="font-size: 0.82rem; color: var(--admin-gold); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem;" title="View linked products">
+                <span>View Catalog</span> &rarr;
+              </a>
+              <div class="cat-actions">
+                <button class="btn-cat-action edit" onclick="editCategory(${cat.id})">
+                  <i data-lucide="edit-2" style="width: 12px; height: 12px;"></i> Edit
+                </button>
+                <button class="btn-cat-action delete" onclick="deleteCategory(${cat.id}, '${cat.name.replace(/'/g, "\\'")}')">
+                  <i data-lucide="trash-2" style="width: 12px; height: 12px;"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    async function toggleCategoryStatus(catId, currentStatus, event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      const newStatus = (currentStatus === 'Active') ? 'Inactive' : 'Active';
+      
+      // Optimistic update
+      const targetCat = categoriesList.find(c => c.id === catId);
+      if (targetCat) targetCat.status = newStatus;
+      renderCategories(categoriesList);
+      updateStats(categoriesList);
+
+      try {
+        const res = await fetch(`/api/admin/categories/${catId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Failed to update category status.');
+        }
+        
+        const catName = targetCat ? targetCat.name : 'Category';
+        if (newStatus === 'Active') {
+          showToast(`"${catName}" is now Active! Visible in Shop by Category and Add Product.`);
+        } else {
+          showToast(`"${catName}" is now Inactive! Hidden from storefront and Add Product.`);
+        }
+      } catch (err) {
+        console.error('Error toggling status:', err);
+        // Rollback
+        if (targetCat) targetCat.status = currentStatus;
+        renderCategories(categoriesList);
+        updateStats(categoriesList);
+        showToast(err.message || 'Error updating status.');
+      }
+    }
+
+    function updateStats(list) {
+      document.getElementById('stat-total-cats').textContent = list.length;
+      document.getElementById('stat-active-cats').textContent = list.filter(c => (c.status || 'Active') === 'Active').length;
+      const totalProds = list.reduce((sum, c) => sum + (c.product_count || 0), 0);
+      document.getElementById('stat-linked-prods').textContent = totalProds;
+    }
+
+    function setupFilters() {
+      const searchInput = document.getElementById('cat-search-input');
+      const statusFilter = document.getElementById('cat-status-filter');
+
+      const applyFilters = () => {
+        const q = (searchInput.value || '').trim().toLowerCase();
+        const s = statusFilter.value;
+
+        const filtered = categoriesList.filter(c => {
+          const matchQuery = !q || c.name.toLowerCase().includes(q) || c.slug.toLowerCase().includes(q) || (c.description || '').toLowerCase().includes(q);
+          const matchStatus = (s === 'all') || (c.status || 'Active') === s;
+          return matchQuery && matchStatus;
+        });
+
+        renderCategories(filtered);
+      };
+
+      searchInput.addEventListener('input', applyFilters);
+      statusFilter.addEventListener('change', applyFilters);
+    }
+
+    function autoGenerateSlug(name) {
+      const id = document.getElementById('form-cat-id').value;
+      if (!id) {
+        const slug = name.toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)+/g, '');
+        document.getElementById('form-cat-slug').value = slug;
+      }
+    }
+
+    function updateImagePreview(url) {
+      const prevContainer = document.getElementById('image-preview-container');
+      const img = document.getElementById('image-preview');
+      if (url && url.trim()) {
+        img.src = formatImgUrl(url);
+        prevContainer.style.display = 'block';
+      } else {
+        prevContainer.style.display = 'none';
+      }
+    }
+
+    async function handleImageFileSelect(input) {
+      if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+
+      showToast('Uploading category image...');
+      try {
+        const res = await fetch('/api/admin/upload', {
+          method: 'POST',
+          body: file,
+          headers: {
+            'Content-Type': file.type || 'image/jpeg',
+            'X-Filename': encodeURIComponent(file.name)
+          }
+        });
+        const data = await res.json();
+        if (data.url) {
+          const formattedUrl = formatImgUrl(data.url);
+          document.getElementById('form-cat-image-url').value = formattedUrl;
+          updateImagePreview(formattedUrl);
+          showToast('Image uploaded successfully!');
+        } else {
+          showToast('Image upload failed: ' + (data.error || 'Server error'));
+        }
+      } catch (err) {
+        console.error('File upload error:', err);
+        showToast('Error uploading image.');
+      }
+    }
+
+    function openCategoryModal(cat = null) {
+      const modal = document.getElementById('category-modal-overlay');
+      const form = document.getElementById('category-form');
+      form.reset();
+
+      if (cat) {
+        document.getElementById('modal-title').textContent = 'Edit Category: ' + cat.name;
+        document.getElementById('form-cat-id').value = cat.id;
+        document.getElementById('form-cat-name').value = cat.name;
+        document.getElementById('form-cat-image-url').value = cat.image_url ? formatImgUrl(cat.image_url) : '';
+        updateImagePreview(cat.image_url);
+      } else {
+        document.getElementById('modal-title').textContent = 'Add Category';
+        document.getElementById('form-cat-id').value = '';
+        document.getElementById('form-cat-name').value = '';
+        document.getElementById('form-cat-image-url').value = '';
+        updateImagePreview('');
+      }
+
+      modal.classList.add('open');
+      setTimeout(() => {
+        const inp = document.getElementById('form-cat-name');
+        if (inp) inp.focus();
+      }, 100);
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeCategoryModal() {
+      document.getElementById('category-modal-overlay').classList.remove('open');
+    }
+
+    function editCategory(id) {
+      const cat = categoriesList.find(c => c.id === id);
+      if (cat) openCategoryModal(cat);
+    }
+
+    async function handleSaveCategory(e) {
+      e.preventDefault();
+      const id = document.getElementById('form-cat-id').value;
+      const name = document.getElementById('form-cat-name').value.trim();
+      const imageUrl = document.getElementById('form-cat-image-url').value.trim();
+
+      if (!name) {
+        showToast('Please enter category name.');
+        return;
+      }
+
+      const slug = name.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)+/g, '');
+
+      const existingCat = id ? categoriesList.find(c => c.id == id) : null;
+      const payload = {
+        name: name,
+        slug: slug,
+        image_url: formatImgUrl(imageUrl),
+        status: existingCat ? (existingCat.status || 'Active') : 'Active'
+      };
+
+      const saveBtn = document.getElementById('save-cat-btn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+
+      try {
+        let res;
+        if (id) {
+          res = await fetch(`/api/admin/categories/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        } else {
+          res = await fetch('/api/admin/categories', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+
+        const data = await res.json();
+        if (res.ok) {
+          showToast(id ? 'Category updated successfully!' : 'Category created successfully!');
+          closeCategoryModal();
+          await loadCategories();
+        } else {
+          showToast(data.error || 'Failed to save category.');
+        }
+      } catch (err) {
+        console.error('Error saving category:', err);
+        showToast('Network error while saving category.');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Category';
+      }
+    }
+
+    async function deleteCategory(id, name) {
+      if (!confirm(`Are you sure you want to delete category "${name}"?`)) return;
+
+      try {
+        const res = await fetch(`/api/admin/categories/${id}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (res.ok) {
+          showToast('Category deleted successfully.');
+          await loadCategories();
+        } else {
+          alert(data.error || 'Cannot delete category.');
+        }
+      } catch (err) {
+        console.error('Error deleting category:', err);
+        showToast('Error deleting category.');
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast-msg');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3500);
+    }
+  </script>
+</body>
+</html>

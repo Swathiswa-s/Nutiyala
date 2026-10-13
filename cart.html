@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Bag | Nutiyala Couture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ═══════════════════════════════════════
+       PREMIUM LUXURY HEADER (CONSISTENT WITH PDP)
+    ═══════════════════════════════════════ */
+    .pdp-header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: #3A0C11;
+      border-bottom: 1px solid rgba(216, 185, 130, 0.28);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .pdp-header .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      height: 72px;
+      padding: 0 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-sizing: border-box;
+    }
+
+    .pdp-header .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.15rem;
+    }
+
+    .pdp-back-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #EEDFA9;
+      background: rgba(250, 246, 240, 0.06);
+      border: 1px solid rgba(216, 185, 130, 0.3);
+      text-decoration: none;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .pdp-back-btn:hover {
+      background: rgba(216, 185, 130, 0.22);
+      border-color: #D8B982;
+      color: #FFFFFF;
+      transform: translateX(-2px);
+    }
+
+    .pdp-brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+    }
+
+    .pdp-brand-emblem {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+
+    .pdp-brand-emblem img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+    }
+
+    .pdp-brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+    }
+
+    .pdp-brand-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: #EEDFA9;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .pdp-brand-tagline {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(216, 185, 130, 0.85);
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    .pdp-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .pdp-action-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #EEDFA9;
+      background: rgba(250, 246, 240, 0.06);
+      border: 1px solid rgba(216, 185, 130, 0.25);
+      position: relative;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .pdp-action-icon:hover {
+      background: rgba(216, 185, 130, 0.2);
+      border-color: #D8B982;
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .pdp-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background: #D8B982;
+      color: #3A0C11;
+      font-size: 0.62rem;
+      font-weight: 700;
+      min-width: 17px;
+      height: 17px;
+      border-radius: 99px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+      border: 1.5px solid #3A0C11;
+    }
+
+    .pdp-account-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.46rem 1.05rem;
+      height: 40px;
+      box-sizing: border-box;
+      border-radius: 99px;
+      background: rgba(30, 18, 11, 0.72);
+      border: 1.5px solid rgba(216, 185, 130, 0.55);
+      color: #FAF7F2;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .pdp-account-btn:hover {
+      background: linear-gradient(135deg, #B38A55 0%, #8E6534 100%);
+      color: #FFFFFF;
+    }
+
+    /* ═══════════════════════════════════════
+       CART PAGE CONTENT
+    ═══════════════════════════════════════ */
+    body.cart-page-body {
+      background: #FAF8F5;
+      color: #2D2424;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+      width: 100%;
+      box-sizing: border-box;
+      flex: 1;
+    }
+
+    .cart-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(179, 138, 85, 0.25);
+      padding-bottom: 1rem;
+    }
+
+    .cart-title-row h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.6rem;
+      color: #3E0F15;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .cart-items-count {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #B38A55;
+      font-weight: 600;
+    }
+
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .cart-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cart-items-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(179, 138, 85, 0.25);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+    }
+
+    .cart-item-row {
+      display: grid;
+      grid-template-columns: 100px 1fr auto auto;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      align-items: center;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .cart-item-row:last-child {
+      border-bottom: none;
+    }
+
+    @media (max-width: 640px) {
+      .cart-item-row {
+        grid-template-columns: 80px 1fr;
+        gap: 1rem;
+      }
+      .cart-item-pricing {
+        grid-column: 2;
+      }
+    }
+
+    .cart-item-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid rgba(179,138,85,0.2);
+    }
+
+    .cart-item-details h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.35rem;
+      color: #3E0F15;
+      margin: 0 0 0.35rem;
+      font-weight: 600;
+    }
+
+    .cart-item-details h3 a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .cart-item-details h3 a:hover {
+      color: #B38A55;
+    }
+
+    .cart-item-meta {
+      font-size: 0.8rem;
+      color: #7A686B;
+      margin-bottom: 0.5rem;
+    }
+
+    .cart-item-meta span {
+      margin-right: 1rem;
+    }
+
+    .cart-item-meta strong {
+      color: #3E0F15;
+    }
+
+    .cart-qty-ctrl {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(179,138,85,0.4);
+      border-radius: 4px;
+      background: #FAF8F5;
+    }
+
+    .cart-qty-btn {
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #3E0F15;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-qty-val {
+      min-width: 28px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #3E0F15;
+    }
+
+    .cart-item-pricing {
+      text-align: right;
+    }
+
+    .cart-item-price-current {
+      font-weight: 700;
+      color: #3E0F15;
+      font-size: 1.15rem;
+      display: block;
+    }
+
+    .cart-item-price-orig {
+      font-size: 0.82rem;
+      color: #A08C8F;
+      text-decoration: line-through;
+    }
+
+    .cart-item-remove-btn {
+      background: none;
+      border: none;
+      color: #A08C8F;
+      cursor: pointer;
+      padding: 6px;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-item-remove-btn:hover {
+      color: #C53030;
+    }
+
+    /* Summary Card */
+    .cart-summary-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(179, 138, 85, 0.3);
+      border-radius: 8px;
+      padding: 1.75rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+      position: sticky;
+      top: 96px;
+    }
+
+    .cart-summary-card h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.6rem;
+      color: #3E0F15;
+      margin: 0 0 1.25rem;
+      border-bottom: 1px solid rgba(179, 138, 85, 0.2);
+      padding-bottom: 0.75rem;
+    }
+
+    .cart-summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+      font-size: 0.88rem;
+      color: #4A3A3D;
+    }
+
+    .cart-summary-line.total {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #3E0F15;
+      border-top: 1px solid rgba(179, 138, 85, 0.25);
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+
+    .btn-checkout-primary {
+      width: 100%;
+      padding: 0.95rem;
+      background: linear-gradient(135deg, #3E0F15 0%, #2A080C 100%);
+      color: #FAF6F0;
+      border: 1px solid #B38A55;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      transition: all 0.25s ease;
+    }
+
+    .btn-checkout-primary:hover {
+      background: linear-gradient(135deg, #B38A55 0%, #8E6534 100%);
+      color: #FFFFFF;
+      box-shadow: 0 6px 20px rgba(179, 138, 85, 0.35);
+    }
+
+    .cart-continue-link {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: #7A686B;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .cart-continue-link:hover {
+      color: #3E0F15;
+    }
+
+    /* Empty Cart State */
+    .cart-empty-view {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: #FFFFFF;
+      border: 1px solid rgba(179, 138, 85, 0.25);
+      border-radius: 8px;
+    }
+
+    .cart-empty-view svg {
+      width: 56px;
+      height: 56px;
+      color: #B38A55;
+      margin-bottom: 1.25rem;
+    }
+
+    .cart-empty-view h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.2rem;
+      color: #3E0F15;
+      margin: 0 0 0.5rem;
+    }
+
+    .cart-empty-view p {
+      font-size: 0.95rem;
+      color: #7A686B;
+      max-width: 480px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+
+    .btn-catalog-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.95rem 2.2rem;
+      background: #3E0F15;
+      color: #FAF6F0;
+      border: 1px solid #B38A55;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-catalog-primary:hover {
+      background: #B38A55;
+      color: #FFFFFF;
+      box-shadow: 0 4px 16px rgba(179, 138, 85, 0.35);
+    }
+  </style>
+</head>
+<body class="cart-page-body">
+
+  <!-- Header -->
+  <header class="pdp-header" id="pdp-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="/products.html" class="pdp-back-btn" aria-label="Return to Catalog" title="Back to Catalog">
+          <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+        </a>
+        <a href="/index.html" class="pdp-brand-logo" aria-label="Nutiyala Couture Home">
+          <div class="pdp-brand-emblem">
+            <img src="/assets/nutiyala-emblem-gold.png" alt="Nutiyala Monogram">
+          </div>
+          <div class="pdp-brand-text">
+            <span class="pdp-brand-name">Nutiyala</span>
+            <span class="pdp-brand-tagline">Couture • Made Just For You</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="pdp-header-actions">
+        <a href="/account.html#wishlist" class="pdp-action-icon" aria-label="Wishlist" title="View Wishlist">
+          <i data-lucide="heart"></i>
+          <span class="pdp-badge" id="wishlist-count">0</span>
+        </a>
+        <button class="pdp-action-icon cart-btn-wrap" id="cart-btn" aria-label="Shopping Bag" title="Shopping Bag">
+          <i data-lucide="shopping-bag"></i>
+          <span class="pdp-badge" id="cart-count">0</span>
+        </button>
+        <a href="/login.html" class="pdp-account-btn" id="account-btn" aria-label="Client Login" title="Client Login / Account">
+          <i data-lucide="user"></i>
+          <span class="login-btn-label">LOGIN</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Cart Section -->
+  <main class="cart-container">
+    <div class="cart-title-row">
+      <h1>Shopping Bag</h1>
+      <span class="cart-items-count" id="cart-header-subtitle">LOADING...</span>
+    </div>
+
+    <!-- Content rendered via JS -->
+    <div id="cart-content-area">
+      <div style="text-align: center; padding: 4rem;">
+        <i data-lucide="loader-2" class="spin" style="width: 36px; height: 36px; color: #B38A55; margin-bottom: 1rem;"></i>
+        <p style="color: #7A686B;">Opening your bespoke couture bag...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer simple-footer bg-deep-chocolate text-light" style="margin-top: auto;">
+    <div class="container footer-simple-wrap">
+      <div class="footer-simple-brand">
+        <a href="/index.html" class="footer-brand-link">
+          <img src="/assets/nutiyala-emblem-gold.png" alt="Nutiyala Emblem" class="footer-simple-logo">
+        </a>
+        <h3 class="footer-simple-name">Nutiyala Couture</h3>
+      </div>
+      <div class="footer-simple-copy">
+        © 2026 Nutiyala Couture. All rights reserved. Grace in Every Thread.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/nutiyala-auth.js"></script>
+  <script src="/js/nutiyala-cart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.lucide) lucide.createIcons();
+
+      // Check user session
+      try {
+        const authRes = await fetch('/api/auth/me');
+        const authData = await authRes.json();
+        const accountBtn = document.getElementById('account-btn');
+        if (authData && authData.user) {
+          const u = authData.user;
+          const label = accountBtn.querySelector('.login-btn-label');
+          if (label) label.textContent = u.account_type === 'ADMIN' ? 'ADMIN' : (u.name.split(' ')[0] || 'ACCOUNT');
+          accountBtn.href = u.account_type === 'ADMIN' ? '/admin-orders.html' : '/account.html';
+        }
+      } catch (e) {}
+
+      loadCartPage();
+
+      async function loadCartPage() {
+        const area = document.getElementById('cart-content-area');
+        const subTitle = document.getElementById('cart-header-subtitle');
+
+        try {
+          const res = await fetch('/api/cart');
+          const data = await res.json();
+          const items = data.items || [];
+          const count = data.item_count || items.length;
+
+          // Update header badges
+          const headerBadge = document.getElementById('cart-count');
+          if (headerBadge) headerBadge.textContent = count;
+          subTitle.textContent = `${count} ${count === 1 ? 'PIECE' : 'PIECES'}`;
+
+          if (items.length === 0) {
+            area.innerHTML = `
+              <div class="cart-empty-view">
+                <i data-lucide="shopping-bag"></i>
+                <h3>Your Bag is Empty</h3>
+                <p>Your bespoke wardrobe awaits. Discover timeless hand-embroidered kurtis, royal co-ords, and pure Kashmiri pashmina creations.</p>
+                <a href="/products.html" class="btn-catalog-primary">
+                  <span>EXPLORE ATELIER COLLECTION</span>
+                  <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+                </a>
+              </div>
+            `;
+            if (window.lucide) lucide.createIcons();
+            return;
+          }
+
+          const subtotal = data.subtotal || 0;
+          const discount = data.discount || 0;
+          const shipping = data.shipping || 0;
+          const total = data.total || 0;
+
+          area.innerHTML = `
+            <div class="cart-layout">
+              <!-- Item list -->
+              <div class="cart-items-card">
+                ${items.map(item => `
+                  <div class="cart-item-row" data-id="${item.id}">
+                    <img src="${item.image || '/assets/category-single.jpg'}" alt="${item.name}" class="cart-item-img">
+                    <div class="cart-item-details">
+                      <h3><a href="/products/${item.slug}">${item.name}</a></h3>
+                      <div class="cart-item-meta">
+                        <span>Size: <strong>${item.size}</strong></span>
+                        <span>Color: <strong>${item.color}</strong></span>
+                      </div>
+                      <div class="cart-qty-ctrl">
+                        <button class="cart-qty-btn" onclick="updateQty(${item.id}, ${item.quantity - 1})" aria-label="Decrease quantity">−</button>
+                        <span class="cart-qty-val">${item.quantity}</span>
+                        <button class="cart-qty-btn" onclick="updateQty(${item.id}, ${item.quantity + 1})" aria-label="Increase quantity">+</button>
+                      </div>
+                    </div>
+                    <div class="cart-item-pricing">
+                      <span class="cart-item-price-current">₹${(item.unit_price * item.quantity).toLocaleString('en-IN')}</span>
+                      ${item.discount_price ? `<span class="cart-item-price-orig">₹${(item.price * item.quantity).toLocaleString('en-IN')}</span>` : ''}
+                    </div>
+                    <button class="cart-item-remove-btn" onclick="removeItem(${item.id})" aria-label="Remove piece from bag">
+                      <i data-lucide="trash-2" style="width: 17px; height: 17px;"></i>
+                    </button>
+                  </div>
+                `).join('')}
+              </div>
+
+              <!-- Order Summary -->
+              <div class="cart-summary-card">
+                <h2>Order Summary</h2>
+                <div class="cart-summary-line">
+                  <span>Subtotal</span>
+                  <span>₹${subtotal.toLocaleString('en-IN')}</span>
+                </div>
+                <div class="cart-summary-line" style="color: #15803d; font-weight: 500;">
+                  <span>VIP Atelier Privilege (15%)</span>
+                  <span>-₹${discount.toLocaleString('en-IN')}</span>
+                </div>
+                <div class="cart-summary-line">
+                  <span>Couture Express Delivery</span>
+                  <span>${shipping === 0 ? 'FREE' : '₹' + shipping.toLocaleString('en-IN')}</span>
+                </div>
+                <div class="cart-summary-line total">
+                  <span>Total Amount</span>
+                  <span>₹${total.toLocaleString('en-IN')}</span>
+                </div>
+
+                <button class="btn-checkout-primary" id="btn-cart-checkout">
+                  <span>PROCEED TO CHECKOUT</span>
+                  <i data-lucide="lock" style="width: 14px; height: 14px;"></i>
+                </button>
+                <a href="/products.html" class="cart-continue-link">← Continue Shopping</a>
+              </div>
+            </div>
+          `;
+
+          if (window.lucide) lucide.createIcons();
+
+          document.getElementById('btn-cart-checkout')?.addEventListener('click', () => {
+            if (window.NutiyalaCart && window.NutiyalaCart.openCheckout) {
+              window.NutiyalaCart.openCheckout();
+            } else if (window.NutiyalaCart && window.NutiyalaCart.openCart) {
+              window.NutiyalaCart.openCart();
+            }
+          });
+
+        } catch (e) {
+          area.innerHTML = '<div style="text-align:center; padding:3rem; color:#C53030;">Failed to load cart. Please refresh or try again.</div>';
+        }
+      }
+
+      window.updateQty = async function(itemId, newQty) {
+        try {
+          if (newQty <= 0) {
+            await removeItem(itemId);
+            return;
+          }
+          const res = await fetch(`/api/cart/items/${itemId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ quantity: newQty })
+          });
+          if (res.ok) {
+            loadCartPage();
+            if (window.NutiyalaCart) window.NutiyalaCart.refreshCartBadges();
+          }
+        } catch (e) {}
+      };
+
+      window.removeItem = async function(itemId) {
+        try {
+          const res = await fetch(`/api/cart/items/${itemId}`, { method: 'DELETE' });
+          if (res.ok) {
+            loadCartPage();
+            if (window.NutiyalaCart) window.NutiyalaCart.refreshCartBadges();
+          }
+        } catch (e) {}
+      };
+    });
+  </script>
+</body>
+</html>

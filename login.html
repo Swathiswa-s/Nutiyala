@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Nutiyala Couture</title>
+  <meta name="description" content="Sign in to your Nutiyala Couture account. Access your bespoke orders, curated wishlist, and private styling services.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg-cream: #FCFAF7;
+      --bg-cream-soft: #FAF7F2;
+      --bg-card: #FCFAF7;
+      --maroon-deep: #350D13;
+      --maroon-hover: #4A121A;
+      --maroon-soft: rgba(53, 13, 19, 0.08);
+      --gold-accent: #A37943;
+      --gold-light: #D8B982;
+      --gold-border: rgba(216, 185, 130, 0.45);
+      --text-main: #2C0C11;
+      --text-muted: #6E4D53;
+      --text-light: #FAF4EC;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Montserrat', -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #2F0A0E;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(216, 185, 130, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(158, 30, 44, 0.38) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 35%, #581620 0%, #350D13 50%, #1A0407 100%);
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    /* Ambient Subtle Background Pattern */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(216, 185, 130, 0.14) 0%, transparent 60%),
+        radial-gradient(circle at 85% 20%, rgba(100, 22, 32, 0.4) 0%, transparent 45%),
+        radial-gradient(circle at 15% 80%, rgba(75, 17, 24, 0.35) 0%, transparent 45%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top Brand Navigation */
+    .top-nav {
+      position: relative;
+      z-index: 10;
+      padding: 0.65rem 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(216, 185, 130, 0.28);
+      background: rgba(26, 4, 7, 0.85);
+      backdrop-filter: blur(12px);
+      flex-shrink: 0;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+    }
+
+    .brand-emblem {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 10px rgba(216, 185, 130, 0.45)) brightness(1.1);
+    }
+
+    .brand-text-group {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .brand-name {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      color: #FAF4EC;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand-tagline {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #D8B982;
+      margin-top: 3px;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .back-home-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: #FAF4EC;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: all 0.2s ease;
+      opacity: 0.92;
+    }
+
+    .back-home-btn i {
+      color: #D8B982;
+      transition: transform 0.2s ease;
+    }
+
+    .back-home-btn:hover {
+      color: #D8B982;
+      opacity: 1;
+    }
+
+    .back-home-btn:hover i {
+      transform: translateX(-3px);
+    }
+
+    /* Main Auth Container */
+    .auth-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 1rem;
+      position: relative;
+      z-index: 5;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .auth-card {
+      background: #FCFAF7;
+      border: 1px solid rgba(216, 185, 130, 0.45);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 420px;
+      padding: 1.25rem 1.85rem 1.15rem;
+      box-shadow: 0 20px 48px rgba(12, 2, 4, 0.65), 0 4px 16px rgba(216, 185, 130, 0.12);
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .auth-emblem-seal {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 0.35rem;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #52151D 0%, #240508 100%);
+      border: 1.5px solid rgba(216, 185, 130, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(20, 3, 5, 0.3), 0 0 10px rgba(216, 185, 130, 0.25);
+    }
+
+    .auth-card-emblem {
+      width: 28px;
+      height: 28px;
+      margin: 0;
+      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35)) brightness(1.1);
+    }
+
+    .auth-title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #350D13;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      margin-bottom: 0.15rem;
+    }
+
+    .auth-subtitle {
+      font-size: 0.76rem;
+      color: #6E4D53;
+      margin-bottom: 0.75rem;
+      line-height: 1.35;
+      letter-spacing: 0.01em;
+    }
+
+    /* Form Elements */
+    .auth-form {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .form-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--maroon-deep);
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 38px;
+      padding: 0 2.4rem 0 2.35rem;
+      border: 1px solid rgba(179, 138, 85, 0.32);
+      border-radius: 4px;
+      background: var(--bg-cream-soft);
+      font-family: var(--font-sans);
+      font-size: 0.84rem;
+      color: var(--maroon-deep);
+      font-weight: 500;
+      transition: all 0.2s ease;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus {
+      border-color: var(--maroon-deep);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(62, 15, 21, 0.08);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 0.8rem;
+      color: var(--gold-accent);
+      width: 15px;
+      height: 15px;
+      pointer-events: none;
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #8C7A7D;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 0.2rem;
+      transition: color 0.15s;
+    }
+
+    .password-toggle-btn:hover {
+      color: var(--maroon-deep);
+    }
+
+    .form-extra-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: -0.2rem;
+    }
+
+    .forgot-link {
+      color: var(--gold-accent);
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .forgot-link:hover {
+      color: var(--maroon-deep);
+      text-decoration: underline;
+    }
+
+    /* Primary Action Button */
+    .btn-login {
+      margin-top: 0.2rem;
+      height: 39px;
+      background: linear-gradient(135deg, #4F151E 0%, #350D13 100%);
+      color: #FAF6F0;
+      border: 1px solid #5A1923;
+      border-radius: 4px;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      width: 100%;
+      box-shadow: 0 4px 14px rgba(40, 8, 12, 0.3);
+    }
+
+    .btn-login:hover {
+      background: linear-gradient(135deg, #611925 0%, #431018 100%);
+      box-shadow: 0 6px 18px rgba(40, 8, 12, 0.4);
+    }
+
+    .btn-login:active {
+      transform: translateY(1px);
+    }
+
+    .btn-login:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    /* Demo Quick Access Bar */
+    .demo-access-bar {
+      margin-top: 0.6rem;
+      padding: 0.4rem 0.65rem;
+      background: rgba(79, 21, 30, 0.05);
+      border: 1px dashed rgba(179, 138, 85, 0.45);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .demo-access-label {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #350D13;
+      white-space: nowrap;
+    }
+
+    .demo-pills {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .demo-pill {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: var(--font-sans);
+      letter-spacing: 0.02em;
+    }
+
+    .demo-pill.admin {
+      background: var(--maroon-deep);
+      color: #FAF6F0;
+      border: 1px solid var(--maroon-deep);
+    }
+
+    .demo-pill.admin:hover {
+      background: var(--maroon-hover);
+    }
+
+    .demo-pill.client {
+      background: #FAF8F5;
+      color: var(--maroon-deep);
+      border: 1px solid rgba(62, 15, 21, 0.35);
+    }
+
+    .demo-pill.client:hover {
+      background: #FFFFFF;
+      border-color: var(--maroon-deep);
+    }
+
+    /* Divider */
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      margin: 0.65rem 0 0.55rem;
+      color: var(--text-muted);
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .auth-divider::before, .auth-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(179, 138, 85, 0.25);
+    }
+
+    .auth-divider span {
+      padding: 0 0.65rem;
+    }
+
+    .create-acc-row {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .create-acc-link {
+      color: var(--maroon-deep);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold-accent);
+      padding-bottom: 1px;
+      margin-left: 0.25rem;
+      transition: color 0.15s;
+    }
+
+    .create-acc-link:hover {
+      color: var(--gold-accent);
+    }
+
+    /* Alert Message */
+    .auth-alert {
+      padding: 0.45rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.76rem;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+      text-align: left;
+    }
+
+    .auth-alert.error {
+      background-color: #FDF2F2;
+      border: 1px solid #F8B4B4;
+      color: #9B1C1C;
+    }
+
+    .auth-alert.success {
+      background-color: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      color: #166534;
+    }
+
+    /* Footer */
+    .auth-footer {
+      position: relative;
+      z-index: 5;
+      padding: 0.45rem 1rem;
+      text-align: center;
+      font-size: 0.72rem;
+      color: #D4BDBF;
+      border-top: 1px solid rgba(216, 185, 130, 0.2);
+      background: rgba(26, 4, 7, 0.85);
+      backdrop-filter: blur(12px);
+      flex-shrink: 0;
+      letter-spacing: 0.03em;
+    }
+
+    @media (max-width: 600px) {
+      .top-nav {
+        padding: 0.6rem 1rem;
+      }
+      .brand-name {
+        font-size: 1.35rem;
+      }
+      .brand-tagline {
+        font-size: 0.5rem;
+      }
+      .back-home-btn span {
+        display: none;
+      }
+      .auth-card {
+        padding: 1.15rem 1.25rem 1rem;
+      }
+      .auth-title {
+        font-size: 1.45rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Brand Navigation (Exact Nutiyala Branding) -->
+  <header class="top-nav">
+    <a href="index.html" class="brand-link">
+      <img src="assets/nutiyala-emblem-gold.png" alt="Nutiyala Emblem" class="brand-emblem">
+      <div class="brand-text-group">
+        <span class="brand-name">Nutiyala</span>
+        <span class="brand-tagline">COUTURE • MADE JUST FOR YOU</span>
+      </div>
+    </a>
+    <a href="index.html" class="back-home-btn">
+      <i data-lucide="arrow-left" style="width: 15px; height: 15px;"></i>
+      <span>Return to Boutique</span>
+    </a>
+  </header>
+
+  <!-- Login Wrapper (Zero-scroll compact layout) -->
+  <main class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-emblem-seal">
+        <img src="assets/nutiyala-emblem-gold.png" alt="Nutiyala Emblem" class="auth-card-emblem">
+      </div>
+      <h1 class="auth-title">Welcome to Nutiyala</h1>
+      <p class="auth-subtitle">Sign in to access your bespoke orders and couture privileges</p>
+
+      <div class="auth-alert error" id="login-error-alert">
+        <i data-lucide="alert-circle" style="width: 16px; height: 16px; flex-shrink: 0;"></i>
+        <span id="login-error-text">Invalid email or password.</span>
+      </div>
+
+      <div class="auth-alert success" id="login-success-alert">
+        <i data-lucide="check-circle" style="width: 16px; height: 16px; flex-shrink: 0;"></i>
+        <span id="login-success-text">Authenticated successfully. Redirecting...</span>
+      </div>
+
+      <form class="auth-form" id="login-form">
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <div class="input-wrapper">
+            <i data-lucide="mail" class="input-icon"></i>
+            <input type="email" id="email" class="form-input" placeholder="name@domain.com" required autofocus>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-wrapper">
+            <i data-lucide="lock" class="input-icon"></i>
+            <input type="password" id="password" class="form-input" placeholder="••••••••" required>
+            <button type="button" class="password-toggle-btn" id="toggle-pw-btn" aria-label="Toggle password visibility">
+              <i data-lucide="eye" id="toggle-pw-icon" style="width: 15px; height: 15px;"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-extra-row">
+          <a href="#" class="forgot-link" id="forgot-password-link">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn-login" id="submit-btn">
+          <span>LOGIN</span>
+          <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
+        </button>
+      </form>
+
+      <!-- Quick Demo Credentials for Fast Testing (Compact Row) -->
+      <div class="demo-access-bar">
+        <div class="demo-access-label">
+          <i data-lucide="sparkles" style="width: 12px; height: 12px; color: var(--gold-accent);"></i>
+          <span>Demo Access:</span>
+        </div>
+        <div class="demo-pills">
+          <button type="button" id="fill-admin-btn" class="demo-pill admin" title="admin@nutiyala.com">
+            Admin
+          </button>
+          <button type="button" id="fill-client-btn" class="demo-pill client" title="sana@nutiyala.com">
+            Client
+          </button>
+        </div>
+      </div>
+
+      <div class="auth-divider">
+        <span>New to Nutiyala?</span>
+      </div>
+
+      <p class="create-acc-row">
+        Don’t have an account yet?
+        <a href="register.html" class="create-acc-link">Create Account</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="auth-footer">
+    © 2026 Nutiyala Couture. All rights reserved. Grace in Every Thread.
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) lucide.createIcons();
+
+      const isFile = window.location.protocol === 'file:';
+
+      // Check if already authenticated
+      fetch('/api/auth/me')
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.user) {
+            window.location.href = data.user.account_type === 'ADMIN' ? 'admin-orders.html' : 'account.html';
+          }
+        })
+        .catch(() => {
+          // If in file mode, check localStorage
+          try {
+            const saved = localStorage.getItem('nutiyala_user');
+            if (saved) {
+              const u = JSON.parse(saved);
+              if (u && u.name) {
+                // optional auto-redirect
+              }
+            }
+          } catch (e) {}
+        });
+
+      // Autofill buttons
+      document.getElementById('fill-admin-btn')?.addEventListener('click', () => {
+        document.getElementById('email').value = 'admin@nutiyala.com';
+        document.getElementById('password').value = 'NutiyalaAdmin2026!';
+      });
+
+      document.getElementById('fill-client-btn')?.addEventListener('click', () => {
+        document.getElementById('email').value = 'sana@nutiyala.com';
+        document.getElementById('password').value = 'Nutiyala2026!';
+      });
+
+      // Password visibility toggle
+      const pwInput = document.getElementById('password');
+      const togglePwBtn = document.getElementById('toggle-pw-btn');
+      const togglePwIcon = document.getElementById('toggle-pw-icon');
+
+      togglePwBtn.addEventListener('click', () => {
+        const isPassword = pwInput.type === 'password';
+        pwInput.type = isPassword ? 'text' : 'password';
+        togglePwIcon.setAttribute('data-lucide', isPassword ? 'eye-off' : 'eye');
+        if (window.lucide) lucide.createIcons();
+      });
+
+      // Forgot password trigger
+      document.getElementById('forgot-password-link').addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Please contact Nutiyala Concierge at concierge@nutiyala.com or via WhatsApp for password reset assistance.');
+      });
+
+      // Login form submission
+      const loginForm = document.getElementById('login-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const errorAlert = document.getElementById('login-error-alert');
+      const errorText = document.getElementById('login-error-text');
+      const successAlert = document.getElementById('login-success-alert');
+      const successText = document.getElementById('login-success-text');
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorAlert.style.display = 'none';
+        successAlert.style.display = 'none';
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span>VERIFYING...</span>`;
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        // Try backend API first
+        let loggedInUser = null;
+        try {
+          const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.error || 'Authentication failed. Please verify credentials.');
+          }
+          loggedInUser = data.user;
+        } catch (err) {
+          const isNetError = err.name === 'TypeError' || (err.message && err.message.includes('fetch'));
+          errorAlert.style.display = 'flex';
+          errorText.textContent = isNetError 
+            ? 'Unable to connect to the server. Please try again.'
+            : (err.message || 'Authentication failed. Please verify credentials.');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<span>LOGIN</span><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>`;
+          if (window.lucide) lucide.createIcons();
+          return;
+        }
+
+        // Successful authentication
+        successAlert.style.display = 'flex';
+        successText.textContent = `Welcome back, ${loggedInUser.name}. Redirecting...`;
+        if (window.lucide) lucide.createIcons();
+
+        // Store local token
+        try {
+          if (loggedInUser.token) localStorage.setItem('nutiyala_token', loggedInUser.token);
+          localStorage.setItem('nutiyala_user', JSON.stringify(loggedInUser));
+        } catch (err) {}
+
+        setTimeout(() => {
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirect = urlParams.get('redirect');
+
+          // Validate redirect parameter to prevent open redirect vulnerabilities
+          const isValidLocalPage = redirect && /^[a-zA-Z0-9_\-]+\.html(\#[a-zA-Z0-9_\-]+)?$/.test(redirect) && !redirect.includes('//');
+
+          if (loggedInUser.account_type === 'ADMIN') {
+            if (isValidLocalPage && redirect.startsWith('admin')) {
+              window.location.href = redirect;
+            } else {
+              window.location.href = 'admin-orders.html';
+            }
+          } else {
+            if (isValidLocalPage && !redirect.startsWith('admin')) {
+              window.location.href = redirect;
+            } else {
+              window.location.href = 'account.html';
+            }
+          }
+        }, 800);
+      });
+    });
+  </script>
+</body>
+</html>

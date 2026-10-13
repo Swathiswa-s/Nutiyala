@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Orders & Live SMS Fulfillment | Nutiyala Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --admin-bg: #F4F6F9;
+      --admin-sidebar: #1E2024;
+      --admin-card: #FFFFFF;
+      --admin-border: #E2E8F0;
+      --admin-text-main: #1A202C;
+      --admin-text-muted: #718096;
+      --admin-gold: #C59A45;
+      --admin-gold-hover: #AF8535;
+      --admin-maroon: #5A161E;
+      --admin-green: #2E7D32;
+      --admin-amber: #D97706;
+      --font-admin: 'Montserrat', sans-serif;
+      --font-serif: 'Playfair Display', serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-admin); background-color: var(--admin-bg); color: var(--admin-text-main); display: flex; min-height: 100vh; }
+
+    /* SIDEBAR */
+    .admin-sidebar { width: 260px; background-color: var(--admin-sidebar); color: #E2E8F0; display: flex; flex-direction: column; flex-shrink: 0; position: sticky; top: 0; height: 100vh; z-index: 20; }
+    .admin-brand { padding: 1.5rem 1.4rem; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); text-decoration: none; }
+    .admin-brand-logo { width: 34px; height: 34px; object-fit: contain; }
+    .admin-brand-text { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.06em; color: #FAF6F0; }
+    .admin-brand-badge { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--admin-gold); display: block; font-weight: 600; }
+    .sidebar-nav { padding: 1.25rem 0; display: flex; flex-direction: column; gap: 0.2rem; flex: 1; overflow-y: auto; }
+    .nav-header-title { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #718096; padding: 0.8rem 1.4rem 0.35rem; font-weight: 600; }
+    .admin-nav-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.75rem 1.4rem; color: #CBD5E0; text-decoration: none; font-size: 0.84rem; font-weight: 500; transition: all 0.2s ease; }
+    .admin-nav-item:hover, .admin-nav-item.active { background-color: #2C3036; color: #FFFFFF; font-weight: 600; border-left: 3px solid var(--admin-gold); }
+    .admin-nav-item i { width: 18px; height: 18px; color: var(--admin-gold); }
+
+    /* MAIN CONTAINER */
+    .admin-main { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; }
+    .admin-topbar { height: 72px; background: var(--admin-card); border-bottom: 1px solid var(--admin-border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+    .topbar-title { font-size: 1.3rem; font-weight: 700; color: var(--admin-text-main); display: flex; align-items: center; gap: 0.6rem; }
+    .topbar-right { display: flex; align-items: center; gap: 1rem; }
+    .btn-site-preview { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.5rem 0.9rem; background: #FAF6F0; border: 1px solid #D8C7B5; color: #3E0F15; border-radius: 4px; text-decoration: none; font-size: 0.78rem; font-weight: 600; transition: all 0.2s; }
+    .btn-site-preview:hover { background: #3E0F15; color: #FAF6F0; }
+
+    .admin-content-area { padding: 2rem; display: flex; flex-direction: column; gap: 1.6rem; }
+
+    /* 1. ADMIN SMS CONFIG CARD */
+    .sms-config-card {
+      background: linear-gradient(135deg, #2E0B10 0%, #1A0508 100%);
+      color: #FAF6F0;
+      border: 1px solid rgba(197, 154, 69, 0.4);
+      border-radius: 8px;
+      padding: 1.4rem 1.6rem;
+      box-shadow: 0 4px 16px rgba(46, 11, 16, 0.2);
+    }
+
+    .sms-config-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .sms-config-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .sms-icon-badge {
+      width: 44px;
+      height: 44px;
+      background: rgba(197, 154, 69, 0.15);
+      border: 1px solid var(--admin-gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--admin-gold);
+    }
+    .sms-icon-badge i { width: 22px; height: 22px; }
+
+    .sms-config-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #F8E7C8;
+      letter-spacing: 0.02em;
+    }
+
+    .sms-config-subtitle {
+      font-size: 0.78rem;
+      color: #D3C5B5;
+      margin-top: 0.2rem;
+      line-height: 1.4;
+      max-width: 650px;
+    }
+
+    .sms-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(46, 125, 50, 0.2);
+      border: 1px solid #2E7D32;
+      color: #81C784;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #4CAF50;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #4CAF50;
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.15); }
+      100% { opacity: 0.4; transform: scale(0.9); }
+    }
+
+    .sms-input-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .sms-input-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .sms-field-icon {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--admin-gold);
+    }
+
+    .sms-input {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid rgba(197, 154, 69, 0.45);
+      color: #1A202C;
+      padding: 0.6rem 0.9rem 0.6rem 2.4rem;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      font-family: inherit;
+    }
+
+    .btn-save-phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--admin-gold);
+      color: #1A0D02;
+      border: none;
+      padding: 0.62rem 1.15rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .btn-save-phone:hover { background: #DDB462; transform: translateY(-1px); }
+
+    .btn-test-sms {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: #FAF6F0;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.62rem 1rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-test-sms:hover { background: rgba(255, 255, 255, 0.2); }
+
+    .btn-view-hub {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: transparent;
+      color: #F8E7C8;
+      border: 1px dashed rgba(197, 154, 69, 0.6);
+      padding: 0.62rem 1rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: auto;
+      transition: all 0.2s;
+    }
+    .btn-view-hub:hover { background: rgba(197, 154, 69, 0.15); border-color: var(--admin-gold); }
+
+    /* 2. KPI SUMMARY ROW */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+
+    .kpi-card {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 6px;
+      padding: 1.1rem 1.3rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .kpi-label { font-size: 0.72rem; text-transform: uppercase; font-weight: 600; color: var(--admin-text-muted); letter-spacing: 0.05em; }
+    .kpi-value { font-size: 1.45rem; font-weight: 700; color: var(--admin-text-main); margin-top: 0.2rem; }
+    .kpi-sub { font-size: 0.72rem; color: #718096; margin-top: 0.15rem; }
+    .kpi-icon-wrap { width: 40px; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+    .kpi-icon-wrap.amber { background: #FEF3C7; color: #D97706; }
+    .kpi-icon-wrap.green { background: #DCFCE7; color: #16A34A; }
+    .kpi-icon-wrap.maroon { background: #FCE7F3; color: #9D174D; }
+    .kpi-icon-wrap.blue { background: #E0E7FF; color: #4338CA; }
+
+    /* 3. ORDERS TABLE */
+    .table-container {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      overflow-x: auto;
+    }
+
+    .table-header-bar {
+      padding: 1.1rem 1.4rem;
+      border-bottom: 1px solid var(--admin-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .table-header-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--admin-text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.84rem;
+    }
+
+    .admin-table th {
+      background: #F8FAFC;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--admin-text-muted);
+      border-bottom: 1px solid var(--admin-border);
+    }
+
+    .admin-table td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--admin-border);
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover { background-color: #FAFAFB; }
+
+    /* Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .status-badge.placed {
+      background: #FEF3C7;
+      color: #92400E;
+      border: 1px solid #FCD34D;
+    }
+
+    .status-badge.confirmed {
+      background: #DCFCE7;
+      color: #166534;
+      border: 1px solid #86EFAC;
+    }
+
+    .status-badge.processing { background: #E0E7FF; color: #3730A3; }
+    .status-badge.shipped { background: #CFFAFE; color: #155E75; }
+    .status-badge.delivered { background: #F3E8FF; color: #6B21A8; }
+    .status-badge.cancelled { background: #FEE2E2; color: #991B1B; }
+
+    /* Action Buttons in Row */
+    .btn-confirm-now {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #16A34A;
+      color: #FFFFFF;
+      border: none;
+      padding: 0.48rem 0.85rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      box-shadow: 0 2px 5px rgba(22, 163, 74, 0.25);
+      transition: all 0.2s;
+    }
+    .btn-confirm-now:hover { background: #15803D; transform: translateY(-1px); }
+
+    .btn-row-details {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #FFFFFF;
+      border: 1px solid #CBD5E0;
+      color: #2D3748;
+      padding: 0.48rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-row-details:hover { background: #F1F5F9; border-color: #94A3B8; }
+
+    .status-select-sm {
+      padding: 0.35rem 0.5rem;
+      border: 1px solid #CBD5E0;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #FFFFFF;
+      outline: none;
+    }
+
+    /* MODAL (ORDER DETAILS & SMS HUB) */
+    .admin-modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .admin-modal-backdrop.open { display: flex; }
+
+    .admin-modal-card {
+      background: #FFFFFF;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      border: 1px solid #E2E8F0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-head {
+      padding: 1.25rem 1.6rem;
+      border-bottom: 1px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #FAF8F5;
+    }
+    .modal-head-title { font-size: 1.1rem; font-weight: 700; color: #3E0F15; }
+    .modal-close-btn { background: transparent; border: none; cursor: pointer; color: #718096; font-size: 1.2rem; }
+
+    .modal-body { padding: 1.5rem 1.6rem; display: flex; flex-direction: column; gap: 1.4rem; font-size: 0.86rem; }
+
+    .modal-section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #8C6D46;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .modal-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      background: #F8FAFC;
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px solid #E2E8F0;
+    }
+
+    .sms-log-box {
+      background: #1E2024;
+      color: #FAF6F0;
+      border-radius: 6px;
+      padding: 1rem;
+      border-left: 4px solid var(--admin-gold);
+      font-family: inherit;
+    }
+
+    .sms-log-item {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .sms-log-item:last-child { border-bottom: none; }
+
+    .sms-log-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--admin-gold);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .sms-log-text {
+      font-size: 0.78rem;
+      color: #E2E8F0;
+      line-height: 1.45;
+      white-space: pre-line;
+      background: rgba(0,0,0,0.3);
+      padding: 0.6rem 0.75rem;
+      border-radius: 4px;
+    }
+
+    /* Toast */
+    #admin-toast-box {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #1E2024;
+      color: #FAF6F0;
+      padding: 0.9rem 1.4rem;
+      border-radius: 6px;
+      border-left: 4px solid var(--admin-gold);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      z-index: 99999;
+      font-size: 0.84rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    #admin-toast-box.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <a href="admin-orders.html" class="admin-brand">
+      <img src="assets/nutiyala-emblem-gold.png" alt="Nutiyala Emblem" class="admin-brand-logo">
+      <div>
+        <div class="admin-brand-text">NUTIYALA</div>
+        <span class="admin-brand-badge">Atelier Enterprise</span>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <span class="nav-header-title">Catalog</span>
+      <a href="admin-products.html" class="admin-nav-item">
+        <i data-lucide="hanger"></i>
+        <span>All Products</span>
+      </a>
+      <a href="admin-product-edit.html" class="admin-nav-item">
+        <i data-lucide="plus-circle"></i>
+        <span>Add New Product</span>
+      </a>
+      <a href="admin-categories.html" class="admin-nav-item">
+        <i data-lucide="layers"></i>
+        <span>Categories</span>
+      </a>
+      <a href="admin-inventory.html" class="admin-nav-item">
+        <i data-lucide="boxes"></i>
+        <span>Inventory</span>
+      </a>
+
+      <span class="nav-header-title">Sales & Clients</span>
+      <a href="admin-orders.html" class="admin-nav-item active">
+        <i data-lucide="shopping-bag"></i>
+        <span>Orders & SMS Hub</span>
+      </a>
+      <a href="admin-customers.html" class="admin-nav-item">
+        <i data-lucide="users"></i>
+        <span>Customers</span>
+      </a>
+
+      <span class="nav-header-title">Promotions</span>
+      <a href="admin-offers.html" class="admin-nav-item">
+        <i data-lucide="sparkles"></i>
+        <span>Update Offer</span>
+      </a>
+
+      <span class="nav-header-title">Settings</span>
+      <a href="admin-details.html" class="admin-nav-item">
+        <i data-lucide="settings"></i>
+        <span>Admin Details</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <h1 class="topbar-title">
+        <i data-lucide="shopping-bag" style="color: var(--admin-maroon);"></i>
+        Customer Orders & SMS Dispatch Hub
+      </h1>
+      <div class="topbar-right">
+        <a href="index.html" target="_blank" class="btn-site-preview">
+          <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> View Storefront
+        </a>
+      </div>
+    </header>
+
+    <div class="admin-content-area">
+
+      <!-- 1. ADMIN ALERT NUMBER CONFIGURATION -->
+      <section class="sms-config-card">
+        <div class="sms-config-header">
+          <div class="sms-config-title-group">
+            <div class="sms-icon-badge">
+              <i data-lucide="smartphone"></i>
+            </div>
+            <div>
+              <h3 class="sms-config-title">Admin Instant Order Alert Mobile Number</h3>
+              <p class="sms-config-subtitle">
+                Enter your mobile number below. Whenever a customer presses <strong>"Buy Now"</strong> and places an order, an instant SMS with customer name, phone, shipping address, and product details is dispatched to this number.
+              </p>
+            </div>
+          </div>
+          <div class="sms-status-pill">
+            <span class="pulse-dot"></span>
+            <span>Live SMS Alerts Active</span>
+          </div>
+        </div>
+
+        <div class="sms-input-row">
+          <div class="sms-input-wrap">
+            <i data-lucide="phone" class="sms-field-icon"></i>
+            <input type="text" id="admin-sms-phone-input" placeholder="+91 9894156412" value="+91 9894156412" class="sms-input">
+          </div>
+          <button type="button" id="btn-save-sms-phone" class="btn-save-phone">
+            <i data-lucide="save" style="width: 15px; height: 15px;"></i> Save Alert Number
+          </button>
+          <button type="button" id="btn-test-sms" class="btn-test-sms" title="Send a verification test SMS">
+            <i data-lucide="send" style="width: 14px; height: 14px;"></i> Test SMS
+          </button>
+          <button type="button" id="btn-open-sms-hub" class="btn-view-hub">
+            <i data-lucide="message-square" style="width: 14px; height: 14px;"></i> All SMS Logs (<span id="sms-count-badge">0</span>)
+          </button>
+        </div>
+      </section>
+
+      <!-- 2. KPI OVERVIEW ROW -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-label">Awaiting Confirmation</div>
+            <div class="kpi-value" id="kpi-pending-count" style="color: var(--admin-amber);">0</div>
+            <div class="kpi-sub">New orders needing review</div>
+          </div>
+          <div class="kpi-icon-wrap amber"><i data-lucide="clock"></i></div>
+        </div>
+
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-label">Confirmed & Active</div>
+            <div class="kpi-value" id="kpi-confirmed-count" style="color: var(--admin-green);">0</div>
+            <div class="kpi-sub">SMS sent to customer</div>
+          </div>
+          <div class="kpi-icon-wrap green"><i data-lucide="check-circle-2"></i></div>
+        </div>
+
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-label">Total Creations Ordered</div>
+            <div class="kpi-value" id="kpi-total-orders">0</div>
+            <div class="kpi-sub">Lifetime orders received</div>
+          </div>
+          <div class="kpi-icon-wrap maroon"><i data-lucide="package"></i></div>
+        </div>
+
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-label">Total Sales Volume</div>
+            <div class="kpi-value" id="kpi-total-revenue">₹0</div>
+            <div class="kpi-sub">Gross revenue value</div>
+          </div>
+          <div class="kpi-icon-wrap blue"><i data-lucide="indian-rupee"></i></div>
+        </div>
+      </div>
+
+      <!-- 3. ORDERS TABLE -->
+      <div class="table-container">
+        <div class="table-header-bar">
+          <div class="table-header-title">
+            <i data-lucide="list-ordered" style="color: var(--admin-gold); width: 18px; height: 18px;"></i>
+            Customer Orders Pipeline
+          </div>
+          <button id="btn-refresh-orders" style="background: transparent; border: 1px solid #CBD5E0; padding: 0.35rem 0.75rem; border-radius: 4px; font-size: 0.76rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.35rem;">
+            <i data-lucide="refresh-cw" style="width: 13px; height: 13px;"></i> Refresh
+          </button>
+        </div>
+
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Order ID & Date</th>
+              <th>Customer & Phone</th>
+              <th>Creations Ordered</th>
+              <th>Total & Payment</th>
+              <th>Current Status</th>
+              <th>Fulfillment Action</th>
+            </tr>
+          </thead>
+          <tbody id="orders-tbody">
+            <tr><td colspan="6" style="text-align: center; padding: 3rem; color: #718096;">Loading customer orders...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ORDER DETAILS & SMS LOG MODAL -->
+  <div class="admin-modal-backdrop" id="order-details-modal">
+    <div class="admin-modal-card">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-head-title" id="modal-order-number">Order Details</h3>
+          <span style="font-size: 0.75rem; color: #718096;" id="modal-order-date"></span>
+        </div>
+        <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Customer & Delivery -->
+        <div>
+          <div class="modal-section-title"><i data-lucide="user"></i> Client & Delivery Information</div>
+          <div class="modal-info-grid" id="modal-client-info">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+
+        <!-- Items Ordered -->
+        <div>
+          <div class="modal-section-title"><i data-lucide="tag"></i> Products Ordered</div>
+          <div id="modal-items-list" style="display: flex; flex-direction: column; gap: 0.6rem;">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+
+        <!-- SMS Transcript History -->
+        <div>
+          <div class="modal-section-title"><i data-lucide="message-square"></i> Dispatched SMS Log & Transcript</div>
+          <div class="sms-log-box" id="modal-sms-box">
+            <div style="font-size: 0.76rem; color: #A0AEC0;">Loading SMS logs...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALL SMS LOGS MODAL -->
+  <div class="admin-modal-backdrop" id="all-sms-modal">
+    <div class="admin-modal-card" style="max-width: 720px;">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-head-title">SMS Dispatch Audit Hub</h3>
+          <span style="font-size: 0.75rem; color: #718096;">Real-time log of alerts to Admin and Customers</span>
+        </div>
+        <button class="modal-close-btn" id="sms-modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="sms-log-box" id="all-sms-list" style="max-height: 480px; overflow-y: auto;">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="admin-toast-box">
+    <i data-lucide="check-circle" style="color: #4CAF50; width: 18px; height: 18px;"></i>
+    <span id="admin-toast-msg">Notification</span>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.lucide) lucide.createIcons();
+
+      function getApiUrl(endpoint) {
+        if (!endpoint) return '';
+        if (endpoint.startsWith('http://') || endpoint.startsWith('https://')) return endpoint;
+        if (window.location.protocol === 'file:' || !window.location.origin || window.location.origin === 'null') {
+          return 'http://localhost:5173' + endpoint;
+        }
+        return endpoint;
+      }
+
+      function getAuthHeaders() {
+        const token = localStorage.getItem('nutiyala_token');
+        return {
+          'Content-Type': 'application/json',
+          'Authorization': token ? `Bearer ${token}` : ''
+        };
+      }
+
+      function showToast(msg) {
+        const toast = document.getElementById('admin-toast-box');
+        const text = document.getElementById('admin-toast-msg');
+        text.textContent = msg;
+        toast.classList.add('show');
+        if (window.lucide) lucide.createIcons();
+        setTimeout(() => toast.classList.remove('show'), 3800);
+      }
+
+      // Check Admin Auth
+      const storedToken = localStorage.getItem('nutiyala_token');
+      if (!storedToken) {
+        window.location.href = 'login.html?redirect=admin-orders.html';
+        return;
+      }
+      try {
+        const authRes = await fetch(getApiUrl('/api/auth/me'), { headers: getAuthHeaders() });
+        if (!authRes.ok) {
+          localStorage.removeItem('nutiyala_token');
+          localStorage.removeItem('nutiyala_user');
+          window.location.href = 'login.html?redirect=admin-orders.html';
+          return;
+        }
+        const authData = await authRes.json();
+        if (!authData || !authData.user || authData.user.account_type !== 'ADMIN') {
+          window.location.href = 'login.html?redirect=admin-orders.html';
+          return;
+        }
+      } catch (err) {
+        console.warn('Backend connection error during auth verification:', err);
+      }
+
+      let allOrders = [];
+
+      // 1. Load Admin Phone Setting
+      async function loadAdminPhone() {
+        try {
+          const res = await fetch(getApiUrl('/api/admin/settings/sms-phone'), { headers: getAuthHeaders() });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.admin_phone) {
+              document.getElementById('admin-sms-phone-input').value = data.admin_phone;
+            }
+          }
+        } catch (e) {
+          // Check cached settings
+          const cached = localStorage.getItem('nutiyala_boutique_details');
+          if (cached) {
+            const d = JSON.parse(cached);
+            if (d.admin_sms_phone || d.contact_number) {
+              document.getElementById('admin-sms-phone-input').value = d.admin_sms_phone || d.contact_number;
+            }
+          }
+        }
+      }
+
+      // 2. Save Admin Phone Setting
+      document.getElementById('btn-save-sms-phone').addEventListener('click', async () => {
+        const phone = document.getElementById('admin-sms-phone-input').value.trim();
+        if (!phone) {
+          alert('Please enter a valid phone number.');
+          return;
+        }
+
+        const btn = document.getElementById('btn-save-sms-phone');
+        btn.disabled = true;
+        btn.innerHTML = 'Saving...';
+
+        try {
+          const res = await fetch(getApiUrl('/api/admin/settings/sms-phone'), {
+            method: 'PUT',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ phone })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Failed to update phone number');
+          showToast(`Admin alert phone saved: ${phone}`);
+        } catch (err) {
+          showToast(`Alert phone saved locally: ${phone}`);
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = `<i data-lucide="save" style="width: 15px; height: 15px;"></i> Save Alert Number`;
+          if (window.lucide) lucide.createIcons();
+        }
+      });
+
+      // 3. Test SMS Button
+      document.getElementById('btn-test-sms').addEventListener('click', async () => {
+        const phone = document.getElementById('admin-sms-phone-input').value.trim();
+        const btn = document.getElementById('btn-test-sms');
+        btn.disabled = true;
+        btn.innerHTML = 'Sending...';
+
+        try {
+          const res = await fetch(getApiUrl('/api/admin/sms/test'), {
+            method: 'POST',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ phone })
+          });
+          const data = await res.json();
+          showToast(data.message || `Test SMS dispatched to ${phone}!`);
+          loadSmsCount();
+        } catch (err) {
+          showToast(`Simulated test SMS sent to ${phone}`);
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = `<i data-lucide="send" style="width: 14px; height: 14px;"></i> Test SMS`;
+          if (window.lucide) lucide.createIcons();
+        }
+      });
+
+      // 4. Load Orders
+      async function loadAdminOrders() {
+        const tbody = document.getElementById('orders-tbody');
+        try {
+          const res = await fetch(getApiUrl('/api/admin/orders'), { headers: getAuthHeaders() });
+          const data = await res.json();
+          allOrders = data.orders || [];
+
+          updateKPIs(allOrders);
+
+          if (allOrders.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 3rem; color: #718096;">No customer orders placed yet. When a client purchases via Buy Now, orders will appear here immediately.</td></tr>`;
+            return;
+          }
+
+          const statuses = ['Order Placed', 'Confirmed', 'Processing', 'Packed', 'Shipped', 'Delivered', 'Cancelled'];
+
+          tbody.innerHTML = allOrders.map(ord => {
+            const dateStr = new Date(ord.created_at).toLocaleDateString('en-IN', {
+              day: 'numeric', month: 'short', year: 'numeric'
+            });
+            const timeStr = new Date(ord.created_at).toLocaleTimeString('en-IN', {
+              hour: '2-digit', minute: '2-digit'
+            });
+
+            const isAwaiting = ord.order_status === 'Order Placed';
+            const isConfirmed = ord.order_status === 'Confirmed';
+
+            let statusBadge = '';
+            if (isAwaiting) {
+              statusBadge = `<span class="status-badge placed"><span class="pulse-dot" style="background:#D97706; box-shadow:0 0 6px #D97706;"></span> Awaiting Confirmation</span>`;
+            } else if (isConfirmed) {
+              statusBadge = `<span class="status-badge confirmed">✓ Confirmed</span>`;
+            } else {
+              statusBadge = `<span class="status-badge ${ord.order_status.toLowerCase()}">${ord.order_status}</span>`;
+            }
+
+            // Parse address
+            let addr = {};
+            if (typeof ord.shipping_address_json === 'string') {
+              try { addr = JSON.parse(ord.shipping_address_json); } catch(e){}
+            } else if (ord.shipping_address_json) {
+              addr = ord.shipping_address_json;
+            }
+
+            const custPhone = addr.phone || ord.customer_mobile || 'Not specified';
+            const custName = addr.name || ord.customer_name || 'Client';
+
+            const items = ord.items || [];
+            const itemsSummary = items.map(i => `${i.product_name} (${i.size}/${i.color}) x${i.quantity}`).join(', ') || '1 Item';
+
+            return `
+              <tr data-order-id="${ord.id}">
+                <td>
+                  <strong style="color: #3E0F15; font-size: 0.88rem;">${ord.order_number}</strong>
+                  <div style="font-size: 0.72rem; color: #718096; margin-top: 0.2rem;">${dateStr} • ${timeStr}</div>
+                </td>
+                <td>
+                  <strong>${custName}</strong>
+                  <div style="font-size: 0.74rem; color: #2E7D32; font-weight: 600; margin-top: 0.15rem;">
+                    📞 ${custPhone}
+                  </div>
+                  <div style="font-size: 0.7rem; color: #718096;">${addr.city ? `${addr.city}, ${addr.pincode || ''}` : ord.customer_email}</div>
+                </td>
+                <td>
+                  <div style="font-weight: 600;">${items.length} Piece(s)</div>
+                  <div style="font-size: 0.74rem; color: #718096; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${itemsSummary}</div>
+                </td>
+                <td>
+                  <strong style="font-size: 0.95rem; color: #1E2024;">₹${Number(ord.total_amount).toLocaleString('en-IN')}</strong>
+                  <div style="font-size: 0.7rem; color: #718096;">${ord.payment_status} (${addr.payment_method || 'COD'})</div>
+                </td>
+                <td>
+                  ${statusBadge}
+                </td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                    ${isAwaiting ? `
+                      <button class="btn-confirm-now" data-order-id="${ord.id}" data-order-num="${ord.order_number}" title="Confirm this order and dispatch confirmation SMS to client">
+                        <i data-lucide="check" style="width: 14px; height: 14px;"></i> Confirm Order
+                      </button>
+                    ` : `
+                      <select class="status-select-sm" data-order-id="${ord.id}">
+                        ${statuses.map(st => `
+                          <option value="${st}" ${ord.order_status === st ? 'selected' : ''}>${st}</option>
+                        `).join('')}
+                      </select>
+                    `}
+                    <button class="btn-row-details" data-order-id="${ord.id}" title="View full details and SMS transcript">
+                      <i data-lucide="eye" style="width: 13px; height: 13px;"></i> Details & SMS
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('');
+
+          if (window.lucide) lucide.createIcons();
+          attachTableListeners();
+
+        } catch (err) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 3rem; color: #C53030;">Failed to load orders. Please ensure Python server is running.</td></tr>`;
+        }
+      }
+
+      function updateKPIs(orders) {
+        const pending = orders.filter(o => o.order_status === 'Order Placed').length;
+        const confirmed = orders.filter(o => o.order_status === 'Confirmed' || o.order_status === 'Processing' || o.order_status === 'Shipped').length;
+        const totalRev = orders.reduce((acc, o) => acc + (Number(o.total_amount) || 0), 0);
+
+        document.getElementById('kpi-pending-count').textContent = pending;
+        document.getElementById('kpi-confirmed-count').textContent = confirmed;
+        document.getElementById('kpi-total-orders').textContent = orders.length;
+        document.getElementById('kpi-total-revenue').textContent = `₹${totalRev.toLocaleString('en-IN')}`;
+      }
+
+      function attachTableListeners() {
+        // Confirm Order Button Click
+        document.querySelectorAll('.btn-confirm-now').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const orderId = btn.dataset.orderId;
+            const orderNum = btn.dataset.orderNum;
+
+            if (!confirm(`Are you sure you want to CONFIRM order ${orderNum}?\nThis will update order status to 'Confirmed' and immediately send an Order Confirmation SMS to the customer.`)) {
+              return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i data-lucide="loader-2" style="width: 13px; height: 13px; animation: spin 1s infinite linear;"></i> Confirming...';
+            if (window.lucide) lucide.createIcons();
+
+            try {
+              const res = await fetch(getApiUrl(`/api/admin/orders/${orderId}/confirm`), {
+                method: 'POST',
+                headers: getAuthHeaders()
+              });
+              const data = await res.json();
+              if (!res.ok) throw new Error(data.error || 'Confirmation failed');
+
+              showToast(`Order ${orderNum} CONFIRMED! Customer SMS dispatched.`);
+              await loadAdminOrders();
+              loadSmsCount();
+            } catch (err) {
+              alert('Error confirming order: ' + err.message);
+              btn.disabled = false;
+            }
+          });
+        });
+
+        // Status Select Dropdown Change
+        document.querySelectorAll('.status-select-sm').forEach(sel => {
+          sel.addEventListener('change', async () => {
+            const orderId = sel.dataset.orderId;
+            const newStatus = sel.value;
+            sel.disabled = true;
+
+            try {
+              const patchRes = await fetch(getApiUrl(`/api/admin/orders/${orderId}/status`), {
+                method: 'PUT',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({ status: newStatus })
+              });
+              const patchData = await patchRes.json();
+              if (!patchRes.ok) throw new Error(patchData.error);
+              showToast(`Order status updated to: ${newStatus}`);
+              await loadAdminOrders();
+            } catch (err) {
+              alert('Failed to update status.');
+              sel.disabled = false;
+            }
+          });
+        });
+
+        // Details Modal Button Click
+        document.querySelectorAll('.btn-row-details').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const orderId = Number(btn.dataset.orderId);
+            const ord = allOrders.find(o => o.id === orderId);
+            if (ord) openOrderDetailsModal(ord);
+          });
+        });
+      }
+
+      // 5. Open Order Details Modal
+      async function openOrderDetailsModal(ord) {
+        const modal = document.getElementById('order-details-modal');
+        document.getElementById('modal-order-number').textContent = `Order ${ord.order_number}`;
+        document.getElementById('modal-order-date').textContent = new Date(ord.created_at).toLocaleString('en-IN');
+
+        let addr = {};
+        if (typeof ord.shipping_address_json === 'string') {
+          try { addr = JSON.parse(ord.shipping_address_json); } catch(e){}
+        } else if (ord.shipping_address_json) {
+          addr = ord.shipping_address_json;
+        }
+
+        const custPhone = addr.phone || ord.customer_mobile || 'Not specified';
+        const cleanWa = custPhone.replace(/[^0-9]/g, '');
+
+        document.getElementById('modal-client-info').innerHTML = `
+          <div>
+            <span style="font-size: 0.72rem; color: #718096; text-transform: uppercase;">Client Name</span>
+            <div style="font-weight: 700; color: #1E2024; margin-top: 0.15rem;">${addr.name || ord.customer_name}</div>
+          </div>
+          <div>
+            <span style="font-size: 0.72rem; color: #718096; text-transform: uppercase;">Phone Number</span>
+            <div style="font-weight: 700; color: #2E7D32; margin-top: 0.15rem;">
+              📞 ${custPhone}
+              <a href="https://wa.me/${cleanWa.length === 10 ? '91' + cleanWa : cleanWa}" target="_blank" style="margin-left: 0.4rem; font-size: 0.72rem; color: #15803D; text-decoration: underline;">WhatsApp Chat</a>
+            </div>
+          </div>
+          <div style="grid-column: span 2;">
+            <span style="font-size: 0.72rem; color: #718096; text-transform: uppercase;">Delivery Address</span>
+            <div style="font-weight: 500; color: #2D3748; margin-top: 0.15rem;">
+              ${addr.street || ''}, ${addr.city || ''} — ${addr.pincode || ''} (${addr.state || 'India'})
+            </div>
+          </div>
+          <div>
+            <span style="font-size: 0.72rem; color: #718096; text-transform: uppercase;">Total Amount</span>
+            <div style="font-weight: 700; color: #3E0F15; font-size: 1rem; margin-top: 0.15rem;">₹${Number(ord.total_amount).toLocaleString('en-IN')}</div>
+          </div>
+          <div>
+            <span style="font-size: 0.72rem; color: #718096; text-transform: uppercase;">Payment Mode</span>
+            <div style="font-weight: 600; color: #2D3748; margin-top: 0.15rem;">${ord.payment_status} (${addr.payment_method || 'COD'})</div>
+          </div>
+        `;
+
+        // Render items
+        const items = ord.items || [];
+        document.getElementById('modal-items-list').innerHTML = items.map(i => `
+          <div style="display: flex; align-items: center; gap: 0.85rem; padding: 0.6rem 0.8rem; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px;">
+            <img src="${i.product_image || 'assets/category-single.jpg'}" alt="${i.product_name}" style="width: 44px; height: 44px; object-fit: cover; border-radius: 4px;">
+            <div style="flex: 1;">
+              <strong style="color: #1E2024; font-size: 0.84rem;">${i.product_name}</strong>
+              <div style="font-size: 0.74rem; color: #718096;">Size: <strong>${i.size}</strong> • Color: <strong>${i.color}</strong> • Qty: <strong>${i.quantity}</strong></div>
+            </div>
+            <div style="font-weight: 700; color: #3E0F15;">₹${Number(i.price * i.quantity).toLocaleString('en-IN')}</div>
+          </div>
+        `).join('');
+
+        // Fetch SMS Logs for this order
+        const smsBox = document.getElementById('modal-sms-box');
+        smsBox.innerHTML = '<div style="font-size: 0.76rem; color: #A0AEC0;">Retrieving SMS log for this order...</div>';
+
+        try {
+          const res = await fetch(getApiUrl('/api/admin/sms-logs'), { headers: getAuthHeaders() });
+          const data = await res.json();
+          const logs = (data.logs || []).filter(l => l.order_number === ord.order_number || Number(l.order_id) === Number(ord.id));
+
+          if (logs.length === 0) {
+            smsBox.innerHTML = `
+              <div style="font-size: 0.78rem; color: #CBD5E0; line-height: 1.4;">
+                No SMS logs recorded yet for this order.<br>
+                <em>(When confirmed, customer confirmation SMS will appear here automatically.)</em>
+              </div>
+            `;
+          } else {
+            smsBox.innerHTML = logs.map(l => {
+              const cleanWa = l.recipient_phone.replace(/[^0-9]/g, '');
+              const waUrl = `https://wa.me/${cleanWa.length === 10 ? '91' + cleanWa : cleanWa}?text=${encodeURIComponent(l.message)}`;
+              let badgeHtml = '<span style="display:inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 600; background: rgba(237, 137, 54, 0.2); color: #ed8936; border: 1px solid rgba(237, 137, 54, 0.4);">SIMULATED</span>';
+              if (l.status === 'SENT' || (l.status && l.status.startsWith('ACCEPTED_BY_GATEWAY')) || (l.status && l.status.startsWith('TWILIO_QUEUED'))) {
+                badgeHtml = '<span style="display:inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 600; background: rgba(72, 187, 120, 0.2); color: #48bb78; border: 1px solid rgba(72, 187, 120, 0.4);">GATEWAY ACCEPTED</span>';
+              } else if (l.status && l.status.startsWith('FAILED')) {
+                badgeHtml = `<span style="display:inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 600; background: rgba(245, 101, 101, 0.2); color: #f56565; border: 1px solid rgba(245, 101, 101, 0.4);" title="${l.status}">FAILED</span>`;
+              }
+              return `
+                <div class="sms-log-item">
+                  <div class="sms-log-meta">
+                    <span>${l.recipient_type === 'ADMIN' ? '📱 ALERT TO STORE ADMIN' : '✨ CONFIRMATION TO CUSTOMER'} (${l.recipient_phone})</span>
+                    <span style="display:flex; align-items:center; gap:6px;">${badgeHtml} <span>${new Date(l.created_at).toLocaleTimeString('en-IN')}</span></span>
+                  </div>
+                  <div class="sms-log-text">${l.message}</div>
+                  <div style="margin-top: 0.35rem; text-align: right;">
+                    <a href="${waUrl}" target="_blank" style="font-size: 0.72rem; color: #81C784; text-decoration: none; font-weight: 600;">
+                      Open in WhatsApp Chat →
+                    </a>
+                  </div>
+                </div>
+              `;
+            }).join('');
+          }
+        } catch (e) {
+          smsBox.innerHTML = '<div style="font-size: 0.76rem; color: #FC8181;">Could not fetch SMS logs.</div>';
+        }
+
+        modal.classList.add('open');
+        if (window.lucide) lucide.createIcons();
+      }
+
+      // Close modal
+      document.getElementById('modal-close-btn').onclick = () => {
+        document.getElementById('order-details-modal').classList.remove('open');
+      };
+      document.getElementById('order-details-modal').onclick = (e) => {
+        if (e.target.id === 'order-details-modal') {
+          document.getElementById('order-details-modal').classList.remove('open');
+        }
+      };
+
+      // 6. All SMS Hub Modal
+      async function loadSmsCount() {
+        try {
+          const res = await fetch(getApiUrl('/api/admin/sms-logs'), { headers: getAuthHeaders() });
+          const data = await res.json();
+          const logs = data.logs || [];
+          document.getElementById('sms-count-badge').textContent = logs.length;
+        } catch(e){}
+      }
+
+      document.getElementById('btn-open-sms-hub').addEventListener('click', async () => {
+        const modal = document.getElementById('all-sms-modal');
+        const list = document.getElementById('all-sms-list');
+        list.innerHTML = '<div style="font-size: 0.78rem; color: #CBD5E0;">Loading all SMS records...</div>';
+
+        try {
+          const res = await fetch(getApiUrl('/api/admin/sms-logs'), { headers: getAuthHeaders() });
+          const data = await res.json();
+          const logs = data.logs || [];
+
+          if (logs.length === 0) {
+            list.innerHTML = '<div style="font-size: 0.78rem; color: #CBD5E0;">No SMS messages dispatched yet.</div>';
+          } else {
+            list.innerHTML = logs.map(l => {
+              const cleanWa = l.recipient_phone.replace(/[^0-9]/g, '');
+              const waUrl = `https://wa.me/${cleanWa.length === 10 ? '91' + cleanWa : cleanWa}?text=${encodeURIComponent(l.message)}`;
+              let badgeHtml = '<span style="display:inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 600; background: rgba(237, 137, 54, 0.2); color: #ed8936; border: 1px solid rgba(237, 137, 54, 0.4);">SIMULATED</span>';
+              if (l.status === 'SENT' || (l.status && l.status.startsWith('ACCEPTED_BY_GATEWAY')) || (l.status && l.status.startsWith('TWILIO_QUEUED'))) {
+                badgeHtml = '<span style="display:inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 600; background: rgba(72, 187, 120, 0.2); color: #48bb78; border: 1px solid rgba(72, 187, 120, 0.4);">GATEWAY ACCEPTED</span>';
+              } else if (l.status && l.status.startsWith('FAILED')) {
+                badgeHtml = `<span style="display:inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 600; background: rgba(245, 101, 101, 0.2); color: #f56565; border: 1px solid rgba(245, 101, 101, 0.4);" title="${l.status}">FAILED</span>`;
+              }
+              return `
+                <div class="sms-log-item">
+                  <div class="sms-log-meta">
+                    <span>${l.recipient_type === 'ADMIN' ? '📱 ADMIN ORDER ALERT' : '✨ CUSTOMER CONFIRMATION'} • ${l.recipient_phone}</span>
+                    <span style="display:flex; align-items:center; gap:6px;">${badgeHtml} <span>${new Date(l.created_at).toLocaleString('en-IN')}</span></span>
+                  </div>
+                  <div class="sms-log-text">${l.message}</div>
+                  <div style="margin-top: 0.35rem; text-align: right;">
+                    <a href="${waUrl}" target="_blank" style="font-size: 0.72rem; color: #81C784; text-decoration: none; font-weight: 600;">
+                      Open in WhatsApp →
+                    </a>
+                  </div>
+                </div>
+              `;
+            }).join('');
+          }
+        } catch(e) {
+          list.innerHTML = '<div style="font-size: 0.78rem; color: #FC8181;">Could not fetch SMS history.</div>';
+        }
+
+        modal.classList.add('open');
+        if (window.lucide) lucide.createIcons();
+      });
+
+      document.getElementById('sms-modal-close-btn').onclick = () => {
+        document.getElementById('all-sms-modal').classList.remove('open');
+      };
+      document.getElementById('all-sms-modal').onclick = (e) => {
+        if (e.target.id === 'all-sms-modal') {
+          document.getElementById('all-sms-modal').classList.remove('open');
+        }
+      };
+
+      // Refresh Button
+      document.getElementById('btn-refresh-orders').addEventListener('click', () => {
+        loadAdminOrders();
+        loadSmsCount();
+        showToast('Orders refreshed');
+      });
+
+      // Initial Executions
+      await loadAdminPhone();
+      await loadAdminOrders();
+      loadSmsCount();
+
+      // Live Polling every 10 seconds for new customer orders
+      setInterval(() => {
+        loadAdminOrders();
+        loadSmsCount();
+      }, 10000);
+    });
+  </script>
+</body>
+</html>

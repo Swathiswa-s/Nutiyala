@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Details & Footer Settings | Nutiyala Couture Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --admin-bg: #F4F6F9;
+      --admin-sidebar: #1E2024;
+      --admin-sidebar-active: #2C3036;
+      --admin-maroon: #5A161E;
+      --admin-card: #FFFFFF;
+      --admin-border: #E2E8F0;
+      --admin-text-main: #1A202C;
+      --admin-text-muted: #718096;
+      --admin-gold: #C59A45;
+      --admin-gold-hover: #AA7E2D;
+      --admin-gold-light: #FDF8ED;
+      --admin-green: #2E7D32;
+      --admin-red: #C53030;
+      --font-admin: 'Montserrat', sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-admin);
+      background-color: var(--admin-bg);
+      color: var(--admin-text-main);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Enterprise Admin Sidebar */
+    .admin-sidebar {
+      width: 260px;
+      background-color: var(--admin-sidebar);
+      color: #E2E8F0;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .admin-brand {
+      padding: 1.5rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .admin-brand-logo {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .admin-brand-text {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #FAF6F0;
+    }
+
+    .admin-brand-badge {
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--admin-gold);
+      display: block;
+    }
+
+    .sidebar-nav {
+      padding: 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .nav-header-title {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #718096;
+      padding: 0.8rem 1.4rem 0.4rem;
+      font-weight: 600;
+    }
+
+    .admin-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1.4rem;
+      color: #CBD5E0;
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .admin-nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #FFFFFF;
+    }
+
+    .admin-nav-item.active {
+      background-color: var(--admin-sidebar-active);
+      color: #FFFFFF;
+      font-weight: 600;
+      border-left: 4px solid var(--admin-gold);
+    }
+
+    .admin-nav-item i {
+      width: 18px;
+      height: 18px;
+      color: var(--admin-gold);
+    }
+
+    .sidebar-footer {
+      padding: 1.25rem 1.4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .view-site-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      color: var(--admin-gold);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 0;
+    }
+
+    .view-site-link:hover {
+      color: #FFFFFF;
+    }
+
+    .logout-admin-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      color: #E53E3E;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      padding: 0.5rem 0;
+      text-align: left;
+    }
+
+    /* Main Admin Body */
+    .admin-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .admin-topbar {
+      height: 68px;
+      background: var(--admin-card);
+      border-bottom: 1px solid var(--admin-border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--admin-text-main);
+    }
+
+    .topbar-user {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--admin-maroon);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .admin-content-area {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .page-header-block {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .page-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1A202C;
+      margin-bottom: 0.3rem;
+    }
+
+    .page-subtitle {
+      font-size: 0.84rem;
+      color: var(--admin-text-muted);
+      max-width: 650px;
+      line-height: 1.5;
+    }
+
+    /* Grid Layout for Form & Live Preview */
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.8rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1100px) {
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Card Containers */
+    .admin-card {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+
+    .admin-card-header {
+      padding: 1.25rem 1.6rem;
+      border-bottom: 1px solid var(--admin-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FAFAFA;
+    }
+
+    .admin-card-title {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--admin-text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .admin-card-title i {
+      color: var(--admin-gold);
+      width: 18px;
+      height: 18px;
+    }
+
+    .admin-card-body {
+      padding: 1.6rem;
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 1.4rem;
+    }
+
+    .form-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #2D3748;
+      margin-bottom: 0.45rem;
+    }
+
+    .form-label span.req {
+      color: var(--admin-maroon);
+      margin-left: 2px;
+    }
+
+    .form-hint {
+      font-size: 0.72rem;
+      color: var(--admin-text-muted);
+      margin-top: 0.35rem;
+      line-height: 1.4;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      width: 17px;
+      height: 17px;
+      color: #A0AEC0;
+      pointer-events: none;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.65rem;
+      font-family: var(--font-admin);
+      font-size: 0.88rem;
+      color: #1A202C;
+      background: #FFFFFF;
+      border: 1px solid var(--admin-border);
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--admin-gold);
+      box-shadow: 0 0 0 3px rgba(197, 154, 69, 0.15);
+    }
+
+    /* Logo Uploader & Preview Box */
+    .logo-uploader-row {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      margin-bottom: 0.85rem;
+      background: #F8FAFC;
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px dashed #CBD5E0;
+    }
+
+    .logo-thumb-box {
+      width: 64px;
+      height: 64px;
+      border-radius: 6px;
+      background: #24070A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(197, 154, 69, 0.3);
+      padding: 6px;
+    }
+
+    .logo-thumb-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .logo-upload-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex: 1;
+    }
+
+    .btn-upload-file {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #FFFFFF;
+      border: 1px solid #CBD5E0;
+      color: #2D3748;
+      padding: 0.5rem 0.9rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: fit-content;
+      transition: all 0.2s ease;
+    }
+
+    .btn-upload-file:hover {
+      background: #EDF2F7;
+      border-color: #A0AEC0;
+    }
+
+    /* Button Actions */
+    .form-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.8rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--admin-border);
+    }
+
+    .btn-gold-save {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--admin-gold);
+      color: #1A1208;
+      border: none;
+      padding: 0.75rem 1.6rem;
+      border-radius: 6px;
+      font-family: var(--font-admin);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(197, 154, 69, 0.3);
+    }
+
+    .btn-gold-save:hover {
+      background: var(--admin-gold-hover);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(197, 154, 69, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-gold-save:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: transparent;
+      border: 1px solid #CBD5E0;
+      color: #4A5568;
+      padding: 0.75rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: #EDF2F7;
+      color: #1A202C;
+    }
+
+    /* LIVE PREVIEW CONTAINER */
+    .preview-card {
+      background: #1A0407;
+      background: linear-gradient(180deg, #2E0B10 0%, #170305 100%);
+      border: 1px solid rgba(197, 154, 69, 0.35);
+      border-radius: 8px;
+      padding: 2.2rem 1.6rem;
+      color: #FAF6F0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    .preview-badge-chip {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(197, 154, 69, 0.2);
+      border: 1px solid rgba(197, 154, 69, 0.4);
+      color: var(--admin-gold);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 12px;
+    }
+
+    .live-logo-preview {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(197, 154, 69, 0.35));
+    }
+
+    .live-brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #F6E2B3;
+      margin: 0;
+    }
+
+    .live-contacts-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      width: 100%;
+      padding: 1.25rem 0;
+      border-top: 1px solid rgba(197, 154, 69, 0.18);
+      border-bottom: 1px solid rgba(197, 154, 69, 0.18);
+    }
+
+    .live-contact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: #E2D7C5;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      padding: 0.45rem 1rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(197, 154, 69, 0.25);
+      transition: all 0.2s ease;
+      width: 100%;
+      max-width: 380px;
+      justify-content: center;
+    }
+
+    .live-contact-pill i {
+      width: 16px;
+      height: 16px;
+      color: var(--admin-gold);
+      stroke: var(--admin-gold);
+    }
+
+    .live-contact-pill:hover {
+      background: rgba(197, 154, 69, 0.18);
+      color: #FFFFFF;
+      border-color: var(--admin-gold);
+    }
+
+    .live-copyright-line {
+      font-size: 0.75rem;
+      color: rgba(250, 246, 240, 0.5);
+      letter-spacing: 0.06em;
+    }
+
+    /* Info Callout */
+    .info-callout {
+      background: #EFF6FF;
+      border-left: 4px solid #3B82F6;
+      padding: 1rem 1.25rem;
+      border-radius: 4px;
+      margin-top: 1.25rem;
+    }
+
+    .info-callout p {
+      font-size: 0.82rem;
+      color: #1E40AF;
+      line-height: 1.5;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #1E2024;
+      color: #FAF6F0;
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-left: 4px solid var(--admin-gold);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 9999;
+      font-size: 0.86rem;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success { border-left-color: var(--admin-green); }
+    .toast.error { border-left-color: var(--admin-red); }
+  </style>
+</head>
+<body>
+
+  <!-- Admin Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <img src="assets/nutiyala-emblem-gold.png" alt="Nutiyala Emblem" class="admin-brand-logo">
+      <div>
+        <div class="admin-brand-text">NUTIYALA</div>
+        <span class="admin-brand-badge">Atelier Enterprise</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-header-title">Catalog</span>
+      <a href="admin-products.html" class="admin-nav-item">
+        <i data-lucide="hanger"></i>
+        <span>All Products</span>
+      </a>
+      <a href="admin-product-edit.html" class="admin-nav-item">
+        <i data-lucide="plus-circle"></i>
+        <span>Add New Product</span>
+      </a>
+      <a href="admin-categories.html" class="admin-nav-item">
+        <i data-lucide="layers"></i>
+        <span>Categories</span>
+      </a>
+      <a href="admin-inventory.html" class="admin-nav-item">
+        <i data-lucide="boxes"></i>
+        <span>Inventory</span>
+      </a>
+
+      <span class="nav-header-title">Sales & Clients</span>
+      <a href="admin-orders.html" class="admin-nav-item">
+        <i data-lucide="shopping-bag"></i>
+        <span>Orders</span>
+      </a>
+      <a href="admin-customers.html" class="admin-nav-item">
+        <i data-lucide="users"></i>
+        <span>Customers</span>
+      </a>
+
+      <span class="nav-header-title">Promotions</span>
+      <a href="admin-offers.html" class="admin-nav-item">
+        <i data-lucide="sparkles"></i>
+        <span>Update Offer</span>
+      </a>
+
+      <span class="nav-header-title">Settings</span>
+      <a href="admin-details.html" class="admin-nav-item active">
+        <i data-lucide="settings"></i>
+        <span>Admin Details</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="index.html" target="_blank" class="view-site-link">
+        <i data-lucide="external-link" style="width: 16px; height: 16px;"></i>
+        <span>VIEW WEBSITE</span>
+      </a>
+      <button class="logout-admin-btn" id="admin-logout-btn">
+        <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+        <span>Logout Admin</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Admin Main Content -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <h1 class="topbar-title">Admin Details & Footer Branding</h1>
+      <div class="topbar-user">
+        <div class="user-avatar" id="admin-avatar">A</div>
+        <div>
+          <strong style="font-size: 0.85rem;" id="admin-name">Admin User</strong>
+          <span style="font-size: 0.72rem; color: #718096; display: block;">Super Administrator</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content-area">
+      <!-- Page Header -->
+      <div class="page-header-block">
+        <div>
+          <h2 class="page-title">Admin Details & Contact Settings</h2>
+          <p class="page-subtitle">
+            Configure the boutique identity and official contact details. Whatever email, phone number, logo, boutique name, and Instagram account you save here will be dynamically visible to all visitors in the website footer.
+          </p>
+        </div>
+        <div>
+          <a href="index.html#contact-footer" target="_blank" class="btn-secondary">
+            <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+            <span>Inspect Live Footer</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Two Column Layout: Edit Form + Live Footer Preview -->
+      <div class="details-grid">
+
+        <!-- Left Column: Form -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <div class="admin-card-title">
+              <i data-lucide="sliders"></i>
+              <span>Edit Boutique & Contact Details</span>
+            </div>
+            <span style="font-size: 0.75rem; color: var(--admin-green); font-weight: 600; display: flex; align-items: center; gap: 0.3rem;">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--admin-green); display: inline-block;"></span>
+              Database Connected
+            </span>
+          </div>
+
+          <div class="admin-card-body">
+            <form id="admin-details-form">
+
+              <!-- 1. Boutique Name -->
+              <div class="form-group">
+                <label class="form-label" for="input-boutique-name">
+                  <span>Boutique Name <span class="req">*</span></span>
+                </label>
+                <div class="input-wrapper">
+                  <i data-lucide="store" class="input-icon"></i>
+                  <input
+                    type="text"
+                    id="input-boutique-name"
+                    class="form-input"
+                    placeholder="e.g. Nutiyala Couture"
+                    required
+                  />
+                </div>
+                <p class="form-hint">Displayed as the primary brand heading in the website footer and copyright.</p>
+              </div>
+
+              <!-- 2. Boutique Logo -->
+              <div class="form-group">
+                <label class="form-label">
+                  <span>Boutique Logo <span class="req">*</span></span>
+                </label>
+
+                <div class="logo-uploader-row">
+                  <div class="logo-thumb-box">
+                    <img id="form-logo-thumb" src="assets/nutiyala-emblem-gold.png" alt="Current Logo Preview">
+                  </div>
+                  <div class="logo-upload-controls">
+                    <strong style="font-size: 0.82rem; color: #2D3748;">Upload New Logo</strong>
+                    <span style="font-size: 0.72rem; color: #718096;">PNG, JPG, SVG or WEBP with transparent background</span>
+                    <input type="file" id="logo-file-input" accept="image/*" style="display: none;">
+                    <button type="button" class="btn-upload-file" id="btn-browse-logo">
+                      <i data-lucide="upload" style="width: 14px; height: 14px;"></i>
+                      <span>Choose File...</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="input-wrapper">
+                  <i data-lucide="image" class="input-icon"></i>
+                  <input
+                    type="text"
+                    id="input-logo-url"
+                    class="form-input"
+                    placeholder="assets/nutiyala-emblem-gold.png"
+                    required
+                  />
+                </div>
+                <p class="form-hint">Relative image path or external URL to your boutique emblem/logo.</p>
+              </div>
+
+              <!-- 3. Official Email -->
+              <div class="form-group">
+                <label class="form-label" for="input-email">
+                  <span>Official Email Address <span class="req">*</span></span>
+                </label>
+                <div class="input-wrapper">
+                  <i data-lucide="mail" class="input-icon"></i>
+                  <input
+                    type="email"
+                    id="input-email"
+                    class="form-input"
+                    placeholder="contact@nutiyala.com"
+                    required
+                  />
+                </div>
+                <p class="form-hint">Visitors clicking this email in the footer will automatically open their mail client.</p>
+              </div>
+
+              <!-- 4. Contact Number -->
+              <div class="form-group">
+                <label class="form-label" for="input-phone">
+                  <span>Contact Number / Phone <span class="req">*</span></span>
+                </label>
+                <div class="input-wrapper">
+                  <i data-lucide="phone" class="input-icon"></i>
+                  <input
+                    type="text"
+                    id="input-phone"
+                    class="form-input"
+                    placeholder="+91 98765 43210"
+                    required
+                  />
+                </div>
+                <p class="form-hint">Customer concierge or boutique support line, with country code (e.g. +91).</p>
+              </div>
+
+              <!-- 5. Instagram Account -->
+              <div class="form-group">
+                <label class="form-label" for="input-instagram">
+                  <span>Instagram Account <span class="req">*</span></span>
+                </label>
+                <div class="input-wrapper">
+                  <svg class="input-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                  <input
+                    type="text"
+                    id="input-instagram"
+                    class="form-input"
+                    placeholder="https://instagram.com/nutiyala_couture or @nutiyala_couture"
+                    required
+                  />
+                </div>
+                <p class="form-hint">Official Instagram page URL or handle (@your_boutique). Direct link in footer.</p>
+              </div>
+
+              <!-- Form Action Buttons -->
+              <div class="form-actions-row">
+                <button type="submit" class="btn-gold-save" id="btn-save-details">
+                  <i data-lucide="check-circle" style="width: 17px; height: 17px;"></i>
+                  <span>Save Admin Details</span>
+                </button>
+                <button type="button" class="btn-secondary" id="btn-reset-form">
+                  <i data-lucide="rotate-ccw" style="width: 14px; height: 14px;"></i>
+                  <span>Reset to Current</span>
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <!-- Right Column: Real-time Live Preview -->
+        <div>
+          <div class="admin-card" style="margin-bottom: 1.5rem;">
+            <div class="admin-card-header">
+              <div class="admin-card-title">
+                <i data-lucide="eye"></i>
+                <span>Live Website Footer Preview</span>
+              </div>
+              <span class="preview-badge-chip">Real-time Preview</span>
+            </div>
+
+            <div class="admin-card-body" style="padding: 1.25rem;">
+              <p style="font-size: 0.78rem; color: #718096; margin-bottom: 1rem;">
+                This preview updates in real-time as you type or change any field:
+              </p>
+
+              <!-- Luxury Live Preview Box -->
+              <div class="preview-card" id="footer-preview-box">
+                <!-- Logo -->
+                <img id="live-preview-logo" src="assets/nutiyala-emblem-gold.png" alt="Preview Logo" class="live-logo-preview">
+
+                <!-- Boutique Name -->
+                <h3 id="live-preview-name" class="live-brand-title">Nutiyala Couture</h3>
+
+                <!-- Contact Details List (Simple & Clean) -->
+                <div class="live-contacts-group">
+                  <!-- Mail -->
+                  <a id="live-preview-email-link" href="mailto:contact@nutiyala.com" class="live-contact-pill" title="Click to test mailto">
+                    <i data-lucide="mail"></i>
+                    <span id="live-preview-email">contact@nutiyala.com</span>
+                  </a>
+
+                  <!-- Phone -->
+                  <a id="live-preview-phone-link" href="tel:+919876543210" class="live-contact-pill" title="Click to test phone call">
+                    <i data-lucide="phone"></i>
+                    <span id="live-preview-phone">+91 98765 43210</span>
+                  </a>
+
+                  <!-- Instagram -->
+                  <a id="live-preview-insta-link" href="https://instagram.com/nutiyala_couture" target="_blank" class="live-contact-pill" title="Click to test Instagram">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    <span id="live-preview-insta">@nutiyala_couture</span>
+                  </a>
+                </div>
+
+                <!-- Copyright -->
+                <div class="live-copyright-line">
+                  © 2026 <span id="live-preview-copy-name">Nutiyala Couture</span>. Grace in Every Thread.
+                </div>
+              </div>
+
+              <!-- Information Note -->
+              <div class="info-callout">
+                <p>
+                  <strong>How this works:</strong> The website footer has been streamlined to exclusively showcase your <strong>Logo, Boutique Name, Email, Contact Number, and Instagram Account</strong>. Any updates saved here are served immediately across the entire website.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Test & Info Card -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div class="admin-card-title">
+                <i data-lucide="info"></i>
+                <span>Active Details Snapshot</span>
+              </div>
+            </div>
+            <div class="admin-card-body" style="font-size: 0.82rem; color: #4A5568; line-height: 1.6;">
+              <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #EDF2F7;">
+                <span>Last Updated:</span>
+                <strong id="snapshot-updated" style="color: #1A202C;">Just now</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #EDF2F7;">
+                <span>Public API Route:</span>
+                <code style="background: #F7FAFC; padding: 2px 6px; border-radius: 4px; font-size: 0.76rem;">/api/settings</code>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 0.5rem 0;">
+                <span>Website Footer Status:</span>
+                <span style="color: var(--admin-green); font-weight: 600;">Active & Synced</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="toast" id="admin-toast">
+    <i data-lucide="check-circle" id="toast-icon" style="width: 20px; height: 20px; color: var(--admin-gold);"></i>
+    <span id="toast-message">Settings saved successfully.</span>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.lucide) lucide.createIcons();
+
+      // State
+      let currentDetails = {
+        boutique_name: 'Nutiyala Couture',
+        logo_url: 'assets/nutiyala-emblem-gold.png',
+        email: 'contact@nutiyala.com',
+        contact_number: '+91 98765 43210',
+        instagram: 'https://instagram.com/nutiyala_couture'
+      };
+
+      // Verify Admin Authentication
+      const token = localStorage.getItem('nutiyala_token');
+      if (!token) {
+        window.location.href = 'login.html?redirect=admin-details.html';
+        return;
+      }
+
+      let adminUser = null;
+      try {
+        const res = await fetch(getApiUrl('/api/auth/me'), {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) {
+          localStorage.removeItem('nutiyala_token');
+          localStorage.removeItem('nutiyala_user');
+          window.location.href = 'login.html?redirect=admin-details.html';
+          return;
+        }
+        const data = await res.json();
+        if (data && data.user && data.user.account_type === 'ADMIN') {
+          adminUser = data.user;
+        } else {
+          window.location.href = 'login.html?redirect=admin-details.html';
+          return;
+        }
+      } catch (e) {
+        console.warn('Network error while checking authentication:', e);
+      }
+
+      if (!adminUser) {
+        window.location.href = 'login.html?redirect=admin-details.html';
+        return;
+      }
+
+      // Display Admin Info
+      document.getElementById('admin-name').textContent = adminUser.name || 'Super Admin';
+      document.getElementById('admin-avatar').textContent = (adminUser.name || 'A')[0].toUpperCase();
+
+      // Admin Logout
+      document.getElementById('admin-logout-btn').addEventListener('click', async () => {
+        try { await fetch('/api/auth/logout', { method: 'POST' }); } catch (e) {}
+        localStorage.removeItem('nutiyala_token');
+        localStorage.removeItem('nutiyala_user');
+        window.location.href = 'login.html';
+      });
+
+      // Form Elements
+      const inputName = document.getElementById('input-boutique-name');
+      const inputLogo = document.getElementById('input-logo-url');
+      const inputEmail = document.getElementById('input-email');
+      const inputPhone = document.getElementById('input-phone');
+      const inputInstagram = document.getElementById('input-instagram');
+      const formThumb = document.getElementById('form-logo-thumb');
+      const logoFileInput = document.getElementById('logo-file-input');
+      const btnBrowseLogo = document.getElementById('btn-browse-logo');
+      const form = document.getElementById('admin-details-form');
+      const btnSave = document.getElementById('btn-save-details');
+      const btnReset = document.getElementById('btn-reset-form');
+
+      // Live Preview Elements
+      const liveLogo = document.getElementById('live-preview-logo');
+      const liveName = document.getElementById('live-preview-name');
+      const liveCopyName = document.getElementById('live-preview-copy-name');
+      const liveEmail = document.getElementById('live-preview-email');
+      const liveEmailLink = document.getElementById('live-preview-email-link');
+      const livePhone = document.getElementById('live-preview-phone');
+      const livePhoneLink = document.getElementById('live-preview-phone-link');
+      const liveInsta = document.getElementById('live-preview-insta');
+      const liveInstaLink = document.getElementById('live-preview-insta-link');
+      const snapshotUpdated = document.getElementById('snapshot-updated');
+
+      function getApiUrl(endpoint) {
+        if (!endpoint) return '';
+        if (endpoint.startsWith('http://') || endpoint.startsWith('https://')) return endpoint;
+        if (window.location.protocol === 'file:' || !window.location.origin || window.location.origin === 'null') {
+          return 'http://localhost:5173' + endpoint;
+        }
+        return endpoint;
+      }
+
+      // 1. Fetch current details from localStorage and server
+      await loadDetails();
+
+      async function loadDetails() {
+        // Load cached details immediately
+        try {
+          const cached = localStorage.getItem('nutiyala_boutique_details');
+          if (cached) {
+            currentDetails = JSON.parse(cached);
+            populateForm(currentDetails);
+            updatePreview(currentDetails);
+            if (currentDetails.updated_at) {
+              snapshotUpdated.textContent = new Date(currentDetails.updated_at).toLocaleString('en-IN');
+            }
+          }
+        } catch (e) {}
+
+        try {
+          const res = await fetch(getApiUrl('/api/settings'));
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.details) {
+              currentDetails = data.details;
+              populateForm(currentDetails);
+              updatePreview(currentDetails);
+              try {
+                localStorage.setItem('nutiyala_boutique_details', JSON.stringify(currentDetails));
+              } catch (e) {}
+              if (currentDetails.updated_at) {
+                snapshotUpdated.textContent = new Date(currentDetails.updated_at).toLocaleString('en-IN');
+              }
+            }
+          }
+        } catch (err) {
+          console.warn('Backend server offline or running via file://, using local settings:', err);
+        }
+      }
+
+      function populateForm(d) {
+        inputName.value = d.boutique_name || 'Nutiyala Couture';
+        inputLogo.value = d.logo_url || 'assets/nutiyala-emblem-gold.png';
+        inputEmail.value = d.email || 'contact@nutiyala.com';
+        inputPhone.value = d.contact_number || '+91 98765 43210';
+        inputInstagram.value = d.instagram || 'https://instagram.com/nutiyala_couture';
+        formThumb.src = d.logo_url || 'assets/nutiyala-emblem-gold.png';
+      }
+
+      function updatePreview(d) {
+        const name = d.boutique_name || 'Nutiyala Couture';
+        const logo = d.logo_url || 'assets/nutiyala-emblem-gold.png';
+        const email = d.email || 'contact@nutiyala.com';
+        const phone = d.contact_number || '+91 98765 43210';
+        const insta = d.instagram || 'https://instagram.com/nutiyala_couture';
+
+        liveName.textContent = name;
+        liveCopyName.textContent = name;
+        liveLogo.src = logo;
+        formThumb.src = logo;
+
+        liveEmail.textContent = email;
+        liveEmailLink.href = `mailto:${email}`;
+
+        livePhone.textContent = phone;
+        livePhoneLink.href = `tel:${phone.replace(/[^0-9+]/g, '')}`;
+
+        // Format Instagram handle for display
+        let instaDisplay = insta.trim();
+        if (instaDisplay.includes('instagram.com/')) {
+          instaDisplay = '@' + instaDisplay.split('instagram.com/')[1].replace(/\/$/, '');
+        } else if (!instaDisplay.startsWith('@')) {
+          instaDisplay = '@' + instaDisplay;
+        }
+        liveInsta.textContent = instaDisplay;
+
+        let instaUrl = insta.trim();
+        if (!instaUrl.startsWith('http://') && !instaUrl.startsWith('https://')) {
+          instaUrl = `https://instagram.com/${instaUrl.replace(/^@/, '')}`;
+        }
+        liveInstaLink.href = instaUrl;
+      }
+
+      // Real-time live preview update on input typing
+      function syncFromInputs() {
+        const d = {
+          boutique_name: inputName.value.trim(),
+          logo_url: inputLogo.value.trim(),
+          email: inputEmail.value.trim(),
+          contact_number: inputPhone.value.trim(),
+          instagram: inputInstagram.value.trim()
+        };
+        updatePreview(d);
+      }
+
+      [inputName, inputLogo, inputEmail, inputPhone, inputInstagram].forEach(el => {
+        el.addEventListener('input', syncFromInputs);
+      });
+
+      // Handle Logo Upload Button
+      btnBrowseLogo.addEventListener('click', () => {
+        logoFileInput.click();
+      });
+
+      logoFileInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        btnBrowseLogo.disabled = true;
+        btnBrowseLogo.innerHTML = '<i data-lucide="loader-2" style="width: 14px; height: 14px; animation: spin 1s linear infinite;"></i><span>Uploading...</span>';
+        if (window.lucide) lucide.createIcons();
+
+        try {
+          const reader = new FileReader();
+          reader.onload = async () => {
+            const base64Data = reader.result;
+            inputLogo.value = base64Data;
+            formThumb.src = base64Data;
+            liveLogo.src = base64Data;
+
+            // Attempt backend server upload
+            try {
+              const token = localStorage.getItem('nutiyala_token');
+              if (token) {
+                const res = await fetch(getApiUrl('/api/admin/upload'), {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                  },
+                  body: JSON.stringify({
+                    filename: file.name,
+                    data: base64Data
+                  })
+                });
+                if (res.ok) {
+                  const data = await res.json();
+                  if (data && data.url) {
+                    inputLogo.value = data.url;
+                    formThumb.src = data.url;
+                    liveLogo.src = data.url;
+                  }
+                }
+              }
+            } catch (netErr) {
+              console.warn('Backend image upload skipped (offline or file protocol), saved locally');
+            }
+            showToast('Logo image uploaded successfully!', 'success');
+          };
+          reader.readAsDataURL(file);
+        } catch (err) {
+          showToast(err.message || 'Image upload failed.', 'error');
+        } finally {
+          btnBrowseLogo.disabled = false;
+          btnBrowseLogo.innerHTML = '<i data-lucide="upload" style="width: 14px; height: 14px;"></i><span>Choose File...</span>';
+          if (window.lucide) lucide.createIcons();
+        }
+      });
+
+      // Reset Button
+      btnReset.addEventListener('click', () => {
+        populateForm(currentDetails);
+        updatePreview(currentDetails);
+        showToast('Restored current saved settings.', 'info');
+      });
+
+      // Save Form Submit
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const payload = {
+          boutique_name: inputName.value.trim() || 'Nutiyala Couture',
+          logo_url: inputLogo.value.trim() || 'assets/nutiyala-emblem-gold.png',
+          email: inputEmail.value.trim(),
+          contact_number: inputPhone.value.trim(),
+          instagram: inputInstagram.value.trim()
+        };
+
+        if (!payload.email) {
+          showToast('Email address is required.', 'error');
+          inputEmail.focus();
+          return;
+        }
+
+        btnSave.disabled = true;
+        btnSave.innerHTML = '<i data-lucide="loader-2" style="width: 17px; height: 17px; animation: spin 1s linear infinite;"></i><span>Saving...</span>';
+        if (window.lucide) lucide.createIcons();
+
+        // 1. Immediately persist to localStorage and refresh preview
+        try {
+          localStorage.setItem('nutiyala_boutique_details', JSON.stringify(payload));
+        } catch (e) {}
+        currentDetails = payload;
+        populateForm(currentDetails);
+        updatePreview(currentDetails);
+        snapshotUpdated.textContent = new Date().toLocaleString('en-IN');
+
+        // 2. Persist to server (gracefully catch errors if on file:// or offline)
+        try {
+          const token = localStorage.getItem('nutiyala_token');
+          if (token) {
+            const res = await fetch(getApiUrl('/api/admin/details'), {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              },
+              body: JSON.stringify(payload)
+            });
+
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.details) {
+              currentDetails = data.details;
+              localStorage.setItem('nutiyala_boutique_details', JSON.stringify(data.details));
+              populateForm(currentDetails);
+              updatePreview(currentDetails);
+            }
+          }
+        } catch (err) {
+          console.warn('Backend server save skipped or running via file://, saved locally:', err);
+        } finally {
+          btnSave.disabled = false;
+          btnSave.innerHTML = '<i data-lucide="check-circle" style="width: 17px; height: 17px;"></i><span>Save Admin Details</span>';
+          if (window.lucide) lucide.createIcons();
+        }
+
+        showToast('Admin details saved! Website footer updated successfully.', 'success');
+      });
+
+      // Toast Notification Function
+      function showToast(msg, type = 'success') {
+        const toast = document.getElementById('admin-toast');
+        const toastMsg = document.getElementById('toast-message');
+        const toastIcon = document.getElementById('toast-icon');
+
+        toastMsg.textContent = msg;
+        toast.className = `toast ${type} show`;
+
+        if (type === 'success') {
+          toastIcon.setAttribute('data-lucide', 'check-circle');
+          toastIcon.style.color = 'var(--admin-green)';
+        } else if (type === 'error') {
+          toastIcon.setAttribute('data-lucide', 'alert-circle');
+          toastIcon.style.color = 'var(--admin-red)';
+        } else {
+          toastIcon.setAttribute('data-lucide', 'info');
+          toastIcon.style.color = 'var(--admin-gold)';
+        }
+
+        if (window.lucide) lucide.createIcons();
+
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3800);
+      }
+    });
+  </script>
+</body>
+</html>

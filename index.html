@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nutiyala Couture | Elegance in Every Detail • Luxury Fashion Boutique</title>
+  <meta name="description"
+    content="Nutiyala Couture: Haute couture ethnic wear, artisanal kurtis, luxury co-ords, royal hijabs, and hand-embroidered pashmina shawls. Crafted with tradition, designed for today.">
+  <meta name="keywords"
+    content="Nutiyala Couture, Nutiyala, luxury fashion boutique, designer kurtis, ethnic couture, co-ord sets, zardozi embroidery, pashmina shawls">
+  <meta property="og:title" content="Nutiyala Couture | Elegance in Every Detail">
+  <meta property="og:description"
+    content="Timeless ethnic wear for every chapter of your story. Explore our handcrafted autumn/winter couture collection.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#451217">
+
+  <!-- Google Fonts: Cormorant Garamond (Editorial Serif) & Plus Jakarta Sans (Clean Modern Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP for Smooth Motion -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="loading">
+
+  <!-- Top Promotional Offer Banner (Dynamically Loaded from Active Offer) -->
+  <aside class="top-announcement-bar" id="top-announcement-bar" aria-label="Promotional Offer">
+    <div class="announcement-content">
+      <p class="announcement-text" id="top-announcement-text"></p>
+    </div>
+  </aside>
+
+  <!-- Header / Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <!-- Left: Three-Dash Menu Toggle & Brand Logo -->
+      <div class="header-left">
+        <button class="header-menu-toggle" id="header-menu-toggle" aria-label="Open Navigation Menu" title="Open Menu">
+          <span class="hamburger-box">
+            <span class="hamburger-line line-1"></span>
+            <span class="hamburger-line line-2"></span>
+            <span class="hamburger-line line-3"></span>
+          </span>
+        </button>
+
+        <a href="#top" class="brand-logo" id="brand-logo" aria-label="Nutiyala Couture Home">
+          <div class="brand-emblem-wrap">
+            <img src="assets/nutiyala-emblem-gold.png" alt="Nutiyala Monogram" class="brand-emblem-img">
+          </div>
+          <div class="brand-title-group">
+            <span class="brand-name">Nutiyala</span>
+            <span class="brand-tagline">Couture • Made Just For You</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Right: Action Icons -->
+      <div class="header-actions">
+        <button class="header-icon-btn" id="search-btn" aria-label="Open search">
+          <i data-lucide="search"></i>
+        </button>
+        <button class="header-icon-btn" id="wishlist-btn" aria-label="Wishlist">
+          <i data-lucide="heart"></i>
+          <span class="badge-count" id="wishlist-count">0</span>
+        </button>
+        <button class="header-icon-btn cart-btn-wrap" id="cart-btn" aria-label="Shopping Cart">
+          <i data-lucide="shopping-bag"></i>
+          <span class="badge-count" id="cart-count">1</span>
+        </button>
+        <a href="login.html" class="header-login-btn" id="account-btn" aria-label="Client Login"
+          title="Client Login / Account">
+          <i data-lucide="user"></i>
+          <span class="login-btn-label">LOGIN</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Left Sidebar Backdrop Overlay -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+  <!-- Left Sidebar Navigation Drawer (Opens on clicking 3-dash menu) -->
+  <aside class="atelier-left-sidebar" id="atelier-left-sidebar" aria-label="Atelier Navigation" aria-hidden="true">
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <div class="sidebar-emblem-wrap">
+          <img src="assets/nutiyala-emblem-gold.png" alt="Nutiyala Monogram" class="brand-emblem-img">
+        </div>
+        <div class="brand-title-group">
+          <span class="brand-name">Nutiyala</span>
+          <span class="brand-tagline">Couture • Made Just For You</span>
+        </div>
+      </div>
+      <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close menu" title="Close Menu">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <!-- Gold Accent Divider -->
+    <div class="sidebar-gold-divider">
+      <span class="line"></span>
+      <span class="sparkle">✦</span>
+      <span class="line"></span>
+    </div>
+
+    <!-- Atelier Menu Navigation -->
+    <nav class="sidebar-nav" aria-label="Sidebar Menu Links">
+      <div class="sidebar-nav-title">ATELIER DIRECTORY</div>
+      <ul class="sidebar-nav-links">
+        <li class="sidebar-nav-item">
+          <a href="#top" class="sidebar-nav-link active">
+            <span class="nav-idx">01</span>
+            <span class="nav-label">Home</span>
+            <span class="nav-arrow"><i data-lucide="arrow-up-right"></i></span>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#story" class="sidebar-nav-link">
+            <span class="nav-idx">02</span>
+            <span class="nav-label">About</span>
+            <span class="nav-arrow"><i data-lucide="arrow-up-right"></i></span>
+          </a>
+        </li>
+        <li class="sidebar-nav-item has-subnav">
+          <a href="products.html" class="sidebar-nav-link">
+            <span class="nav-idx">03</span>
+            <span class="nav-label">Shop</span>
+            <span class="nav-arrow"><i data-lucide="arrow-up-right"></i></span>
+          </a>
+          <div class="sidebar-subnav">
+            <a href="products.html?category=kurtis" class="sidebar-subnav-link"><span>•</span> Artisanal Kurtis</a>
+            <a href="products.html?category=co-ord-sets" class="sidebar-subnav-link"><span>•</span> Velvet & Silk
+              Co-ords</a>
+            <a href="products.html?category=shawls" class="sidebar-subnav-link"><span>•</span> Pashmina Shawls</a>
+            <a href="products.html?category=hijabs" class="sidebar-subnav-link"><span>•</span> Royal Silk Hijabs</a>
+          </div>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#featured" class="sidebar-nav-link">
+            <span class="nav-idx">04</span>
+            <span class="nav-label">Featured</span>
+            <span class="nav-arrow"><i data-lucide="arrow-up-right"></i></span>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#craftsmanship" class="sidebar-nav-link">
+            <span class="nav-idx">05</span>
+            <span class="nav-label">Craftsmanship</span>
+            <span class="nav-arrow"><i data-lucide="arrow-up-right"></i></span>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#contact-footer" class="sidebar-nav-link">
+            <span class="nav-idx">06</span>
+            <span class="nav-label">Contact</span>
+            <span class="nav-arrow"><i data-lucide="arrow-up-right"></i></span>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="login.html" class="sidebar-nav-link" id="sidebar-login-link">
+            <span class="nav-idx">07</span>
+            <span class="nav-label" id="sidebar-login-label">LOGIN</span>
+            <span class="nav-arrow"><i data-lucide="arrow-up-right"></i></span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+  </aside>
+
+  <main id="main-content">
+
+    <!-- ==============================================
+         HERO SECTION: TOP CINEMATIC VIDEO CARD
+         ============================================== -->
+    <section class="hero-section" id="top">
+      <div class="hero-container container">
+        <div class="hero-top-card" id="hero-card">
+          <!-- Background Video Container -->
+          <div class="hero-video-wrapper">
+            <video id="hero-video" class="hero-video" autoplay muted loop playsinline preload="metadata"
+              poster="assets/sewing-start.jpg">
+              <source src="assets/atelier-couture.mp4" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+            <div class="hero-video-scrim"></div>
+            <!-- Elegant Botanical Corner Flourishes -->
+            <div class="corner-flourish flourish-tl">
+              <svg viewBox="0 0 60 60" fill="none">
+                <path d="M4 56C4 28 28 4 56 4" stroke="#B38A55" stroke-width="1.2" stroke-dasharray="2 4" />
+                <path d="M4 36C4 18 18 4 36 4" stroke="#D8B982" stroke-width="1" />
+              </svg>
+            </div>
+            <div class="corner-flourish flourish-tr">
+              <svg viewBox="0 0 60 60" fill="none">
+                <path d="M56 56C56 28 32 4 4 4" stroke="#B38A55" stroke-width="1.2" stroke-dasharray="2 4" />
+                <path d="M56 36C56 18 42 4 24 4" stroke="#D8B982" stroke-width="1" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Hero Content Overlay -->
+          <div class="hero-overlay-content">
+
+
+            <h1 class="hero-title">
+              Crafted with Tradition,<br>
+              <em>Designed for Today</em>
+            </h1>
+
+            <p class="hero-subtitle">
+              Timeless ethnic wear for every chapter of your story.
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="#categories" class="hero-explore-btn magnetic-btn">
+                <span>Discover Collection</span>
+                <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         SECTION 02: THE ART BEHIND EVERY THREAD (STORY)
+         ============================================== -->
+    <section class="story-section section-padding" id="story">
+      <div class="container story-grid">
+        <!-- Left: Editorial Narrative -->
+        <div class="story-content-col" data-reveal="fade-up">
+          <div class="section-label-group">
+            <span class="botanical-accent">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+                <path
+                  d="M12 2C8 6 4 12 4 17C4 19.8 6.2 22 9 22C11.5 22 13.5 20.3 14 18C14.5 20.3 16.5 22 19 22C21.8 22 24 19.8 24 17C24 12 16 6 12 2Z"
+                  stroke="#B38A55" stroke-width="1.5" />
+              </svg>
+            </span>
+            <span class="section-subtitle">FOUNDER'S JOURNEY • SANA</span>
+          </div>
+
+          <h2 class="section-heading editorial-serif story-heading-maroon">
+            THE STORY BEHIND NUTIYALA
+          </h2>
+
+          <p class="story-lead">
+            Nutiyala is more than just a clothing store — it is the beginning of a 15-year-old dream.
+          </p>
+
+          <p class="story-body">
+            I’m Sana, the founder of Nutiyala. As a Muslim girl, stepping beyond the comfort of home, facing life’s
+            challenges and family circumstances, and building something of my own was never an easy journey. But every
+            challenge taught me to be stronger, and every setback brought me one step closer to this dream. Today,
+            Nutiyala is not the destination. It is only the beginning — the first step towards a dream I have carried in
+            my heart for 15 years.
+          </p>
+
+          <p class="story-body">
+            What makes Nutiyala special is simple: every piece is made for you, and only you. Every design, every detail
+            and every customization is created with one person in mind the person who will wear it. Because at Nutiyala,
+            we believe clothing should feel personal, not ordinary.
+          </p>
+
+          <p class="story-body">
+            Behind this journey is a family who stood by me with love, faith and support. their encouragement gave me
+            the strength to keep going when things were not easy. Through Nutiyala, I hope to create more than beautiful
+            clothes. I want to inspire every girl, especially Muslim girls, to believe that their dreams are possible,
+            no matter where they begin.
+          </p>
+
+          <p class="story-signoff">
+            This is Sana’s dream. This is her beginning. This is Nutiyala — Made Just For You.
+          </p>
+
+        </div>
+
+        <!-- Right: Editorial Image with Mask Reveal -->
+        <div class="story-image-col" data-reveal="mask-left">
+          <div class="story-image-frame">
+            <img src="assets/nutiyala-boutique-backview.jpg"
+              alt="Sana from the back wearing a royal maroon hijab shawl looking at her dream Nutiyala Couture boutique"
+              class="story-main-img" loading="lazy">
+            <div class="story-botanical-watermark">
+              <svg viewBox="0 0 100 100" fill="none">
+                <path d="M10 90C40 90 80 50 80 10" stroke="#B38A55" stroke-width="1" stroke-dasharray="3 3" />
+                <circle cx="80" cy="10" r="3" fill="#D8B982" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         SECTION 03: SHOP BY CATEGORY (EXPANDABLE PANELS)
+         ============================================== -->
+    <section class="category-section section-padding bg-cream" id="categories">
+      <div class="container">
+        <div class="section-header-center" data-reveal="fade-up">
+          <h2 class="section-heading editorial-serif">SHOP BY CATEGORY</h2>
+          <p class="section-subtext">Find your perfect style</p>
+          <div class="gold-hairline"></div>
+        </div>
+
+        <!-- Expandable Category Panels -->
+        <div class="category-accordion-container" id="category-accordion">
+          <!-- Category 1: Kurti -->
+          <div class="category-card active" data-category="kurti">
+            <div class="category-card-bg">
+              <img src="assets/emerald_green.png" alt="Kurti Collection" loading="lazy">
+              <div class="category-card-overlay"></div>
+            </div>
+            <div class="category-card-content">
+              <span class="category-index">01</span>
+              <h3 class="category-name">Kurti</h3>
+              <p class="category-desc">Regal emerald raw silk silhouettes adorned with handcrafted gold zardozi
+                necklines and pure zari borders.</p>
+              <div class="category-footer">
+                <span class="category-count">Handcrafted Atelier</span>
+                <span class="category-link-arrow">Explore <i data-lucide="arrow-right"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category 2: Hijabs & Shawls -->
+          <div class="category-card" data-category="hijabs-shawls">
+            <div class="category-card-bg">
+              <img src="assets/luxury_hijab.png" alt="Hijabs Shawls Collection" class="img-hijab-shawl" loading="lazy">
+              <div class="category-card-overlay"></div>
+            </div>
+            <div class="category-card-content">
+              <span class="category-index">02</span>
+              <h3 class="category-name">Hijabs Shawls</h3>
+              <p class="category-desc">Opulent silk and chiffon head drapes with woven pashmina shawls, edged in
+                delicate heritage gold embroidery.</p>
+              <div class="category-footer">
+                <span class="category-count">Pure Silk & Pashmina</span>
+                <span class="category-link-arrow">Explore <i data-lucide="arrow-right"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category 3: Festival Wear Kurti -->
+          <div class="category-card" data-category="festival-wear-kurti">
+            <div class="category-card-bg">
+              <img src="assets/maroon_velvet.png" alt="Festival Wear Kurti Collection" loading="lazy">
+              <div class="category-card-overlay"></div>
+            </div>
+            <div class="category-card-content">
+              <span class="category-index">03</span>
+              <h3 class="category-name">Festival Wear Kurti</h3>
+              <p class="category-desc">Sumptuous deep velvet and festive ensembles richly detailed with dabka, sequins,
+                and royal tilla needlework.</p>
+              <div class="category-footer">
+                <span class="category-count">Festive Edition</span>
+                <span class="category-link-arrow">Explore <i data-lucide="arrow-right"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category 4: Casual Co-ords -->
+          <div class="category-card" data-category="casual-coords">
+            <div class="category-card-bg">
+              <img src="assets/navy_coord.png" alt="Casual Co-ords Collection" loading="lazy">
+              <div class="category-card-overlay"></div>
+            </div>
+            <div class="category-card-content">
+              <span class="category-index">04</span>
+              <h3 class="category-name">Casual Co-ords</h3>
+              <p class="category-desc">Tailored navy two-piece coordinated sets blending effortless daywear ease with
+                structured bespoke luxury.</p>
+              <div class="category-footer">
+                <span class="category-count">Modern Tailoring</span>
+                <span class="category-link-arrow">Explore <i data-lucide="arrow-right"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category 5: Daily Wear Kurtis -->
+          <div class="category-card" data-category="daily-wear-kurtis">
+            <div class="category-card-bg">
+              <img src="assets/beige_kurti.png" alt="Daily Wear Kurtis Collection" loading="lazy">
+              <div class="category-card-overlay"></div>
+            </div>
+            <div class="category-card-content">
+              <span class="category-index">05</span>
+              <h3 class="category-name">Daily Wear Kurtis</h3>
+              <p class="category-desc">Understated ivory & sand silhouettes crafted in breathable weaves for everyday
+                grace and effortless poise.</p>
+              <div class="category-footer">
+                <span class="category-count">Everyday Elegance</span>
+                <span class="category-link-arrow">Explore <i data-lucide="arrow-right"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==============================================
+         SECTION 05: FEATURED COLLECTION
+         ============================================== -->
+    <section class="featured-section section-padding bg-cream" id="featured">
+      <div class="container">
+        <div class="section-header-center" data-reveal="fade-up">
+          <h2 class="section-heading editorial-serif">Featured Collection</h2>
+          <p class="section-subtext">Handpicked styles just for you</p>
+
+          <!-- Category Filter Tabs -->
+          <div class="collection-filter-tabs">
+            <button class="filter-tab active" data-filter="all">All Styles</button>
+            <button class="filter-tab" data-filter="kurti">Kurti</button>
+            <button class="filter-tab" data-filter="hijabs-shawls">Hijabs Shawls</button>
+            <button class="filter-tab" data-filter="festival-wear-kurti">Festival Wear Kurti</button>
+            <button class="filter-tab" data-filter="casual-coords">Casual Co-ords</button>
+            <button class="filter-tab" data-filter="daily-wear-kurtis">Daily Wear Kurtis</button>
+          </div>
+        </div>
+
+        <!-- 5-Column / Grid Editorial Product Showcase -->
+        <div class="featured-scroll-wrapper" style="position: relative;">
+          <button class="slider-arrow prev-slide"
+            onclick="document.getElementById('product-grid').scrollBy({left: -300, behavior: 'smooth'})"
+            aria-label="Scroll left"
+            style="position: absolute; left: -20px; top: 40%; transform: translateY(-50%); z-index: 10;">
+            <i data-lucide="chevron-left"></i>
+          </button>
+          <button class="slider-arrow next-slide"
+            onclick="document.getElementById('product-grid').scrollBy({left: 300, behavior: 'smooth'})"
+            aria-label="Scroll right"
+            style="position: absolute; right: -20px; top: 40%; transform: translateY(-50%); z-index: 10;">
+            <i data-lucide="chevron-right"></i>
+          </button>
+
+          <div class="product-grid" id="product-grid">
+            <!-- Product 1: Emerald Green Kurti -->
+            <div class="product-card" data-category="kurti" data-id="p1">
+              <div class="product-image-container">
+                <span class="product-card-badge">Bestseller</span>
+                <button class="product-wishlist-toggle" aria-label="Add to Wishlist">
+                  <i data-lucide="heart"></i>
+                </button>
+                <img src="assets/emerald_green.png" alt="Emerald Green Hand-embroidered Kurti" class="primary-prod-img"
+                  loading="lazy">
+                <div class="product-quick-actions">
+                  <button class="quick-view-btn" data-prod="p1">Quick View</button>
+                  <button class="quick-add-btn" data-prod="p1">Quick Add +</button>
+                </div>
+              </div>
+              <div class="product-info-block">
+                <h3 class="prod-card-title">Emerald Green Kurti</h3>
+                <div class="prod-card-price-row">
+                  <span class="prod-price">₹1,499</span>
+                  <span class="prod-orig">₹1,999</span>
+                </div>
+                <div class="prod-swatches">
+                  <span class="swatch-dot active" style="background-color: #1A4D3E;"></span>
+                  <span class="swatch-dot" style="background-color: #1A2E40;"></span>
+                  <span class="swatch-dot" style="background-color: #5A1E28;"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 2: Luxury Silk Hijab Shawl -->
+            <div class="product-card" data-category="hijabs-shawls" data-id="p2">
+              <div class="product-image-container">
+                <span class="product-card-badge">Couture Edit</span>
+                <button class="product-wishlist-toggle" aria-label="Add to Wishlist">
+                  <i data-lucide="heart"></i>
+                </button>
+                <img src="assets/luxury_hijab.png" alt="Pure Silk Hijab Shawl" class="primary-prod-img"
+                  style="object-position: center 15%;" loading="lazy">
+                <div class="product-quick-actions">
+                  <button class="quick-view-btn" data-prod="p2">Quick View</button>
+                  <button class="quick-add-btn" data-prod="p2">Quick Add +</button>
+                </div>
+              </div>
+              <div class="product-info-block">
+                <h3 class="prod-card-title">Pure Silk Hijabs & Shawls</h3>
+                <div class="prod-card-price-row">
+                  <span class="prod-price">₹1,299</span>
+                  <span class="prod-orig">₹1,750</span>
+                </div>
+                <div class="prod-swatches">
+                  <span class="swatch-dot active" style="background-color: #D4AF37;"></span>
+                  <span class="swatch-dot" style="background-color: #1A2E40;"></span>
+                  <span class="swatch-dot" style="background-color: #5A1E28;"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 3: Maroon Festival Wear Kurti -->
+            <div class="product-card" data-category="festival-wear-kurti" data-id="p3">
+              <div class="product-image-container">
+                <span class="product-card-badge">Festive Pick</span>
+                <button class="product-wishlist-toggle" aria-label="Add to Wishlist">
+                  <i data-lucide="heart"></i>
+                </button>
+                <img src="assets/maroon_velvet.png" alt="Maroon Velvet Festival Wear Kurti" class="primary-prod-img"
+                  loading="lazy">
+                <div class="product-quick-actions">
+                  <button class="quick-view-btn" data-prod="p3">Quick View</button>
+                  <button class="quick-add-btn" data-prod="p3">Quick Add +</button>
+                </div>
+              </div>
+              <div class="product-info-block">
+                <h3 class="prod-card-title">Maroon Festival Wear Kurti</h3>
+                <div class="prod-card-price-row">
+                  <span class="prod-price">₹1,899</span>
+                  <span class="prod-orig">₹2,499</span>
+                </div>
+                <div class="prod-swatches">
+                  <span class="swatch-dot active" style="background-color: #5A1E28;"></span>
+                  <span class="swatch-dot" style="background-color: #D9C3A5;"></span>
+                  <span class="swatch-dot" style="background-color: #1A4D3E;"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 4: Navy Casual Co-ords -->
+            <div class="product-card" data-category="casual-coords" data-id="p4">
+              <div class="product-image-container">
+                <span class="product-card-badge">Tailored</span>
+                <button class="product-wishlist-toggle" aria-label="Add to Wishlist">
+                  <i data-lucide="heart"></i>
+                </button>
+                <img src="assets/navy_coord.png" alt="Tailored Navy Casual Co-ords" class="primary-prod-img"
+                  loading="lazy">
+                <div class="product-quick-actions">
+                  <button class="quick-view-btn" data-prod="p4">Quick View</button>
+                  <button class="quick-add-btn" data-prod="p4">Quick Add +</button>
+                </div>
+              </div>
+              <div class="product-info-block">
+                <h3 class="prod-card-title">Navy Casual Co-ords</h3>
+                <div class="prod-card-price-row">
+                  <span class="prod-price">₹1,699</span>
+                  <span class="prod-orig">₹2,200</span>
+                </div>
+                <div class="prod-swatches">
+                  <span class="swatch-dot active" style="background-color: #1A2E40;"></span>
+                  <span class="swatch-dot" style="background-color: #5A1E28;"></span>
+                  <span class="swatch-dot" style="background-color: #D9C3A5;"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 5: Beige Daily Wear Kurti -->
+            <div class="product-card" data-category="daily-wear-kurtis" data-id="p5">
+              <div class="product-image-container">
+                <span class="product-card-badge">Daily Chic</span>
+                <button class="product-wishlist-toggle" aria-label="Add to Wishlist">
+                  <i data-lucide="heart"></i>
+                </button>
+                <img src="assets/beige_kurti.png" alt="Beige Daily Wear Kurti" class="primary-prod-img" loading="lazy">
+                <div class="product-quick-actions">
+                  <button class="quick-view-btn" data-prod="p5">Quick View</button>
+                  <button class="quick-add-btn" data-prod="p5">Quick Add +</button>
+                </div>
+              </div>
+              <div class="product-info-block">
+                <h3 class="prod-card-title">Beige Daily Wear Kurti</h3>
+                <div class="prod-card-price-row">
+                  <span class="prod-price">₹1,399</span>
+                  <span class="prod-orig">₹1,899</span>
+                </div>
+                <div class="prod-swatches">
+                  <span class="swatch-dot active" style="background-color: #D9C3A5;"></span>
+                  <span class="swatch-dot" style="background-color: #5A1E28;"></span>
+                  <span class="swatch-dot" style="background-color: #1A2E40;"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="featured-footer-row">
+          <a href="#categories" class="btn-chocolate magnetic-btn">
+            <span>View All Styles</span>
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         SECTION 06: CRAFTSMANSHIP BANNER (THE MAKING OF A PIECE)
+         ============================================== -->
+    <section class="craftsmanship-banner-section" id="craftsmanship">
+      <div class="craftsmanship-bg">
+        <img src="assets/craftsmanship.png" alt="Atelier artisanal craftsmanship with antique shears and needlework"
+          class="craftsmanship-bg-img">
+        <div class="craftsmanship-scrim"></div>
+      </div>
+
+      <div class="container craftsmanship-content-wrapper">
+        <div class="craftsmanship-header" data-reveal="fade-up">
+          <span class="banner-sub-tag">THE MAKING OF A PIECE</span>
+          <h2 class="banner-title editorial-serif">
+            From the first stitch<br>to the final detail.
+          </h2>
+          <p class="banner-desc">
+            Every garment is born at the intersection of artisanal precision and poetic silhouette. Over 40 hours of
+            hand zardozi stitching, pure botanical dyeing, and hand-finished hems.
+          </p>
+
+
+        </div>
+
+        <!-- 4 Craftsmanship Steps Grid -->
+        <div class="craft-steps-grid">
+          <div class="craft-step-card">
+            <span class="step-num">01</span>
+            <h4 class="step-title">Thread Selection</h4>
+            <p class="step-desc">Pure zari woven with 24k gold bullion leaf and high-twist Mulberry silk threads.</p>
+          </div>
+          <div class="craft-step-card">
+            <span class="step-num">02</span>
+            <h4 class="step-title">Artisanal Looming</h4>
+            <p class="step-desc">Heritage pit-looms guided by generational master weavers in Varanasi and Chanderi.</p>
+          </div>
+          <div class="craft-step-card">
+            <span class="step-num">03</span>
+            <h4 class="step-title">Zardozi Needlework</h4>
+            <p class="step-desc">Hand-guided needle embroidery placing intricate dabka, metallic coils, and seed pearls.
+            </p>
+          </div>
+          <div class="craft-step-card">
+            <span class="step-num">04</span>
+            <h4 class="step-title">Bespoke Atelier Finishing</h4>
+            <p class="step-desc">Hand-scalloped hems, steam-sculpted drape, and sealed with our master artisan's
+              hallmark.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         SECTION 07: EDITORIAL FASHION STATEMENT
+         ============================================== -->
+    <!--
+    <section class="editorial-statement-section section-padding">
+      <div class="container statement-container">
+        <div class="statement-typography-wrap" data-reveal="fade-up">
+          <span class="statement-eyebrow">A STATEMENT OF PURPOSE</span>
+          <h2 class="statement-main editorial-serif">
+            LESS TREND.<br>MORE TIMELESS.
+          </h2>
+          <p class="statement-sub">
+            In an era of fleeting fast fashion, Nutiyala Couture remains dedicated to heirloom permanence—garments you
+            will wear, cherish, and pass down.
+          </p>
+        </div>
+
+        <div class="statement-visual-wrap" data-reveal="mask-right">
+          <div class="statement-img-pod">
+            <img src="assets/maroon_velvet.png" alt="AURA Statement Piece" class="statement-model-img">
+            <div class="statement-caption">
+              <span>Palace Salon Edit • Look 04</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    -->
+
+    <!-- Scroll-Linked Infinite Marquee Ticker -->
+    <div class="statement-ticker-track" aria-hidden="true">
+      <div class="ticker-inner">
+        <span>CRAFTED WITH INTENTION</span>
+        <span class="ticker-star">✦</span>
+        <span>TIMELESS SILHOUETTES</span>
+        <span class="ticker-star">✦</span>
+        <span>BESPOKE COUTURE</span>
+        <span class="ticker-star">✦</span>
+        <span>UNCOMPROMISED ARTISTRY</span>
+        <span class="ticker-star">✦</span>
+        <span>HAND-EMBROIDERED ZARI</span>
+        <span class="ticker-star">✦</span>
+        <span>CRAFTED WITH INTENTION</span>
+        <span class="ticker-star">✦</span>
+        <span>TIMELESS SILHOUETTES</span>
+        <span class="ticker-star">✦</span>
+        <span>BESPOKE COUTURE</span>
+        <span class="ticker-star">✦</span>
+        <span>UNCOMPROMISED ARTISTRY</span>
+        <span class="ticker-star">✦</span>
+      </div>
+    </div>
+    </section>
+
+
+
+    <!-- ==============================================
+         SECTION 09: A LITTLE MORE NUTIYALA (COMMUNITY & INSTAGRAM)
+         ============================================== -->
+    <!-- <section class="community-section section-padding">
+      <div class="container">
+        <div class="community-header-row" data-reveal="fade-up">
+          <div>
+            <span class="section-subtitle">COMMUNITY & MOMENTS</span>
+            <h2 class="section-heading editorial-serif">A Little More Nutiyala</h2>
+            <p class="section-subtext">Real moments. Effortless elegance. Follow @nutiyala.couture</p>
+          </div>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="instagram-follow-btn">
+            <i data-lucide="instagram"></i>
+            <span>Follow on Instagram</span>
+          </a>
+        </div>
+
+        <div class="community-gallery-grid">
+          <div class="gallery-item">
+            <img src="assets/sewing-action.jpg" alt="Atelier sewing moment" loading="lazy">
+            <div class="gallery-overlay"><i data-lucide="instagram"></i></div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/model-beige.jpg" alt="Customer styled in beige kurti" loading="lazy">
+            <div class="gallery-overlay"><i data-lucide="instagram"></i></div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/model-anarkali-full.jpg" alt="Festive soiree outfit" loading="lazy">
+            <div class="gallery-overlay"><i data-lucide="instagram"></i></div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/category-single.jpg" alt="Sunlit silk texture" loading="lazy">
+            <div class="gallery-overlay"><i data-lucide="instagram"></i></div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/model-maroon.jpg" alt="Wedding guest couture" loading="lazy">
+            <div class="gallery-overlay"><i data-lucide="instagram"></i></div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- ==============================================
+         SECTION 10: BRAND PHILOSOPHY
+         ============================================== -->
+    <section class="philosophy-section bg-ivory">
+      <div class="container text-center" data-reveal="fade-up">
+        <h2 class="philosophy-text editorial-serif">
+          “You don’t just wear Nutiyala.<br>
+          <span class="gold-gradient-text">You feel it.”</span>
+        </h2>
+
+        <p class="philosophy-sub">
+          A presence that lingers. A confidence that requires no announcement.
+        </p>
+
+        <div class="botanical-gold-divider">
+          <svg viewBox="0 0 200 20" fill="none">
+            <line x1="10" y1="10" x2="80" y2="10" stroke="#B38A55" stroke-width="1" />
+            <circle cx="100" cy="10" r="4" fill="#B38A55" />
+            <circle cx="100" cy="10" r="7" stroke="#D8B982" stroke-width="0.8" />
+            <line x1="120" y1="10" x2="190" y2="10" stroke="#B38A55" stroke-width="1" />
+          </svg>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==============================================
+       FOOTER - SIMPLE ATELIER CONTACTS & BRANDING
+       ============================================== -->
+  <footer class="site-footer simple-footer bg-deep-chocolate text-light" id="contact-footer">
+    <div class="container footer-simple-wrap">
+      <!-- 1. Logo & 2. Boutique Name -->
+      <div class="footer-simple-brand">
+        <a href="index.html" class="footer-brand-link" aria-label="Nutiyala Home">
+          <img id="footer-logo" src="assets/nutiyala-emblem-gold.png" alt="Nutiyala Couture Emblem"
+            class="footer-simple-logo">
+        </a>
+        <h3 id="footer-boutique-name" class="footer-simple-name">Nutiyala Couture</h3>
+      </div>
+
+      <!-- 3. Mail, 4. Contact Number, 5. Instagram Account -->
+      <div class="footer-simple-contacts">
+        <!-- Mail -->
+        <a id="footer-email-link" href="mailto:contact@nutiyala.com" class="footer-contact-item"
+          title="Send us an email">
+          <i data-lucide="mail"></i>
+          <span id="footer-email">contact@nutiyala.com</span>
+        </a>
+
+        <!-- Contact Number -->
+        <a id="footer-phone-link" href="tel:+919876543210" class="footer-contact-item" title="Call or WhatsApp us">
+          <i data-lucide="phone"></i>
+          <span id="footer-phone">+91 98765 43210</span>
+        </a>
+
+        <!-- Instagram -->
+        <a id="footer-insta-link" href="https://instagram.com/nutiyala_couture" target="_blank"
+          rel="noopener noreferrer" class="footer-contact-item" title="Follow us on Instagram">
+          <svg class="instagram-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          <span id="footer-instagram">@nutiyala_couture</span>
+        </a>
+      </div>
+
+      <!-- Bottom Copyright Bar -->
+      <div class="footer-simple-copy">
+        © 2026 <span class="footer-copy-name">Nutiyala Couture</span>. All rights reserved. Grace in Every Thread.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==============================================
+       INTERACTIVE MODALS & DRAWERS
+       ============================================== -->
+
+  <!-- Bespoke Styling & Fitting Consultation Modal -->
+  <div class="quick-view-modal" id="consultation-modal" aria-hidden="true">
+    <div class="modal-backdrop" id="consultation-backdrop"></div>
+    <div class="modal-card" style="max-width: 520px; padding: 2.2rem 2rem;">
+      <button class="modal-close-btn" id="consultation-close" aria-label="Close consultation modal">
+        <i data-lucide="x"></i>
+      </button>
+      <div style="text-align: center; margin-bottom: 1.25rem;">
+        <span
+          style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: #B38A55; font-weight: 600;">ATELIER
+          BESPOKE SERVICES</span>
+        <h3 style="font-family: var(--font-serif); font-size: 1.85rem; color: #3E0F15; margin: 0.35rem 0 0.4rem;">
+          Private Styling Consultation</h3>
+        <p style="font-size: 0.82rem; color: #735D60; margin: 0;">Schedule a one-on-one session with our master stylist
+          Sana.</p>
+      </div>
+      <form id="consultation-form" style="display: flex; flex-direction: column; gap: 0.85rem;">
+        <div>
+          <label
+            style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #3E0F15; display: block; margin-bottom: 0.3rem;">Your
+            Name *</label>
+          <input type="text" id="consult-name" required placeholder="e.g. Maharani Zara"
+            style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid rgba(179,138,85,0.4); border-radius: 3px; font-family: inherit; font-size: 0.85rem; box-sizing: border-box;">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div>
+            <label
+              style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #3E0F15; display: block; margin-bottom: 0.3rem;">Email
+              Address *</label>
+            <input type="email" id="consult-email" required placeholder="client@luxury.com"
+              style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid rgba(179,138,85,0.4); border-radius: 3px; font-family: inherit; font-size: 0.85rem; box-sizing: border-box;">
+          </div>
+          <div>
+            <label
+              style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #3E0F15; display: block; margin-bottom: 0.3rem;">Phone
+              / WhatsApp *</label>
+            <input type="tel" id="consult-phone" required placeholder="+91 98765 43210"
+              style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid rgba(179,138,85,0.4); border-radius: 3px; font-family: inherit; font-size: 0.85rem; box-sizing: border-box;">
+          </div>
+        </div>
+        <div>
+          <label
+            style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #3E0F15; display: block; margin-bottom: 0.3rem;">Consultation
+            Type</label>
+          <select id="consult-type"
+            style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid rgba(179,138,85,0.4); border-radius: 3px; font-family: inherit; font-size: 0.85rem; background: #fff; box-sizing: border-box;">
+            <option value="Bespoke Bridal Fitting">Bespoke Bridal Fitting & Trousseau</option>
+            <option value="Festive Wardrobe Styling">Festive Wardrobe Styling</option>
+            <option value="Custom Sizing & Measurements">Custom Sizing & Tailoring</option>
+            <option value="Hijab & Shawl Draping">Silk Hijab & Pashmina Styling</option>
+          </select>
+        </div>
+        <div>
+          <label
+            style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #3E0F15; display: block; margin-bottom: 0.3rem;">Notes
+            / Styling Preferences</label>
+          <textarea id="consult-message" rows="2"
+            placeholder="Tell us about the occasion, preferred colors, or specific silhouette..."
+            style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid rgba(179,138,85,0.4); border-radius: 3px; font-family: inherit; font-size: 0.85rem; resize: vertical; box-sizing: border-box;"></textarea>
+        </div>
+        <button type="submit" class="btn-chocolate btn-full"
+          style="margin-top: 0.4rem; padding: 0.85rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">
+          <span>Request Atelier Appointment</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Slide-out Wishlist Drawer -->
+  <aside class="cart-drawer" id="wishlist-drawer" aria-hidden="true">
+    <div class="drawer-scrim" id="wishlist-scrim"></div>
+    <div class="drawer-panel">
+      <div class="drawer-head">
+        <div class="drawer-title-group">
+          <h3 class="drawer-title">My Wishlist</h3>
+          <span class="drawer-subtitle" id="wishlist-item-count-text">0 Items</span>
+        </div>
+        <button class="drawer-close" id="wishlist-close" aria-label="Close wishlist">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <div class="cart-items-container" id="wishlist-items-list">
+        <div class="empty-drawer-state">
+          <i data-lucide="heart" class="empty-icon"></i>
+          <p>Your wishlist is currently empty.</p>
+          <a href="#featured" class="btn-chocolate" id="wishlist-explore-btn">Explore Collection</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Quick View Modal -->
+  <div class="quick-view-modal" id="quick-view-modal" aria-hidden="true">
+    <div class="modal-backdrop" id="quick-view-backdrop"></div>
+    <div class="modal-card">
+      <button class="modal-close-btn" id="quick-view-close" aria-label="Close modal">
+        <i data-lucide="x"></i>
+      </button>
+      <div class="modal-body-grid">
+        <div class="modal-gallery-col">
+          <img id="qv-main-img" src="assets/model-beige.jpg" alt="Product Quick View" class="qv-active-img">
+        </div>
+        <div class="modal-details-col">
+          <span class="badge-featured" id="qv-badge">Bestseller</span>
+          <h3 class="qv-title editorial-serif" id="qv-title">Beige Embroidered Kurti</h3>
+          <div class="qv-price-row">
+            <span class="qv-current-price" id="qv-price">₹1,399</span>
+            <span class="qv-orig-price" id="qv-orig">₹1,899</span>
+          </div>
+          <p class="qv-desc" id="qv-desc">
+            Gracefully tailored from pure mulberry silk, featuring delicate hand-worked antique gold zari borders and a
+            lightweight sheer dupatta.
+          </p>
+          <div class="option-group">
+            <label class="option-label">Select Size:</label>
+            <div class="size-pill-list" id="qv-size-list">
+              <button class="size-pill">S</button>
+              <button class="size-pill active">M</button>
+              <button class="size-pill">L</button>
+              <button class="size-pill">XL</button>
+            </div>
+          </div>
+          <div class="qv-actions">
+            <button class="btn-chocolate btn-full" id="qv-add-cart-btn">
+              <i data-lucide="shopping-bag"></i>
+              <span>Add to Bag</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Size Guide Modal -->
+  <div class="quick-view-modal" id="size-guide-modal" aria-hidden="true">
+    <div class="modal-backdrop" id="size-guide-backdrop"></div>
+    <div class="modal-card size-guide-card">
+      <button class="modal-close-btn" id="size-guide-close" aria-label="Close size guide">
+        <i data-lucide="x"></i>
+      </button>
+      <div class="size-guide-content">
+        <span class="section-subtitle">ATELIER FIT SPECIFICATIONS</span>
+        <h3 class="modal-title editorial-serif">Garment Size Guide</h3>
+        <p class="modal-sub">All measurements are provided in inches. For custom bespoke tailoring, please contact our
+          atelier.</p>
+
+        <div class="table-responsive">
+          <table class="size-table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Bust</th>
+                <th>Waist</th>
+                <th>Hip</th>
+                <th>Kurti Length</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>S (36)</strong></td>
+                <td>36"</td>
+                <td>32"</td>
+                <td>38"</td>
+                <td>46"</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>M (38)</strong></td>
+                <td>38"</td>
+                <td>34"</td>
+                <td>40"</td>
+                <td>46"</td>
+              </tr>
+              <tr>
+                <td><strong>L (40)</strong></td>
+                <td>40"</td>
+                <td>36"</td>
+                <td>42"</td>
+                <td>47"</td>
+              </tr>
+              <tr>
+                <td><strong>XL (42)</strong></td>
+                <td>42"</td>
+                <td>38"</td>
+                <td>44"</td>
+                <td>47"</td>
+              </tr>
+              <tr>
+                <td><strong>XXL (44)</strong></td>
+                <td>44"</td>
+                <td>40"</td>
+                <td>46"</td>
+                <td>48"</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Story Video Theater Modal -->
+  <div class="video-theater-modal" id="video-theater-modal" aria-hidden="true">
+    <div class="modal-backdrop" id="theater-backdrop"></div>
+    <div class="theater-card">
+      <button class="modal-close-btn theater-close-btn" id="theater-close-btn" aria-label="Close theater">
+        <i data-lucide="x"></i>
+      </button>
+      <div class="theater-player-wrap">
+        <video id="theater-video" controls playsinline>
+          <source src="assets/atelier-couture.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="theater-caption">
+        <h4>Crafted with Tradition, Designed for Today</h4>
+        <p>The making of Nutiyala couture: from raw Mulberry silk threads to final hand-finished embroidery.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Search Modal -->
+  <div class="search-modal" id="search-modal" aria-hidden="true">
+    <div class="modal-backdrop" id="search-backdrop"></div>
+    <div class="search-box-card">
+      <div class="search-input-wrapper">
+        <i data-lucide="search" class="search-lens-icon"></i>
+        <input type="text" id="live-search-input" placeholder="Search kurtis, co-ords, pashmina shawls, or colors..."
+          autofocus>
+        <button class="modal-close-btn" id="search-close" aria-label="Close search">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="search-suggestions-row">
+        <span>Suggested:</span>
+        <button class="search-tag" data-tag="Beige">Beige Kurti</button>
+        <button class="search-tag" data-tag="Maroon">Maroon Velvet</button>
+        <button class="search-tag" data-tag="Emerald">Emerald Green</button>
+        <button class="search-tag" data-tag="Shawl">Pashmina Shawls</button>
+      </div>
+      <div class="search-results-list" id="search-results-list">
+        <!-- Live search matches pop here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Core JavaScript -->
+  <script src="app.js"></script>
+  <!-- GSAP Scroll Animation System -->
+  <script src="animations.js"></script>
+  <!-- Authentication & Account Header Sync -->
+  <script src="js/nutiyala-auth.js"></script>
+  <!-- Unified Cart & Instant Checkout -->
+  <script src="js/nutiyala-cart.js"></script>
+</body>
+
+</html>

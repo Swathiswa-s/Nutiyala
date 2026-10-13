@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Couture Creation Details | Nutiyala Couture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ═══════════════════════════════════════
+       PREMIUM LUXURY HEADER FOR PRODUCT DETAIL
+    ═══════════════════════════════════════ */
+    .pdp-header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: #3A0C11; /* Deep Royal Burgundy */
+      border-bottom: 1px solid rgba(216, 185, 130, 0.28);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .pdp-header .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      height: 72px;
+      padding: 0 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-sizing: border-box;
+    }
+
+    .pdp-header .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.15rem;
+    }
+
+    .pdp-back-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #EEDFA9;
+      background: rgba(250, 246, 240, 0.06);
+      border: 1px solid rgba(216, 185, 130, 0.3);
+      text-decoration: none;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .pdp-back-btn:hover {
+      background: rgba(216, 185, 130, 0.22);
+      border-color: #D8B982;
+      color: #FFFFFF;
+      transform: translateX(-2px);
+    }
+
+    .pdp-brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+    }
+
+    .pdp-brand-emblem {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pdp-brand-emblem img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+    }
+
+    .pdp-brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+    }
+
+    .pdp-brand-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: #EEDFA9;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .pdp-brand-tagline {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(216, 185, 130, 0.85);
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    .pdp-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .pdp-action-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #EEDFA9;
+      background: rgba(250, 246, 240, 0.06);
+      border: 1px solid rgba(216, 185, 130, 0.25);
+      position: relative;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      outline: none;
+    }
+
+    .pdp-action-icon:hover {
+      background: rgba(216, 185, 130, 0.2);
+      border-color: #D8B982;
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .pdp-action-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .pdp-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background: #D8B982;
+      color: #3A0C11;
+      font-size: 0.62rem;
+      font-weight: 700;
+      min-width: 17px;
+      height: 17px;
+      border-radius: 99px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+      border: 1.5px solid #3A0C11;
+      box-sizing: border-box;
+      line-height: 1;
+    }
+
+    .pdp-account-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.46rem 1.05rem;
+      height: 40px;
+      box-sizing: border-box;
+      border-radius: 99px;
+      background: rgba(30, 18, 11, 0.72);
+      border: 1.5px solid rgba(216, 185, 130, 0.55);
+      color: #FAF7F2;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .pdp-account-btn:hover {
+      background: linear-gradient(135deg, #B38A55 0%, #8E6534 100%);
+      border-color: #D8B982;
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .pdp-account-btn svg {
+      width: 15px;
+      height: 15px;
+      color: #EEDFA9;
+    }
+
+    @media (max-width: 768px) {
+      .pdp-header .header-inner {
+        height: 64px;
+        padding: 0 1rem;
+        gap: 0.5rem;
+      }
+      .pdp-brand-tagline {
+        display: none;
+      }
+      .pdp-brand-name {
+        font-size: 1.6rem;
+      }
+      .pdp-brand-emblem {
+        width: 30px;
+        height: 30px;
+      }
+      .pdp-back-btn, .pdp-action-icon {
+        width: 36px;
+        height: 36px;
+      }
+      .pdp-account-btn {
+        height: 36px;
+        padding: 0.35rem 0.8rem;
+        font-size: 0.68rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .pdp-account-btn .login-btn-label {
+        display: none;
+      }
+      .pdp-account-btn {
+        padding: 0;
+        width: 36px;
+        justify-content: center;
+      }
+    }
+
+    .pdp-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem 1.75rem 2.5rem;
+    }
+
+    .pdp-grid {
+      display: grid;
+      grid-template-columns: 38fr 62fr;
+      gap: 2.25rem;
+      align-items: start;
+    }
+
+    @media (max-width: 992px) {
+      .pdp-wrapper {
+        padding: 5rem 1.25rem 2rem;
+      }
+      .pdp-grid {
+        grid-template-columns: 1fr;
+        gap: 1.75rem;
+        padding-top: 0;
+      }
+    }
+
+    /* Gallery */
+    .pdp-gallery-col {
+      display: flex;
+      gap: 1.25rem;
+      position: sticky;
+      top: 140px;
+    }
+
+    @media (max-width: 768px) {
+      .pdp-gallery-col {
+        flex-direction: column-reverse;
+        position: static;
+      }
+    }
+
+    .gallery-thumbs-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      width: 90px;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-thumbs-col {
+        flex-direction: row;
+        width: 100%;
+        overflow-x: auto;
+      }
+    }
+
+    .thumb-btn {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border: 1px solid rgba(179, 138, 85, 0.3);
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      background: #320C10;
+      transition: all 0.2s ease;
+      opacity: 0.65;
+    }
+
+    .thumb-btn.active, .thumb-btn:hover {
+      border-color: #B38A55;
+      opacity: 1;
+      box-shadow: 0 0 0 2px rgba(179, 138, 85, 0.4);
+    }
+
+    .thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .main-image-pod {
+      flex: 1;
+      aspect-ratio: 4/5;
+      max-height: 550px;
+      background: #320C10;
+      border: 1px solid rgba(179, 138, 85, 0.25);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .main-product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform 0.4s ease;
+    }
+
+    .main-image-pod:hover .main-product-img {
+      transform: scale(1.03);
+    }
+
+    /* Details Column */
+    .pdp-details-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .pdp-header-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .pdp-title {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      color: #3E0F15;
+      font-weight: 500;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .pdp-short-desc {
+      font-size: 0.95rem;
+      color: #554;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .pdp-meta-section {
+      font-size: 0.95rem;
+      color: #3E0F15;
+    }
+
+    .pdp-meta-section strong {
+      color: #5A1E28;
+      font-weight: 600;
+    }
+
+    .pdp-pricing-compact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      font-size: 0.95rem;
+      color: #3E0F15;
+      padding: 0.75rem 0;
+      border-top: 1px solid rgba(179, 138, 85, 0.2);
+      border-bottom: 1px solid rgba(179, 138, 85, 0.2);
+    }
+
+    .pdp-label {
+      font-weight: 600;
+      display: inline-block;
+      width: 110px;
+    }
+
+    .pdp-price-current {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #3E0F15;
+    }
+
+    .pdp-price-orig {
+      text-decoration: line-through;
+      color: #887;
+    }
+
+    .pdp-save-text {
+      color: #1A4D3E;
+      font-weight: 600;
+    }
+
+    /* Variant Selectors */
+    .variant-section-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .variant-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.82rem;
+    }
+
+    .variant-label {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      color: #3E0F15;
+    }
+
+    .size-guide-trigger {
+      color: #B38A55;
+      background: none;
+      border: none;
+      font-size: 0.78rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .size-guide-trigger:hover {
+      color: #3E0F15;
+    }
+
+    .variant-pills-row {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .var-pill {
+      min-width: 48px;
+      height: 44px;
+      padding: 0 1rem;
+      border: 1px solid rgba(179, 138, 85, 0.4);
+      background: #FFFFFF;
+      color: #3E0F15;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .var-pill:hover {
+      border-color: #3E0F15;
+    }
+
+    .var-pill.active {
+      background: #3E0F15;
+      color: #FAF6F0;
+      border-color: #3E0F15;
+    }
+
+    .var-pill.out-of-stock {
+      opacity: 0.4;
+      text-decoration: line-through;
+      background: #F3F0EC;
+    }
+
+    /* Live Stock Alert Banner */
+    .stock-status-banner {
+      padding: 0.85rem 1.15rem;
+      border-radius: 3px;
+      font-size: 0.84rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .stock-status-banner.in-stock {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      color: #166534;
+    }
+
+    .stock-status-banner.low-stock {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      color: #92400E;
+    }
+
+    .stock-status-banner.out-of-stock {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: #991B1B;
+    }
+
+    /* Actions Row */
+    .actions-quantity-row {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .actions-quantity-row {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      .quantity-control {
+        flex: 1;
+        min-width: 120px;
+      }
+      .btn-wish-toggle {
+        width: 52px;
+        flex-shrink: 0;
+      }
+      .btn-add-bag,
+      .btn-buy-now {
+        flex: 1 1 100%;
+        width: 100%;
+      }
+      .pdp-title {
+        font-size: clamp(1.75rem, 5.5vw, 2.2rem);
+      }
+      .pdp-price-current {
+        font-size: 1.6rem;
+      }
+    }
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(179, 138, 85, 0.4);
+      border-radius: 3px;
+      background: #FFFFFF;
+      height: 52px;
+    }
+
+    .qty-btn {
+      width: 44px;
+      height: 100%;
+      background: none;
+      border: none;
+      color: #3E0F15;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .qty-btn:hover:not(:disabled) {
+      background: rgba(179, 138, 85, 0.1);
+    }
+
+    .qty-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .qty-display {
+      width: 45px;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #3E0F15;
+    }
+
+    .btn-add-bag {
+      flex: 1;
+      height: 52px;
+      background: #3E0F15;
+      color: #FAF6F0;
+      border: 1px solid #3E0F15;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.25s ease;
+    }
+
+    .btn-add-bag:hover:not(:disabled) {
+      background: #50131B;
+      box-shadow: 0 6px 20px rgba(62, 15, 21, 0.25);
+    }
+
+    .btn-add-bag:disabled {
+      background: #8E7A7D;
+      border-color: #8E7A7D;
+      cursor: not-allowed;
+      opacity: 0.75;
+    }
+
+    .btn-buy-now {
+      flex: 1;
+      height: 52px;
+      background: linear-gradient(135deg, #B38A55 0%, #D8B982 100%);
+      color: #320C10;
+      border: 1px solid #B38A55;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 15px rgba(179, 138, 85, 0.25);
+    }
+
+    .btn-buy-now:hover:not(:disabled) {
+      background: linear-gradient(135deg, #D8B982 0%, #E8D1A7 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(179, 138, 85, 0.4);
+    }
+
+    .btn-buy-now:disabled {
+      background: #D8CFC8;
+      border-color: #C8BEB6;
+      color: #735D60;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    .btn-wish-toggle {
+      width: 52px;
+      height: 52px;
+      border: 1px solid rgba(179, 138, 85, 0.4);
+      background: #FFFFFF;
+      color: #3E0F15;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-wish-toggle:hover {
+      border-color: #3E0F15;
+    }
+
+    .btn-wish-toggle.active {
+      background: #3E0F15;
+      color: #E25858;
+      border-color: #3E0F15;
+    }
+
+    /* Accordions */
+    .pdp-specs-accordion {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid rgba(179, 138, 85, 0.2);
+    }
+
+    .spec-item {
+      border-bottom: 1px solid rgba(179, 138, 85, 0.2);
+    }
+
+    .spec-header {
+      width: 100%;
+      padding: 1.15rem 0;
+      background: none;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: #3E0F15;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .spec-content {
+      padding-bottom: 1.25rem;
+      font-size: 0.88rem;
+      color: #5D4B4E;
+      line-height: 1.7;
+    }
+
+    /* Modal size guide */
+    .size-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 10, 8, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .size-modal-card {
+      background: #FAF6F0;
+      border: 1px solid #B38A55;
+      border-radius: 4px;
+      max-width: 620px;
+      width: 100%;
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .size-modal-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      color: #3E0F15;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="luxury-boutique-body">
+
+  <!-- ══════════ REDESIGNED LUXURY HEADER ══════════ -->
+  <header class="pdp-header" id="pdp-header">
+    <div class="header-inner">
+      <!-- Left: Back Button & Brand Logo -->
+      <div class="header-left">
+        <a href="/products.html" class="pdp-back-btn" aria-label="Return to Catalog" title="Back to Catalog">
+          <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+        </a>
+        <a href="/index.html" class="pdp-brand-logo" aria-label="Nutiyala Couture Home">
+          <div class="pdp-brand-emblem">
+            <img src="/assets/nutiyala-emblem-gold.png" alt="Nutiyala Monogram">
+          </div>
+          <div class="pdp-brand-text">
+            <span class="pdp-brand-name">Nutiyala</span>
+            <span class="pdp-brand-tagline">Couture • Made Just For You</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Right: Wishlist, Shopping Bag & Account -->
+      <div class="pdp-header-actions">
+        <a href="/account.html#wishlist" class="pdp-action-icon" id="pdp-header-wishlist" aria-label="Wishlist" title="View Wishlist">
+          <i data-lucide="heart"></i>
+          <span class="pdp-badge" id="wishlist-count">0</span>
+        </a>
+        <button class="pdp-action-icon cart-btn-wrap" id="cart-btn" aria-label="Shopping Bag" title="View Shopping Bag">
+          <i data-lucide="shopping-bag"></i>
+          <span class="pdp-badge" id="cart-count">0</span>
+        </button>
+        <a href="/login.html" class="pdp-account-btn" id="account-btn" aria-label="Client Login" title="Client Login / Account">
+          <i data-lucide="user"></i>
+          <span class="login-btn-label">LOGIN</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pdp-wrapper">
+    <div class="pdp-grid" id="pdp-grid-content">
+      <!-- Loading State -->
+      <div style="grid-column: 1/-1; text-align: center; padding: 6rem;">
+        <i data-lucide="loader-2" class="spin" style="width: 40px; height: 40px; color: #B38A55; margin-bottom: 1rem;"></i>
+        <h3 style="font-family: var(--font-serif); font-size: 1.8rem; color: #3E0F15;">Consulting Atelier Database...</h3>
+      </div>
+    </div>
+  </main>
+
+  <!-- Size Guide Modal -->
+  <div class="size-modal-backdrop" id="size-guide-modal">
+    <div class="size-modal-card">
+      <button class="size-modal-close" id="size-modal-close-btn"><i data-lucide="x"></i></button>
+      <span style="font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: #B38A55; font-weight: 600;">ATELIER FIT SPECIFICATIONS</span>
+      <h3 style="font-family: var(--font-serif); font-size: 2rem; color: #3E0F15; margin: 0.3rem 0 1.5rem;">Couture Size Guide</h3>
+      <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+        <thead>
+          <tr style="border-bottom: 2px solid #B38A55; color: #3E0F15;">
+            <th style="padding: 0.6rem;">Size</th>
+            <th style="padding: 0.6rem;">Bust (in)</th>
+            <th style="padding: 0.6rem;">Waist (in)</th>
+            <th style="padding: 0.6rem;">Hips (in)</th>
+            <th style="padding: 0.6rem;">Length (in)</th>
+          </tr>
+        </thead>
+        <tbody style="color: #4A3A3D;">
+          <tr style="border-bottom: 1px solid rgba(179, 138, 85, 0.2);"><td style="padding: 0.6rem;"><strong>XS (34)</strong></td><td>34"</td><td>28"</td><td>36"</td><td>45"</td></tr>
+          <tr style="border-bottom: 1px solid rgba(179, 138, 85, 0.2);"><td style="padding: 0.6rem;"><strong>S (36)</strong></td><td>36"</td><td>30"</td><td>38"</td><td>46"</td></tr>
+          <tr style="border-bottom: 1px solid rgba(179, 138, 85, 0.2);"><td style="padding: 0.6rem;"><strong>M (38)</strong></td><td>38"</td><td>32"</td><td>40"</td><td>46"</td></tr>
+          <tr style="border-bottom: 1px solid rgba(179, 138, 85, 0.2);"><td style="padding: 0.6rem;"><strong>L (40)</strong></td><td>40"</td><td>34"</td><td>42"</td><td>47"</td></tr>
+          <tr><td style="padding: 0.6rem;"><strong>XL (42)</strong></td><td>42"</td><td>36"</td><td>44"</td><td>47"</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 0.78rem; color: #7A686B; margin-top: 1.25rem;">For bespoke bridal or customized sleeve tailoring, please reach out to Sana via our concierge.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer simple-footer bg-deep-chocolate text-light" id="contact-footer" style="margin-top: 5rem;">
+    <div class="container footer-simple-wrap">
+      <div class="footer-simple-brand">
+        <a href="index.html" class="footer-brand-link" aria-label="Nutiyala Home">
+          <img id="footer-logo" src="assets/nutiyala-emblem-gold.png" alt="Nutiyala Couture Emblem" class="footer-simple-logo">
+        </a>
+        <h3 id="footer-boutique-name" class="footer-simple-name">Nutiyala Couture</h3>
+      </div>
+      <div class="footer-simple-contacts">
+        <a id="footer-email-link" href="mailto:contact@nutiyala.com" class="footer-contact-item" title="Send us an email">
+          <i data-lucide="mail"></i>
+          <span id="footer-email">contact@nutiyala.com</span>
+        </a>
+        <a id="footer-phone-link" href="tel:+919876543210" class="footer-contact-item" title="Call or WhatsApp us">
+          <i data-lucide="phone"></i>
+          <span id="footer-phone">+91 98765 43210</span>
+        </a>
+        <a id="footer-insta-link" href="https://instagram.com/nutiyala_couture" target="_blank" rel="noopener noreferrer" class="footer-contact-item" title="Follow us on Instagram">
+          <svg class="instagram-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          <span id="footer-instagram">@nutiyala_couture</span>
+        </a>
+      </div>
+      <div class="footer-simple-copy">
+        © 2026 <span class="footer-copy-name">Nutiyala Couture</span>. All rights reserved. Grace in Every Thread.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) lucide.createIcons();
+
+      // Determine slug from URL
+      let slug = window.location.pathname.replace('/products/', '').replace('/products', '').replace('/', '');
+      if (!slug || slug === 'product') {
+        const params = new URLSearchParams(window.location.search);
+        slug = params.get('slug') || params.get('id') || 'beige-embroidered-silk-kurti';
+      }
+
+      // User header auth
+      fetch('/api/auth/me').then(r => r.json()).then(data => {
+        const btn = document.getElementById('account-btn');
+        btn.addEventListener('click', () => {
+          if (data && data.user) {
+            window.location.href = data.user.account_type === 'ADMIN' ? '/admin-orders.html' : '/account';
+          } else {
+            window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+          }
+        });
+      });
+
+      // Update badge counts
+      fetch('/api/cart').then(r => r.json()).then(d => {
+        const count = document.getElementById('cart-count');
+        if (count && d.item_count !== undefined) count.textContent = d.item_count;
+      }).catch(() => {});
+
+      fetch('/api/wishlist').then(r => r.json()).then(d => {
+        const count = document.getElementById('wishlist-count');
+        if (count && d.items) count.textContent = d.items.length;
+      }).catch(() => {});
+
+      // Load Product Detail
+      loadProductDetail(slug);
+
+      async function loadProductDetail(productSlug) {
+        const container = document.getElementById('pdp-grid-content');
+        try {
+          const res = await fetch(`/api/products/${productSlug}`);
+          const data = await res.json();
+          if (!res.ok || !data.product) {
+            throw new Error(data.error || 'Product not found');
+          }
+
+          const p = data.product;
+          document.title = `${p.name} | Nutiyala Couture`;
+
+          // Selected variant state (prioritize in-stock variant)
+          const inStockVariant = (p.variants || []).find(v => v.stock_quantity > 0);
+          let selectedColor = inStockVariant ? inStockVariant.color : (p.colors[0] || 'Default');
+          let selectedSize = inStockVariant ? inStockVariant.size : (p.sizes[0] || 'Standard');
+          let currentQty = 1;
+
+          // Find variant stock
+          function getVariantStock(size, color) {
+            const variant = p.variants.find(v => v.size === size && v.color === color);
+            return variant ? variant.stock_quantity : 0;
+          }
+
+          const hasDiscount = p.discount_price && p.discount_price < p.price;
+          const currentPrice = hasDiscount ? p.discount_price : p.price;
+          const initialStock = getVariantStock(selectedSize, selectedColor);
+
+          container.innerHTML = `
+            <!-- Left: Gallery -->
+            <div class="pdp-gallery-col">
+              <div class="gallery-thumbs-col" id="pdp-thumbs">
+                ${p.images.map((img, idx) => `
+                  <button class="thumb-btn ${idx === 0 ? 'active' : ''}" data-index="${idx}" data-src="${img.image_url}">
+                    <img src="/${img.image_url}" alt="${p.name} thumb" class="thumb-img">
+                  </button>
+                `).join('')}
+              </div>
+              <div class="main-image-pod">
+                <img id="pdp-main-img" src="/${p.images[0].image_url}" alt="${p.name}" class="main-product-img">
+              </div>
+            </div>
+
+            <!-- Right: Product Info & Actions -->
+            <div class="pdp-details-col">
+              
+              <!-- Title & Desc -->
+              <div class="pdp-header-section">
+                <h1 class="pdp-title">${p.name}</h1>
+                <p class="pdp-short-desc">${p.description || 'Artisanal haute couture tailored exclusively for you.'}</p>
+              </div>
+
+              <!-- Meta: Fabric -->
+              <div class="pdp-meta-section">
+                <p class="pdp-fabric"><strong>Fabric:</strong> <span>${p.fabric || 'Pure Mulberry Silk'}</span></p>
+              </div>
+
+              <!-- Color Selection -->
+              ${p.colors.length > 0 ? `
+                <div class="variant-section-block">
+                  <div class="variant-header-row">
+                    <span class="variant-label"><strong>Color:</strong> <span id="lbl-color">${selectedColor}</span></span>
+                  </div>
+                  <div class="variant-pills-row" id="color-pills-row">
+                    ${p.colors.map((c, i) => `
+                      <button class="var-pill ${c === selectedColor ? 'active' : ''}" data-color="${c}">${c}</button>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+
+              <!-- Size Selection -->
+              ${p.sizes.length > 0 ? `
+                <div class="variant-section-block">
+                  <div class="variant-header-row">
+                    <span class="variant-label"><strong>Size:</strong> <span id="lbl-size">${selectedSize}</span></span>
+                    <button class="size-guide-trigger" id="open-size-modal" style="margin-left:auto;">Size Guide</button>
+                  </div>
+                  <div class="variant-pills-row" id="size-pills-row">
+                    ${p.sizes.map((s, i) => {
+                      const stock = getVariantStock(s, selectedColor);
+                      return `
+                        <button class="var-pill ${s === selectedSize ? 'active' : ''} ${stock === 0 ? 'out-of-stock' : ''}" data-size="${s}">
+                          ${s}
+                        </button>
+                      `;
+                    }).join('')}
+                  </div>
+                </div>
+              ` : ''}
+
+              <!-- Pricing (Compact) -->
+              <div class="pdp-pricing-compact">
+                <div><span class="pdp-label">Price:</span> <span class="pdp-price-current">₹${currentPrice.toLocaleString('en-IN')}</span></div>
+                ${hasDiscount ? `
+                  <div><span class="pdp-label">Original price:</span> <span class="pdp-price-orig">₹${p.price.toLocaleString('en-IN')}</span></div>
+                  <div><span class="pdp-label">You save:</span> <span class="pdp-save-text">₹${(p.price - p.discount_price).toLocaleString('en-IN')}</span></div>
+                ` : ''}
+              </div>
+
+              <!-- Stock Availability Alert -->
+              <div class="stock-status-banner" id="stock-banner">
+                <!-- Dynamically updated -->
+              </div>
+
+              <!-- Quantity & Purchase Actions -->
+              <div class="actions-quantity-row" style="flex-wrap: wrap;">
+                <div class="quantity-control">
+                  <button class="qty-btn" id="qty-minus" aria-label="Decrease quantity">−</button>
+                  <span class="qty-display" id="qty-display">1</span>
+                  <button class="qty-btn" id="qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+
+                <button class="btn-add-bag" id="add-to-bag-btn" style="flex:1; min-width: 140px;">
+                  <i data-lucide="shopping-bag" style="width: 17px; height: 17px;"></i>
+                  <span id="bag-btn-text">ADD TO BAG</span>
+                </button>
+
+                <button class="btn-buy-now" id="buy-now-btn" style="flex:1; min-width: 140px;">
+                  <i data-lucide="zap" style="width: 17px; height: 17px;"></i>
+                  <span>BUY NOW</span>
+                </button>
+
+                <button class="btn-wish-toggle" id="pdp-wish-btn" aria-label="Add to Wishlist">
+                  <i data-lucide="heart" style="width: 20px; height: 20px;"></i>
+                </button>
+              </div>
+
+              <!-- Extra Accordions (Care Info) -->
+              <div class="pdp-specs-accordion" style="margin-top: 1rem;">
+                <div class="spec-item">
+                  <div class="spec-header" style="pointer-events: none;">
+                    <span style="font-size: 0.95rem; font-weight: 600; text-transform: uppercase;">Care Instructions</span>
+                  </div>
+                  <div class="spec-content" style="display:block; padding-top: 0.5rem; color: #554; font-size: 0.9rem;">
+                    ${p.care_instructions || 'Specialist dry clean only. Store in unbleached cotton muslin fabric.'}
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+
+          if (window.lucide) lucide.createIcons();
+
+          // Setup Gallery thumbnails
+          document.querySelectorAll('.thumb-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+              document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              document.getElementById('pdp-main-img').src = '/' + btn.dataset.src;
+            });
+          });
+
+          // Size Guide Modal
+          const modal = document.getElementById('size-guide-modal');
+          document.getElementById('open-size-modal').addEventListener('click', () => modal.style.display = 'flex');
+          document.getElementById('size-modal-close-btn').addEventListener('click', () => modal.style.display = 'none');
+          modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+
+          // Stock & Availability Updater
+          function updateStockUI() {
+            const stock = getVariantStock(selectedSize, selectedColor);
+            const banner = document.getElementById('stock-banner');
+            const bagBtn = document.getElementById('add-to-bag-btn');
+            const bagBtnText = document.getElementById('bag-btn-text');
+            const plusBtn = document.getElementById('qty-plus');
+            const minusBtn = document.getElementById('qty-minus');
+            const qtyDisplay = document.getElementById('qty-display');
+
+            if (currentQty > stock) currentQty = Math.max(1, stock);
+            qtyDisplay.textContent = stock === 0 ? '0' : currentQty;
+
+            const buyBtn = document.getElementById('buy-now-btn');
+            if (buyBtn) buyBtn.disabled = (stock === 0);
+
+            if (stock === 0) {
+              banner.className = 'stock-status-banner out-of-stock';
+              banner.innerHTML = `<i data-lucide="x-circle" style="width: 17px; height: 17px;"></i> <span>OUT OF STOCK — This size & color combination is currently unavailable</span>`;
+              bagBtn.disabled = true;
+              bagBtnText.textContent = 'OUT OF STOCK';
+              plusBtn.disabled = true;
+              minusBtn.disabled = true;
+            } else if (stock <= 3) {
+              banner.className = 'stock-status-banner low-stock';
+              banner.innerHTML = `<i data-lucide="alert-triangle" style="width: 17px; height: 17px;"></i> <span>ONLY ${stock} PIECES LEFT — Order now to secure this bespoke piece</span>`;
+              bagBtn.disabled = false;
+              bagBtnText.textContent = 'ADD TO BAG';
+              plusBtn.disabled = currentQty >= stock;
+              minusBtn.disabled = currentQty <= 1;
+            } else {
+              banner.className = 'stock-status-banner in-stock';
+              banner.innerHTML = `<i data-lucide="check-circle" style="width: 17px; height: 17px;"></i> <span>IN STOCK (${stock} available) — Ready for bespoke couture dispatch</span>`;
+              bagBtn.disabled = false;
+              bagBtnText.textContent = 'ADD TO BAG';
+              plusBtn.disabled = currentQty >= stock;
+              minusBtn.disabled = currentQty <= 1;
+            }
+
+            if (window.lucide) lucide.createIcons();
+          }
+
+          updateStockUI();
+
+          // Quantity Buttons
+          document.getElementById('qty-plus').addEventListener('click', () => {
+            const stock = getVariantStock(selectedSize, selectedColor);
+            if (currentQty < stock) {
+              currentQty++;
+              updateStockUI();
+            }
+          });
+
+          document.getElementById('qty-minus').addEventListener('click', () => {
+            if (currentQty > 1) {
+              currentQty--;
+              updateStockUI();
+            }
+          });
+
+          // Color Pill Selectors
+          document.querySelectorAll('#color-pills-row .var-pill').forEach(btn => {
+            btn.addEventListener('click', () => {
+              document.querySelectorAll('#color-pills-row .var-pill').forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              selectedColor = btn.dataset.color;
+              document.getElementById('lbl-color').textContent = selectedColor;
+
+              // Update size pills out-of-stock classes
+              document.querySelectorAll('#size-pills-row .var-pill').forEach(sBtn => {
+                const s = sBtn.dataset.size;
+                const stock = getVariantStock(s, selectedColor);
+                sBtn.classList.toggle('out-of-stock', stock === 0);
+              });
+
+              updateStockUI();
+            });
+          });
+
+          // Size Pill Selectors
+          document.querySelectorAll('#size-pills-row .var-pill').forEach(btn => {
+            btn.addEventListener('click', () => {
+              document.querySelectorAll('#size-pills-row .var-pill').forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              selectedSize = btn.dataset.size;
+              document.getElementById('lbl-size').textContent = selectedSize;
+              updateStockUI();
+            });
+          });
+
+          // Add to Bag Click
+          document.getElementById('add-to-bag-btn').addEventListener('click', async () => {
+            const stock = getVariantStock(selectedSize, selectedColor);
+            if (stock === 0) {
+              alert('The selected creation size and color combination is currently out of stock.');
+              return;
+            }
+            if (window.NutiyalaCart && window.NutiyalaCart.addToCart) {
+              await window.NutiyalaCart.addToCart(p.id, selectedSize, selectedColor, currentQty);
+            } else {
+              try {
+                const res = await fetch('/api/cart/items', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ product_id: p.id, size: selectedSize, color: selectedColor, quantity: currentQty })
+                });
+                const d = await res.json();
+                if (res.ok) {
+                  const badge = document.getElementById('cart-count');
+                  if (badge) badge.textContent = d.item_count || 1;
+                  alert('Added to your couture bag!');
+                } else {
+                  alert(d.error || 'Failed to add item to bag.');
+                }
+              } catch (e) {
+                alert('Could not add creation to bag. Please try again.');
+              }
+            }
+          });
+
+          // Buy Now Click
+          document.getElementById('buy-now-btn').addEventListener('click', async () => {
+            const stock = getVariantStock(selectedSize, selectedColor);
+            if (stock === 0) {
+              alert('The selected creation size and color combination is currently out of stock.');
+              return;
+            }
+            if (window.NutiyalaCart && window.NutiyalaCart.buyNow) {
+              await window.NutiyalaCart.buyNow(p.id, selectedSize, selectedColor, currentQty);
+            } else {
+              try {
+                await fetch('/api/cart/items', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ product_id: p.id, size: selectedSize, color: selectedColor, quantity: currentQty })
+                });
+              } catch (e) {}
+              window.location.href = '/cart.html';
+            }
+          });
+
+          // Wishlist Toggle
+          document.getElementById('pdp-wish-btn').addEventListener('click', async () => {
+            const btn = document.getElementById('pdp-wish-btn');
+
+            if (window.NutiyalaAuth && !window.NutiyalaAuth.getUser()) {
+              window.NutiyalaAuth.promptWishlistLogin(p.id, (wishlisted) => {
+                btn.classList.toggle('active', wishlisted);
+              });
+              return;
+            }
+
+            try {
+              const res = await fetch('/api/wishlist/toggle', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ product_id: p.id })
+              });
+              if (res.status === 401) {
+                if (window.NutiyalaAuth && window.NutiyalaAuth.promptWishlistLogin) {
+                  window.NutiyalaAuth.promptWishlistLogin(p.id, (wishlisted) => {
+                    btn.classList.toggle('active', wishlisted);
+                  });
+                }
+                return;
+              }
+              const data = await res.json();
+              btn.classList.toggle('active', data.wishlisted);
+
+              const wishCount = document.getElementById('wishlist-count');
+              if (wishCount) {
+                const cur = parseInt(wishCount.textContent) || 0;
+                wishCount.textContent = data.wishlisted ? cur + 1 : Math.max(0, cur - 1);
+              }
+            } catch (err) {}
+          });
+
+        } catch (err) {
+          container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 6rem;">
+              <i data-lucide="alert-circle" style="width: 48px; height: 48px; color: #9B1C1C; margin-bottom: 1rem;"></i>
+              <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: #3E0F15;">Creation Not Found</h2>
+              <p style="color: #7A686B; margin: 0.5rem 0 2rem;">The requested couture piece is not present in our database catalogue.</p>
+              <a href="/products.html" style="padding: 0.9rem 2rem; background: #3E0F15; color: #FAF6F0; text-decoration: none; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase;">
+                Return to Catalog
+              </a>
+            </div>
+          `;
+          if (window.lucide) lucide.createIcons();
+        }
+      }
+    });
+  </script>
+  <script src="/js/nutiyala-auth.js"></script>
+  <script src="/js/nutiyala-cart.js"></script>
+</body>
+</html>

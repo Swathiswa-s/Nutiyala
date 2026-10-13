@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AARADHYA CLOTHING | Luxury Indian Ethnic-Wear & Haute Couture</title>
+  <meta name="description" content="Indian craftsmanship, reimagined for the modern woman. Discover handcrafted kurtis, architectural co-ord sets, royal Kashmiri pashmina shawls, and pure mulberry silk hijabs.">
+  <meta name="keywords" content="Aaradhya Clothing, luxury Indian fashion, ethnic wear, designer kurtis, co-ord sets, pashmina shawls, silk hijabs, Indian haute couture">
+  <meta property="og:title" content="AARADHYA CLOTHING | Indian Craftsmanship, Reimagined">
+  <meta property="og:description" content="A quiet dedication to needle, thread, and timeless proportions. Explore our bespoke handcrafted collections.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Cormorant Garamond, Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS Design System -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/header-nav.css">
+  <link rel="stylesheet" href="css/hero-reveal.css">
+  <link rel="stylesheet" href="css/editorial-sections.css">
+  <link rel="stylesheet" href="css/products.css">
+  <link rel="stylesheet" href="css/modal-details.css">
+  <link rel="stylesheet" href="css/cart-checkout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- ==================================================
+       1. STICKY LUXURY NAVIGATION
+  ================================================== -->
+  <header id="siteHeader" class="site-header">
+    <div class="header-inner">
+      <!-- Left: Collections Mega-Trigger & Links -->
+      <nav class="desktop-nav" aria-label="Primary Navigation">
+        <a href="#collections" class="nav-link has-indicator" data-open-collections>Collections</a>
+        <a href="#kurtis" class="nav-link" data-filter-category="kurtis">Kurtis</a>
+        <a href="#coords" class="nav-link" data-filter-category="coords">Co-ord Sets</a>
+        <a href="#hijabs" class="nav-link" data-filter-category="hijabs">Hijabs</a>
+        <a href="#shawls" class="nav-link" data-filter-category="shawls">Shawls</a>
+      </nav>
+
+      <!-- Center: Brand Identity Logotype -->
+      <a href="#" class="brand-logo-wrap" aria-label="Aaradhya Clothing Home">
+        <span class="brand-logo">Aaradhya</span>
+        <span class="brand-logo-sub">Clothing • New Delhi</span>
+      </a>
+
+      <!-- Right: Secondary Links & Action Icons -->
+      <div class="header-actions">
+        <nav class="desktop-nav" aria-label="Secondary Navigation">
+          <a href="#collectionSection" class="nav-link" data-filter-category="new-arrivals">New Arrivals</a>
+          <a href="#aboutSection" class="nav-link">About</a>
+          <a href="#contactSection" class="nav-link">Contact</a>
+        </nav>
+
+        <!-- Search Icon Button -->
+        <button type="button" id="navSearchBtn" class="action-btn" aria-label="Search Catalog" title="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <circle cx="11" cy="11" r="7"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+
+        <!-- Wishlist Icon Button -->
+        <button type="button" id="navWishlistBtn" class="action-btn" aria-label="View Wishlist" title="Saved Pieces">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          <span id="navWishlistCount" class="badge-count">0</span>
+        </button>
+
+        <!-- Shopping Bag Icon Button -->
+        <button type="button" id="navCartBtn" class="action-btn" aria-label="View Cart" title="Shopping Bag">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span id="navCartCount" class="badge-count">0</span>
+        </button>
+
+        <!-- Mobile Hamburger -->
+        <button type="button" id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Open Mobile Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================================================
+       3. SIDE COLLECTIONS MEGA DRAWER
+  ================================================== -->
+  <div id="collectionsBackdrop" class="drawer-backdrop"></div>
+  <aside id="collectionsDrawer" class="collections-drawer" aria-label="Collections Mega Menu">
+    <div class="drawer-header">
+      <h3 class="drawer-title">
+        <span>The Collections</span>
+        <span style="font-size: 0.8rem; color: var(--gold-light);">✦</span>
+      </h3>
+      <button type="button" id="collectionsCloseBtn" class="drawer-close-btn" aria-label="Close collections menu">✕</button>
+    </div>
+
+    <div class="collections-menu-list">
+      <a href="#collectionSection" class="collection-menu-item" data-filter-category="kurtis">
+        <div class="collection-menu-thumb">
+          <img src="assets/images/pexels/sage_kurti_1.jpg" alt="Kurtis" loading="lazy" />
+        </div>
+        <div class="collection-menu-info">
+          <h4 class="collection-menu-name">KURTIS</h4>
+          <p class="collection-menu-desc">“Everyday elegance, crafted with intention.”</p>
+        </div>
+      </a>
+
+      <a href="#collectionSection" class="collection-menu-item" data-filter-category="coords">
+        <div class="collection-menu-thumb">
+          <img src="assets/images/pexels/terracotta_coord_new_1.jpg" alt="Co-ord Sets" loading="lazy" />
+        </div>
+        <div class="collection-menu-info">
+          <h4 class="collection-menu-name">CO-ORD SETS</h4>
+          <p class="collection-menu-desc">“Modern silhouettes designed to move with you.”</p>
+        </div>
+      </a>
+
+      <a href="#collectionSection" class="collection-menu-item" data-filter-category="hijabs">
+        <div class="collection-menu-thumb">
+          <img src="assets/images/pexels/hijab_lav_new_1.jpg" alt="Hijabs" loading="lazy" />
+        </div>
+        <div class="collection-menu-info">
+          <h4 class="collection-menu-name">HIJABS</h4>
+          <p class="collection-menu-desc">“Soft textures. Refined drapes.”</p>
+        </div>
+      </a>
+
+      <a href="#collectionSection" class="collection-menu-item" data-filter-category="shawls">
+        <div class="collection-menu-thumb">
+          <img src="assets/images/pexels/pashmina_shawl_new_1.jpg" alt="Shawls" loading="lazy" />
+        </div>
+        <div class="collection-menu-info">
+          <h4 class="collection-menu-name">SHAWLS</h4>
+          <p class="collection-menu-desc">“Layers of warmth, artistry and grace.”</p>
+        </div>
+      </a>
+
+      <a href="#collectionSection" class="collection-menu-item" data-filter-category="new-arrivals">
+        <div class="collection-menu-thumb">
+          <img src="assets/images/pexels/rosewood_coord_new_1.jpg" alt="New Arrivals" loading="lazy" />
+        </div>
+        <div class="collection-menu-info">
+          <h4 class="collection-menu-name">NEW ARRIVALS</h4>
+          <p class="collection-menu-desc">“Freshly unveiled handcrafted masterworks.”</p>
+        </div>
+      </a>
+
+      <a href="#collectionSection" class="collection-menu-item" data-filter-category="bestsellers">
+        <div class="collection-menu-thumb">
+          <img src="assets/images/pexels/lavender_kurti_new_1.jpg" alt="Bestsellers" loading="lazy" />
+        </div>
+        <div class="collection-menu-info">
+          <h4 class="collection-menu-name">BESTSELLERS</h4>
+          <p class="collection-menu-desc">“Beloved silhouettes cherished season after season.”</p>
+        </div>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ==================================================
+       4. MOBILE NAVIGATION DRAWER
+  ================================================== -->
+  <div id="mobileNavMenu" class="mobile-nav-drawer" aria-label="Mobile Menu">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <span class="brand-logo" style="font-size: 1.3rem;">Aaradhya</span>
+      <button type="button" id="mobileNavClose" class="drawer-close-btn" aria-label="Close Mobile Menu">✕</button>
+    </div>
+
+    <div class="mobile-nav-links">
+      <a href="#collectionSection" class="mobile-nav-link" data-filter-category="new-arrivals">New Arrivals <span>→</span></a>
+      <a href="#collectionSection" class="mobile-nav-link" data-filter-category="kurtis">Kurtis <span>→</span></a>
+      <a href="#collectionSection" class="mobile-nav-link" data-filter-category="coords">Co-ord Sets <span>→</span></a>
+      <a href="#collectionSection" class="mobile-nav-link" data-filter-category="hijabs">Hijabs <span>→</span></a>
+      <a href="#collectionSection" class="mobile-nav-link" data-filter-category="shawls">Shawls <span>→</span></a>
+      <a href="#craftsmanshipSection" class="mobile-nav-link">Our Craft <span>→</span></a>
+      <a href="#aboutSection" class="mobile-nav-link">About The Brand <span>→</span></a>
+      <a href="#contactSection" class="mobile-nav-link">Atelier Concierge <span>→</span></a>
+    </div>
+
+    <div class="mobile-nav-footer">
+      <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+        <button type="button" id="mobileSearchBtn" class="btn-secondary" style="flex: 1; padding: 0.6rem;">Search</button>
+        <button type="button" id="mobileWishlistBtn" class="btn-secondary" style="flex: 1; padding: 0.6rem;">
+          Saved (<span id="mobileWishlistCount">0</span>)
+        </button>
+        <button type="button" id="mobileCartBtn" class="btn-primary" style="flex: 1; padding: 0.6rem;">
+          Bag (<span id="mobileCartCount">0</span>)
+        </button>
+      </div>
+      <p style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">AARADHYA CLOTHING • NEW DELHI</p>
+    </div>
+  </div>
+
+  <!-- ==================================================
+       5. MAIN APPLICATION CONTENT
+  ================================================== -->
+  <main id="appMain">
+
+    <!-- CINEMATIC MULTI-SCENE LUXURY HERO SECTION (Haute Couture Film Campaign) -->
+    <section id="heroSection" class="hero-section" aria-label="Aaradhya Haute Couture Luxury Film Campaign">
+      <!-- Cinematic Multi-Scene Film Viewport -->
+      <div class="hero-cinema-viewport">
+        <!-- Scene 01: Haveli Window / Autumn Grace -->
+        <div class="hero-scene is-active" data-scene="0">
+          <div class="hero-scene-media-wrap">
+            <img 
+              src="aaradhya/assets/videos/window.webp" 
+              alt="Aaradhya Haute Couture Haveli Window Campaign" 
+              class="hero-scene-media" 
+              loading="eager"
+            />
+          </div>
+          <div class="hero-scene-overlay"></div>
+        </div>
+
+        <!-- Scene 02: Royal Pashmina & Cashmere Archive -->
+        <div class="hero-scene" data-scene="1">
+          <div class="hero-scene-media-wrap">
+            <img 
+              src="aaradhya/assets/videos/shawl_tie.webp" 
+              alt="Aaradhya Royal Pashmina Drape Editorial" 
+              class="hero-scene-media" 
+              loading="eager"
+            />
+          </div>
+          <div class="hero-scene-overlay"></div>
+        </div>
+
+        <!-- Scene 03: Architectural Silhouette Walk -->
+        <div class="hero-scene" data-scene="2">
+          <div class="hero-scene-media-wrap">
+            <img 
+              src="aaradhya/assets/videos/walk.webp" 
+              alt="Aaradhya Contemporary Architectural Silhouette" 
+              class="hero-scene-media" 
+              loading="eager"
+            />
+          </div>
+          <div class="hero-scene-overlay"></div>
+        </div>
+
+        <!-- Scene 04: The Royal Atelier Festive Campaign -->
+        <div class="hero-scene" data-scene="3">
+          <div class="hero-scene-media-wrap">
+            <img 
+              src="aaradhya/assets/videos/campaign.webp" 
+              alt="Aaradhya Royal Atelier Festive Grandeur" 
+              class="hero-scene-media" 
+              loading="eager"
+            />
+          </div>
+          <div class="hero-scene-overlay"></div>
+        </div>
+
+        <!-- Peripheral Vignette -->
+        <div class="hero-cinematic-vignette"></div>
+      </div>
+
+      <!-- Luxury Editorial Narrative Layer -->
+      <div class="hero-narrative-container">
+        <div class="hero-content" id="heroContent">
+          <div class="hero-eyebrow-wrap">
+            <span class="hero-campaign-tag" id="heroTag">✦ Haute Couture Autumn / Festive • Scene 01</span>
+          </div>
+          <h1 class="hero-title" id="heroTitle">Crafted with <span>Grace.</span></h1>
+          <p class="hero-subheading" id="heroDesc">Contemporary silhouettes, timeless Indian craftsmanship.</p>
+
+          <div class="hero-cta-group" id="heroCtas">
+            <a href="#collectionSection" class="btn-primary" data-filter-category="all">Explore Collection</a>
+            <a href="#aboutSection" class="btn-secondary">Discover Our Story</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editorial Scene Timeline & Progress -->
+      <div class="hero-film-timeline" aria-label="Campaign Film Scenes">
+        <button type="button" class="timeline-scene-btn is-active" data-go-scene="0" aria-label="Scene 01: Haveli Grace">
+          <span class="timeline-num">01</span>
+          <div class="timeline-bar"><div class="timeline-fill"></div></div>
+          <span class="timeline-label">Haveli Grace</span>
+        </button>
+        <button type="button" class="timeline-scene-btn" data-go-scene="1" aria-label="Scene 02: Pashmina Archive">
+          <span class="timeline-num">02</span>
+          <div class="timeline-bar"><div class="timeline-fill"></div></div>
+          <span class="timeline-label">Pashmina Archive</span>
+        </button>
+        <button type="button" class="timeline-scene-btn" data-go-scene="2" aria-label="Scene 03: Royal Motion">
+          <span class="timeline-num">03</span>
+          <div class="timeline-bar"><div class="timeline-fill"></div></div>
+          <span class="timeline-label">Royal Motion</span>
+        </button>
+        <button type="button" class="timeline-scene-btn" data-go-scene="3" aria-label="Scene 04: Atelier Grandeur">
+          <span class="timeline-num">04</span>
+          <div class="timeline-bar"><div class="timeline-fill"></div></div>
+          <span class="timeline-label">Atelier Grandeur</span>
+        </button>
+      </div>
+
+      <!-- Floating campaign markers -->
+      <div class="hero-badges-bar">
+        <div class="hero-badge-pill">
+          <span class="hero-badge-dot"></span>
+          <span>Mulberry &amp; Chanderi Silks</span>
+        </div>
+        <div class="hero-badge-pill">
+          <span class="hero-badge-dot"></span>
+          <span>48+ Hours Hand Embroidery</span>
+        </div>
+        <div class="hero-badge-pill">
+          <span class="hero-badge-dot"></span>
+          <span>Himalayan Cashmere Pashmina</span>
+        </div>
+      </div>
+
+      <div class="hero-scroll-indicator">
+        <span>Scroll to Explore</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- FIRST EDITORIAL QUOTE -->
+    <section class="editorial-quote-section scroll-reveal">
+      <div class="container-narrow">
+        <blockquote class="editorial-quote-text">
+          “Crafted with grace. Every silhouette honoring centuries of Indian handloom heritage.”
+        </blockquote>
+        <cite class="editorial-quote-sub">The Aaradhya Manifesto</cite>
+      </div>
+    </section>
+
+    <!-- COLLECTION INTRO: "Designed for Every Expression" -->
+    <section id="categorySection" class="collection-intro-section scroll-reveal">
+      <div class="container">
+        <div class="text-center">
+          <span class="eyebrow">Curated Silhouettes</span>
+          <h2 class="section-title">Designed for Every Expression</h2>
+          <p class="section-desc">Four foundational pillars of Indian craftsmanship sculpted with modern architectural restraint.</p>
+        </div>
+
+        <div class="category-quad-grid">
+          <!-- Pillar 1: Kurtis -->
+          <a href="#collectionSection" class="category-pillar-card" data-filter-category="kurtis">
+            <div class="category-pillar-media">
+              <img src="assets/images/pexels/pillar_kurtis_new.jpg" alt="Aaradhya Kurtis" loading="lazy" />
+            </div>
+            <div class="category-pillar-overlay"></div>
+            <div class="category-pillar-content">
+              <span class="category-pillar-eyebrow">Atelier Pillar 01</span>
+              <h3 class="category-pillar-title">
+                <span>Kurtis</span>
+                <span class="category-pillar-arrow">→</span>
+              </h3>
+              <p class="category-pillar-desc">Everyday elegance, crafted with intention and heirloom needlework.</p>
+            </div>
+          </a>
+
+          <!-- Pillar 2: Co-ord Sets -->
+          <a href="#collectionSection" class="category-pillar-card" data-filter-category="coords">
+            <div class="category-pillar-media">
+              <img src="assets/images/pexels/pillar_coords_new.jpg" alt="Aaradhya Co-ord Sets" loading="lazy" />
+            </div>
+            <div class="category-pillar-overlay"></div>
+            <div class="category-pillar-content">
+              <span class="category-pillar-eyebrow">Atelier Pillar 02</span>
+              <h3 class="category-pillar-title">
+                <span>Co-ord Sets</span>
+                <span class="category-pillar-arrow">→</span>
+              </h3>
+              <p class="category-pillar-desc">Modern silhouettes designed to move with you through life’s rhythm.</p>
+            </div>
+          </a>
+
+          <!-- Pillar 3: Hijabs -->
+          <a href="#collectionSection" class="category-pillar-card" data-filter-category="hijabs">
+            <div class="category-pillar-media">
+              <img src="assets/images/pexels/pillar_hijabs_new.jpg" alt="Aaradhya Hijabs" loading="lazy" />
+            </div>
+            <div class="category-pillar-overlay"></div>
+            <div class="category-pillar-content">
+              <span class="category-pillar-eyebrow">Atelier Pillar 03</span>
+              <h3 class="category-pillar-title">
+                <span>Hijabs</span>
+                <span class="category-pillar-arrow">→</span>
+              </h3>
+              <p class="category-pillar-desc">Soft textures. Refined drapes woven in pure Mulberry silk.</p>
+            </div>
+          </a>
+
+          <!-- Pillar 4: Shawls -->
+          <a href="#collectionSection" class="category-pillar-card" data-filter-category="shawls">
+            <div class="category-pillar-media">
+              <img src="assets/images/pexels/pillar_shawls_new.jpg" alt="Aaradhya Shawls" loading="lazy" />
+            </div>
+            <div class="category-pillar-overlay"></div>
+            <div class="category-pillar-content">
+              <span class="category-pillar-eyebrow">Atelier Pillar 04</span>
+              <h3 class="category-pillar-title">
+                <span>Shawls</span>
+                <span class="category-pillar-arrow">→</span>
+              </h3>
+              <p class="category-pillar-desc">Layers of warmth, artistry and grace woven from Changthangi fleece.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAILORING & CRAFTSMANSHIP SPREAD (assets/tailoring video) -->
+    <section id="craftsmanshipSection" class="craftsmanship-section scroll-reveal">
+      <div class="container">
+        <div class="craft-editorial-spread">
+          <!-- Left: Tailoring sequence canvas player -->
+          <div class="craft-video-col">
+            <div class="craft-canvas-wrapper">
+              <canvas id="tailoringCanvas" class="craft-canvas"></canvas>
+              <div class="craft-overlay-tag">
+                <span class="craft-tag-pulse"></span>
+                <span class="craft-tag-text">Master Atelier Stitching • New Delhi</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Editorial Narrative -->
+          <div class="craft-text-col">
+            <span class="eyebrow">Atelier Provenance</span>
+            <h2 class="section-title">Where Every Thread Begins</h2>
+
+            <blockquote class="craft-quote-callout">
+              “Before it becomes a garment, it becomes a craft.”
+            </blockquote>
+
+            <div class="craft-paragraphs">
+              <p>In our quiet Delhi atelier, cloth is not simply tailored—it is listened to. Each cut of handwoven Mulberry silk and Chanderi organza is draped on wooden dress forms, allowing the natural grain and fall of the textile to dictate the final contour.</p>
+              <p>Master needlecraft artisans guide fine metallic zari and botanical-dyed resham thread with unhurried precision. A single neckline requires upwards of three full days of meticulous handiwork, ensuring seams remain fluid, weightless, and enduring.</p>
+            </div>
+
+            <div class="craft-badges-row">
+              <div class="craft-badge-item">
+                <span class="craft-badge-num">48h</span>
+                <span class="craft-badge-lbl">Hand-Stitching per Garment</span>
+              </div>
+              <div class="craft-badge-item">
+                <span class="craft-badge-num">100%</span>
+                <span class="craft-badge-lbl">Pure Ethical Mulberry Silk</span>
+              </div>
+              <div class="craft-badge-item">
+                <span class="craft-badge-num">Zero</span>
+                <span class="craft-badge-lbl">Synthetic Substitutes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECOND EDITORIAL QUOTE -->
+    <section class="editorial-quote-section scroll-reveal">
+      <div class="container-narrow">
+        <blockquote class="editorial-quote-text">
+          “Made slowly. Worn beautifully.”
+        </blockquote>
+        <cite class="editorial-quote-sub">The Philosophy of Slow Indian Couture</cite>
+      </div>
+    </section>
+
+    <!-- SECOND BRAND STORY SPREAD (assets/walk sequence) -->
+    <section class="brand-story-section scroll-reveal">
+      <div class="container">
+        <div class="story-spread-grid">
+          <!-- Left: Narrative -->
+          <div class="story-text-col">
+            <span class="eyebrow">Fluidity & Motion</span>
+            <h2 class="section-title">Made Slowly.<br>Worn Beautifully.</h2>
+
+            <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.75rem; color: var(--text-primary); font-family: var(--font-serif);">
+              From the first cut to the final detail, every Aaradhya piece is shaped with patience, precision and love for the craft.
+            </p>
+
+            <p style="margin-bottom: 2rem;">
+              When the garment is finished, its true soul emerges in motion. The whisper of hand-embroidered hems, the weightless sweep of a pure silk dupatta in evening breeze, and the confident composure of modern silhouettes designed for celebrations that linger into dawn.
+            </p>
+
+            <a href="#collectionSection" class="btn-primary" data-filter-category="kurtis">
+              <span>View Embroidered Ensembles</span>
+              <span>→</span>
+            </a>
+          </div>
+
+          <!-- Right: Walk Video Canvas -->
+          <div class="story-video-col">
+            <div class="story-canvas-wrapper">
+              <canvas id="storyCanvas" class="story-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT CATALOG SECTION -->
+    <section id="collectionSection" class="products-section scroll-reveal">
+      <div class="container">
+        <div class="text-center">
+          <span class="eyebrow">The Atelier Collection</span>
+          <h2 class="section-title">New Arrivals & Masterworks</h2>
+          <p class="section-desc">Handcrafted in limited seasonal editions. Each garment is accompanied by an artisanal provenance certificate.</p>
+        </div>
+
+        <!-- Filter Pill Tabs -->
+        <nav class="catalog-filter-bar" aria-label="Catalog Filter">
+          <button type="button" class="cat-filter-btn active" data-category="all">All Masterworks</button>
+          <button type="button" class="cat-filter-btn" data-category="kurtis">Kurtis</button>
+          <button type="button" class="cat-filter-btn" data-category="coords">Co-ord Sets</button>
+          <button type="button" class="cat-filter-btn" data-category="shawls">Shawls</button>
+          <button type="button" class="cat-filter-btn" data-category="hijabs">Hijabs</button>
+          <button type="button" class="cat-filter-btn" data-category="new-arrivals">New Arrivals</button>
+          <button type="button" class="cat-filter-btn" data-category="bestsellers">Bestsellers</button>
+        </nav>
+
+        <!-- Product Grid (Populated dynamically from products.js) -->
+        <div id="productCatalogGrid" class="products-grid"></div>
+      </div>
+    </section>
+
+    <!-- THIRD EDITORIAL SECTION: "Elegance lives in the details" -->
+    <section class="details-story-section scroll-reveal">
+      <div class="container">
+        <div class="text-center">
+          <span class="eyebrow">Tactile Poetry</span>
+          <h2 class="section-title">Elegance Lives in the Details</h2>
+          <p class="section-desc">Take a closer look at the intricate micro-craftsmanship defining each Aaradhya silhouette.</p>
+        </div>
+
+        <div class="details-triptych-grid">
+          <div class="detail-triptych-item">
+            <img src="assets/images/pexels/craft_detail_new_1.jpg" alt="Needlework Detail" class="detail-triptych-img" loading="lazy" />
+            <div class="detail-triptych-caption">
+              <h4 class="detail-triptych-title">Hand-Embroidered Scallops</h4>
+              <p class="detail-triptych-text">Delicate floral vines executed with pure tonal silk threads across hand-spun Chanderi organza.</p>
+            </div>
+          </div>
+
+          <div class="detail-triptych-item">
+            <img src="assets/images/craft_measuring_hands.jpg" alt="Artisan Measuring" class="detail-triptych-img" loading="lazy" />
+            <div class="detail-triptych-caption">
+              <h4 class="detail-triptych-title">Bespoke Master Draping</h4>
+              <p class="detail-triptych-text">Individually tailored proportions ensuring complete comfort, breathing ease, and effortless regal carriage.</p>
+            </div>
+          </div>
+
+          <div class="detail-triptych-item">
+            <img src="assets/images/shawl_craft_detail.jpg" alt="Kashmiri Pashmina Twist" class="detail-triptych-img" loading="lazy" />
+            <div class="detail-triptych-caption">
+              <h4 class="detail-triptych-title">Changthangi Pashmina Twill</h4>
+              <p class="detail-triptych-text">Reversible dual-tone weaving by seventh-generation artisans in the high mountain valleys of Kashmir.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THIRD EDITORIAL QUOTE -->
+    <section class="editorial-quote-section scroll-reveal">
+      <div class="container-narrow">
+        <blockquote class="editorial-quote-text">
+          “Tradition, with a modern rhythm.”
+        </blockquote>
+        <cite class="editorial-quote-sub">Aaradhya Haute Couture</cite>
+      </div>
+    </section>
+
+    <!-- ABOUT THE BRAND SECTION -->
+    <section id="aboutSection" class="about-brand-section scroll-reveal">
+      <div class="container">
+        <div class="about-brand-grid">
+          <!-- Left: Window video canvas (Haveli colonnade sequence) -->
+          <div class="about-brand-image-wrap">
+            <canvas id="aboutCanvas" class="about-canvas"></canvas>
+            <div class="about-brand-floating-card">
+              <h4 class="about-brand-floating-title">Haveli Architecture</h4>
+              <p class="about-brand-floating-desc">Our design sanctuary in Old Delhi where ancient masonry inspires clean contemporary lines.</p>
+            </div>
+          </div>
+
+          <!-- Right: Heritage Story -->
+          <div class="about-brand-content">
+            <span class="eyebrow">The Story of Aaradhya</span>
+            <h2 class="section-title">Indian Craftsmanship,<br>Reimagined for the Modern Woman</h2>
+
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem;">
+              Aaradhya Clothing brings together the beauty of Indian craftsmanship and the ease of contemporary design. Each piece is created with an appreciation for thoughtful detailing, beautiful fabrics and silhouettes made for modern everyday life.
+            </p>
+
+            <p style="margin-bottom: 2rem;">
+              We reject fleeting trends in favor of timeless textiles that celebrate the woman wearing them. We work directly with master weaving clusters across Rajasthan, Kashmir, and Bengal—preserving heritage methods while designing clothing that feels effortlessly relevant in global capitals.
+            </p>
+
+            <div class="about-stats-grid">
+              <div class="about-stat-card">
+                <div class="about-stat-val">120+</div>
+                <div class="about-stat-lbl">Master Artisans Supported</div>
+              </div>
+              <div class="about-stat-card">
+                <div class="about-stat-val">100%</div>
+                <div class="about-stat-lbl">Natural Biodegradable Silks</div>
+              </div>
+              <div class="about-stat-card">
+                <div class="about-stat-val">48h+</div>
+                <div class="about-stat-lbl">Artisan Devotion per Suit</div>
+              </div>
+              <div class="about-stat-card">
+                <div class="about-stat-val">Zero</div>
+                <div class="about-stat-lbl">Mass Production Waste</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT & CONCIERGE SECTION -->
+    <section id="contactSection" class="contact-section scroll-reveal">
+      <div class="container">
+        <div class="text-center">
+          <span class="eyebrow">Private Concierge</span>
+          <h2 class="section-title">Connect with Aaradhya</h2>
+          <p class="section-desc">For private bridal commissions, bespoke sizing appointments, or international courier queries.</p>
+        </div>
+
+        <div class="contact-editorial-grid">
+          <!-- Concierge Information -->
+          <div class="contact-concierge-info">
+            <div class="contact-info-block">
+              <h4>Atelier Location</h4>
+              <p>The Aaradhya Design Studio, Haveli Courtyard, Shahpur Jat, New Delhi 110049</p>
+            </div>
+
+            <div class="contact-info-block">
+              <h4>Private Appointments</h4>
+              <p><a href="tel:+919811002233">+91 98110 02233</a></p>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">Monday – Saturday, 10:00 AM – 7:00 PM IST</p>
+            </div>
+
+            <div class="contact-info-block">
+              <h4>Direct Inquiries</h4>
+              <p><a href="mailto:concierge@aaradhyaclothing.com">concierge@aaradhyaclothing.com</a></p>
+            </div>
+
+            <div class="contact-info-block">
+              <h4>Social Archive</h4>
+              <p><a href="https://instagram.com" target="_blank" rel="noopener">@aaradhyaclothing • Instagram</a></p>
+            </div>
+
+            <div class="contact-atelier-note">
+              <p><strong>Note for visitors:</strong> Atelier private fittings are hosted strictly by prior appointment to ensure individual consultation with our head couturier.</p>
+            </div>
+          </div>
+
+          <!-- Refined Contact Form -->
+          <div class="contact-form-card">
+            <form id="editorialContactForm">
+              <div class="contact-form-group">
+                <label for="contactName" class="contact-form-label">Your Full Name</label>
+                <input type="text" id="contactName" class="contact-form-input" placeholder="e.g. Maharani Meera Singh" required />
+              </div>
+
+              <div class="contact-form-group">
+                <label for="contactEmail" class="contact-form-label">Email Address</label>
+                <input type="email" id="contactEmail" class="contact-form-input" placeholder="meera@example.com" required />
+              </div>
+
+              <div class="contact-form-group">
+                <label for="contactMessage" class="contact-form-label">Your Message or Bespoke Request</label>
+                <textarea id="contactMessage" class="contact-form-textarea" placeholder="Tell us about the occasion, preferred silhouette, or bespoke colorway..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn-primary" style="width: 100%;">
+                <span>Send to Atelier Concierge</span>
+                <span>→</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================================================
+       6. LUXURY MINIMAL FOOTER
+  ================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <!-- Col 1: Brand & Tagline -->
+        <div>
+          <h3 class="footer-brand-title">AARADHYA CLOTHING</h3>
+          <p class="footer-brand-desc">
+            Indian craftsmanship, reimagined for the modern woman. Pure Mulberry silks, heritage Chanderi, and royal Kashmiri pashmina.
+          </p>
+        </div>
+
+        <!-- Col 2: Collections -->
+        <div>
+          <h4 class="footer-col-title">Collections</h4>
+          <ul class="footer-links-list">
+            <li><a href="#collectionSection" class="footer-link" data-filter-category="kurtis">Kurtis</a></li>
+            <li><a href="#collectionSection" class="footer-link" data-filter-category="coords">Co-ord Sets</a></li>
+            <li><a href="#collectionSection" class="footer-link" data-filter-category="hijabs">Hijabs</a></li>
+            <li><a href="#collectionSection" class="footer-link" data-filter-category="shawls">Shawls</a></li>
+            <li><a href="#collectionSection" class="footer-link" data-filter-category="new-arrivals">New Arrivals</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Customer Care -->
+        <div>
+          <h4 class="footer-col-title">Customer Care</h4>
+          <ul class="footer-links-list">
+            <li><a href="#contactSection" class="footer-link">Bespoke Concierge</a></li>
+            <li><a href="#contactSection" class="footer-link">Complimentary Shipping</a></li>
+            <li><a href="#contactSection" class="footer-link">Returns & Exchanges</a></li>
+            <li><a href="#contactSection" class="footer-link">Atelier Appointments</a></li>
+            <li><a href="#contactSection" class="footer-link">Garment Care Guide</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Brand -->
+        <div>
+          <h4 class="footer-col-title">Brand</h4>
+          <ul class="footer-links-list">
+            <li><a href="#aboutSection" class="footer-link">About Aaradhya</a></li>
+            <li><a href="#craftsmanshipSection" class="footer-link">Our Master Craft</a></li>
+            <li><a href="#aboutSection" class="footer-link">Sustainability & Ethics</a></li>
+            <li><a href="#contactSection" class="footer-link">Press & Editorial</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: Newsletter -->
+        <div class="footer-newsletter-col">
+          <h4 class="footer-col-title">Join The Journal</h4>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+            Receive private preview invitations and seasonal campaign journals.
+          </p>
+          <form id="newsletterForm" class="newsletter-form-box">
+            <input type="email" id="newsletterEmail" class="newsletter-input" placeholder="Enter your email" required />
+            <button type="submit" class="newsletter-btn">Join</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 AARADHYA CLOTHING. All rights reserved. Handcrafted in India.
+        </div>
+
+        <a href="#heroSection" class="footer-replay-btn" title="Back to Top">
+          <span>✦ Back to Top</span>
+        </a>
+
+        <div>
+          <span style="color: var(--text-muted); margin-right: 1.5rem;">Privacy Policy</span>
+          <span style="color: var(--text-muted);">Terms of Service</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================================================
+       7. SLIDING CART DRAWER
+  ================================================== -->
+  <div id="cartBackdrop" class="drawer-backdrop"></div>
+  <aside id="cartDrawer" class="cart-drawer" aria-label="Shopping Cart">
+    <div class="cart-header">
+      <h3 class="cart-header-title">
+        <span>Your Collection</span>
+        <span style="font-size: 0.8rem; color: var(--gold-light);">✦</span>
+      </h3>
+      <button type="button" id="cartCloseBtn" class="cart-close-btn" aria-label="Close cart">✕</button>
+    </div>
+
+    <!-- Free Shipping Progress Tracker -->
+    <div class="cart-shipping-banner">
+      <div id="cartShippingText" class="cart-shipping-text">
+        <span>Add items for complimentary insured courier delivery</span>
+      </div>
+      <div class="cart-progress-track">
+        <div id="cartShippingProgress" class="cart-progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="cartEmptyState" class="cart-empty-state">
+      <div class="cart-empty-icon">✧</div>
+      <h4>Your Bag is Empty</h4>
+      <p>Discover our newly unveiled handcrafted ethnic silhouettes and add them to your private collection.</p>
+      <a href="#collectionSection" class="btn-primary" style="margin-top: 1.5rem; font-size: 0.75rem;" onclick="document.getElementById('cartCloseBtn').click()">
+        Explore Collection
+      </a>
+    </div>
+
+    <!-- Items List -->
+    <div id="cartItemsList" class="cart-items-container"></div>
+
+    <!-- Footer Summary -->
+    <div id="cartFooter" class="cart-footer">
+      <!-- Promo code input -->
+      <div class="cart-promo-box">
+        <input type="text" id="cartPromoInput" class="cart-promo-input" placeholder="Privilege Code (e.g. AARADHYA10)" />
+        <button type="button" id="cartPromoApplyBtn" class="cart-promo-btn">Apply</button>
+      </div>
+      <div id="cartPromoMsg" class="cart-promo-msg"></div>
+
+      <div class="cart-summary-table">
+        <div class="cart-summary-row">
+          <span>Subtotal</span>
+          <span id="cartSubtotal">₹0</span>
+        </div>
+        <div class="cart-summary-row" id="cartDiscountRow" style="display: none;">
+          <span>Privilege Discount</span>
+          <span id="cartDiscount" style="color: #81c784;">-₹0</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Insured Express Delivery</span>
+          <span id="cartShipping">Complimentary</span>
+        </div>
+        <div class="cart-summary-row total-row">
+          <span>Estimated Total</span>
+          <span id="cartTotal" style="color: var(--gold-light);">₹0</span>
+        </div>
+      </div>
+
+      <button type="button" id="cartCheckoutBtn" class="btn-primary btn-checkout">
+        <span>Proceed to Atelier Checkout</span>
+        <span>→</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================================================
+       8. SLIDING WISHLIST DRAWER
+  ================================================== -->
+  <div id="wishlistBackdrop" class="drawer-backdrop"></div>
+  <aside id="wishlistDrawer" class="wishlist-drawer" aria-label="Saved Pieces">
+    <div class="wishlist-header">
+      <h3 class="wishlist-header-title">
+        <span>Saved Pieces</span>
+        <span style="font-size: 0.8rem; color: var(--gold-light);">♡</span>
+      </h3>
+      <button type="button" id="wishlistCloseBtn" class="wishlist-close-btn" aria-label="Close wishlist">✕</button>
+    </div>
+
+    <div id="wishlistEmptyState" class="wishlist-empty-state">
+      <div class="cart-empty-icon">♡</div>
+      <h4>No Saved Pieces Yet</h4>
+      <p>Save items you admire to view and curate them here anytime.</p>
+    </div>
+
+    <div id="wishlistItemsList" class="wishlist-items-container"></div>
+  </aside>
+
+  <!-- ==================================================
+       9. SEARCH OVERLAY
+  ================================================== -->
+  <div id="searchOverlay" class="search-overlay" aria-label="Catalog Search">
+    <div class="search-container">
+      <div class="search-header-row">
+        <h3 class="search-brand-title">Search Aaradhya Clothing</h3>
+        <button type="button" id="searchCloseBtn" class="search-close-btn" aria-label="Close search">✕</button>
+      </div>
+
+      <div class="search-input-box">
+        <span class="search-icon-lens">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by name, fabric, craft, or color..." autocomplete="off" />
+      </div>
+
+      <div id="searchSuggestions" class="search-chips-row">
+        <span class="search-chips-label">Popular:</span>
+        <button type="button" class="search-chip" data-query="Sage Garden">Sage Sharara</button>
+        <button type="button" class="search-chip" data-query="Mulberry Silk">Mulberry Silk</button>
+        <button type="button" class="search-chip" data-query="Pashmina">Pashmina Shawl</button>
+        <button type="button" class="search-chip" data-query="Terracotta">Terracotta Co-ord</button>
+        <button type="button" class="search-chip" data-query="Chikankari">Chikankari</button>
+      </div>
+
+      <div id="searchResultsCount" class="search-results-count">Curated Recommendations</div>
+      <div id="searchResultsList" class="search-results-grid"></div>
+    </div>
+  </div>
+
+  <!-- ==================================================
+       10. PRODUCT DETAILS & QUICK VIEW MODAL
+  ================================================== -->
+  <div id="productModalBackdrop" class="product-modal-backdrop"></div>
+  <div id="productModal" class="product-modal" aria-label="Product Details" role="dialog">
+    <button type="button" id="productModalCloseBtn" class="product-modal-close" aria-label="Close product view">✕</button>
+    <div id="productModalContent" class="product-modal-content"></div>
+  </div>
+
+  <!-- ==================================================
+       11. CHECKOUT MODAL & ORDER CONFIRMATION
+  ================================================== -->
+  <div id="checkoutBackdrop" class="checkout-backdrop"></div>
+  <div id="checkoutModal" class="checkout-modal" aria-label="Checkout" role="dialog">
+    <button type="button" id="checkoutCloseBtn" class="checkout-close-btn" aria-label="Close checkout">✕</button>
+
+    <!-- Form View -->
+    <div id="checkoutFormView" class="checkout-form-view">
+      <!-- Address & Payment Form -->
+      <div>
+        <form id="checkoutForm">
+          <h3 class="checkout-step-title">
+            <span class="step-num">1</span>
+            <span>Delivery & Client Details</span>
+          </h3>
+
+          <div class="checkout-form-grid">
+            <div class="grid-full">
+              <label class="chk-label" for="chkFullName">Full Name *</label>
+              <input type="text" id="chkFullName" class="chk-input" placeholder="e.g. Princess Ananya Sharma" required />
+            </div>
+
+            <div>
+              <label class="chk-label" for="chkEmail">Email Address *</label>
+              <input type="email" id="chkEmail" class="chk-input" placeholder="ananya@luxury.in" required />
+            </div>
+
+            <div>
+              <label class="chk-label" for="chkPhone">Phone Number *</label>
+              <input type="tel" id="chkPhone" class="chk-input" placeholder="+91 98765 43210" required />
+            </div>
+
+            <div class="grid-full">
+              <label class="chk-label" for="chkAddress">Delivery Address *</label>
+              <input type="text" id="chkAddress" class="chk-input" placeholder="House/Villa No., Street, Colony" required />
+            </div>
+
+            <div>
+              <label class="chk-label" for="chkCity">City *</label>
+              <input type="text" id="chkCity" class="chk-input" placeholder="New Delhi" required />
+            </div>
+
+            <div>
+              <label class="chk-label" for="chkState">State / Province *</label>
+              <input type="text" id="chkState" class="chk-input" placeholder="Delhi" required />
+            </div>
+
+            <div>
+              <label class="chk-label" for="chkPostalCode">PIN / Postal Code *</label>
+              <input type="text" id="chkPostalCode" class="chk-input" placeholder="110001" required />
+            </div>
+
+            <div>
+              <label class="chk-label" for="chkCountry">Country *</label>
+              <input type="text" id="chkCountry" class="chk-input" value="India" required />
+            </div>
+          </div>
+
+          <h3 class="checkout-step-title">
+            <span class="step-num">2</span>
+            <span>Payment Method</span>
+          </h3>
+
+          <div class="payment-methods-box">
+            <label class="payment-radio-label">
+              <span class="payment-label-text">
+                <input type="radio" name="paymentMethod" value="card" checked />
+                <span>Credit / Debit Card (Visa, Mastercard, Amex)</span>
+              </span>
+              <span style="font-size: 0.8rem; color: var(--gold-light);">💳</span>
+            </label>
+
+            <div id="paymentPanel_card" class="payment-subpanel">
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <input type="text" class="chk-input" placeholder="Card Number (Mock Gateway: 4242 •••• •••• 4242)" maxlength="19" />
+                <div style="display: flex; gap: 0.75rem;">
+                  <input type="text" class="chk-input" placeholder="MM / YY" maxlength="5" />
+                  <input type="text" class="chk-input" placeholder="CVV" maxlength="4" />
+                </div>
+              </div>
+            </div>
+
+            <label class="payment-radio-label">
+              <span class="payment-label-text">
+                <input type="radio" name="paymentMethod" value="upi" />
+                <span>Instant UPI (Google Pay, PhonePe, Paytm, BHIM)</span>
+              </span>
+              <span style="font-size: 0.8rem; color: var(--gold-light);">📱</span>
+            </label>
+
+            <div id="paymentPanel_upi" class="payment-subpanel" style="display: none;">
+              <input type="text" class="chk-input" placeholder="Enter Virtual Payment Address (e.g. client@okaxis)" />
+            </div>
+
+            <label class="payment-radio-label">
+              <span class="payment-label-text">
+                <input type="radio" name="paymentMethod" value="netbanking" />
+                <span>Net Banking (HDFC, ICICI, SBI, Axis)</span>
+              </span>
+              <span style="font-size: 0.8rem; color: var(--gold-light);">🏛️</span>
+            </label>
+
+            <div id="paymentPanel_netbanking" class="payment-subpanel" style="display: none;">
+              <select class="chk-input">
+                <option>HDFC Bank</option>
+                <option>ICICI Bank</option>
+                <option>State Bank of India</option>
+                <option>Axis Bank</option>
+                <option>Kotak Mahindra Bank</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="security-mode-note">
+            <span>🔒</span>
+            <span><strong>Development Mode Gateway:</strong> Secure tokenized integration ready for Stripe / Razorpay bindings. No payment details are stored.</span>
+          </div>
+
+          <div style="margin-top: 2rem;">
+            <button type="submit" id="checkoutSubmitBtn" class="btn-primary" style="width: 100%; height: 50px;">
+              <span>Authorize & Place Order</span>
+              <span>→</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Order Summary Breakdown -->
+      <div class="checkout-summary-col">
+        <h4 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 1.25rem;">Atelier Order Summary</h4>
+        <div id="checkoutSummaryItems" class="chk-items-list"></div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.85rem;">
+          <div style="display: flex; justify-content: space-between; color: var(--text-secondary);">
+            <span>Subtotal</span>
+            <span id="checkoutSummarySubtotal">₹0</span>
+          </div>
+          <div id="checkoutSummaryDiscountRow" style="display: none; justify-content: space-between; color: #81c784;">
+            <span>Privilege Discount</span>
+            <span id="checkoutSummaryDiscount">-₹0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; color: var(--text-secondary);">
+            <span>Insured Express Courier</span>
+            <span id="checkoutSummaryShipping" class="text-free">Complimentary</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 1.15rem; font-weight: 600; color: var(--text-primary); border-top: 1px solid var(--border-subtle); padding-top: 0.75rem; margin-top: 0.5rem;">
+            <span>Total Payable</span>
+            <span id="checkoutSummaryTotal" style="color: var(--gold-light);">₹0</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); font-size: 0.75rem; color: var(--text-muted); line-height: 1.6;">
+          ✨ <strong>Complimentary Heritage Packaging:</strong> Every order arrives packaged in an archival cedar keepsake box with hand-signed artisan provenance.
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Confirmation Screen -->
+    <div id="orderConfirmationView" class="order-confirmation-view" style="display: none;">
+      <div class="confirm-seal-icon">✦</div>
+      <h2 class="confirm-title">Your Aaradhya story has begun.</h2>
+      <p class="confirm-subtitle">
+        We are preparing your handcrafted garments with patience and devotion in our atelier.
+      </p>
+
+      <div class="confirm-card">
+        <div class="confirm-row">
+          <span>Artisanal Order Reference</span>
+          <strong id="confirmOrderNumber" style="color: var(--gold-light); font-family: var(--font-sans);">AAR-2026-0000</strong>
+        </div>
+        <div class="confirm-row">
+          <span>Client Name</span>
+          <span id="confirmCustomerName">-</span>
+        </div>
+        <div class="confirm-row">
+          <span>Delivery Destination</span>
+          <span id="confirmDeliveryAddress" style="max-width: 280px; text-align: right;">-</span>
+        </div>
+        <div class="confirm-row">
+          <span>Estimated Dispatch</span>
+          <span>3 – 5 Business Days (Insured)</span>
+        </div>
+        <div class="confirm-row">
+          <span>Amount Settled</span>
+          <span id="confirmTotalPaid" style="color: var(--gold-light);">-</span>
+        </div>
+      </div>
+
+      <button type="button" id="confirmContinueBtn" class="btn-primary" style="padding: 1rem 2.5rem;">
+        Continue Exploring Collections
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================================================
+       12. TOAST NOTIFICATION
+  ================================================== -->
+  <div id="toastNotification" class="toast-notification" role="status" aria-live="polite">
+    <div class="toast-icon">✦</div>
+    <div>
+      <div class="toast-title">Added to your collection</div>
+      <div class="toast-desc">Item added to bag</div>
+    </div>
+  </div>
+
+  <!-- GSAP Animation Engine -->
+  <script src="js/gsap.min.js"></script>
+  <!-- Application Modules -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

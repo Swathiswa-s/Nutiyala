@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Directory | Nutiyala Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --admin-bg: #F4F6F9;
+      --admin-sidebar: #1E2024;
+      --admin-card: #FFFFFF;
+      --admin-border: #E2E8F0;
+      --admin-text-main: #1A202C;
+      --admin-text-muted: #718096;
+      --admin-gold: #C59A45;
+      --admin-maroon: #5A161E;
+      --font-admin: 'Montserrat', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-admin); background-color: var(--admin-bg); color: var(--admin-text-main); display: flex; min-height: 100vh; }
+
+    .admin-sidebar { width: 260px; background-color: var(--admin-sidebar); color: #E2E8F0; display: flex; flex-direction: column; flex-shrink: 0; position: sticky; top: 0; height: 100vh; }
+    .admin-brand { padding: 1.5rem 1.4rem; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .admin-brand-logo { width: 32px; height: 32px; object-fit: contain; }
+    .admin-brand-text { font-size: 1rem; font-weight: 700; letter-spacing: 0.06em; color: #FAF6F0; }
+    .admin-brand-badge { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--admin-gold); display: block; }
+    .sidebar-nav { padding: 1.25rem 0; display: flex; flex-direction: column; gap: 0.25rem; flex: 1; }
+    .nav-header-title { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #718096; padding: 0.8rem 1.4rem 0.4rem; font-weight: 600; }
+    .admin-nav-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.75rem 1.4rem; color: #CBD5E0; text-decoration: none; font-size: 0.84rem; font-weight: 500; }
+    .admin-nav-item:hover, .admin-nav-item.active { background-color: #2C3036; color: #FFFFFF; font-weight: 600; }
+    .admin-nav-item i { width: 18px; height: 18px; color: var(--admin-gold); }
+
+    .admin-main { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; }
+    .admin-topbar { height: 68px; background: var(--admin-card); border-bottom: 1px solid var(--admin-border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+    .topbar-title { font-size: 1.25rem; font-weight: 700; color: var(--admin-text-main); }
+
+    .admin-content-area { padding: 2rem; display: flex; flex-direction: column; gap: 1.8rem; }
+
+    .table-container {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      overflow-x: auto;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.84rem;
+    }
+
+    .admin-table th {
+      background: #F8FAFC;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--admin-text-muted);
+      border-bottom: 1px solid var(--admin-border);
+    }
+
+    .admin-table td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--admin-border);
+      vertical-align: middle;
+    }
+
+    .btn-view-cust {
+      padding: 0.4rem 0.85rem;
+      border: 1px solid var(--admin-border);
+      background: #FFFFFF;
+      color: var(--admin-maroon);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .btn-view-cust:hover { background: #FEF2F2; border-color: var(--admin-maroon); }
+
+    /* Modal */
+    .cust-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .cust-modal-card {
+      background: #FFFFFF;
+      border-radius: 6px;
+      max-width: 650px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <img src="/assets/nutiyala-emblem-gold.png" alt="Nutiyala Emblem" class="admin-brand-logo">
+      <div>
+        <div class="admin-brand-text">NUTIYALA</div>
+        <span class="admin-brand-badge">Atelier Enterprise</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-header-title">Catalog</span>
+      <a href="/admin/products" class="admin-nav-item">
+        <i data-lucide="hanger"></i>
+        <span>All Products</span>
+      </a>
+      <a href="/admin/products/new" class="admin-nav-item">
+        <i data-lucide="plus-circle"></i>
+        <span>Add New Product</span>
+      </a>
+            <a href="/admin/categories" class="admin-nav-item">
+        <i data-lucide="layers"></i>
+        <span>Categories</span>
+      </a>
+      <a href="/admin/inventory" class="admin-nav-item">
+        <i data-lucide="boxes"></i>
+        <span>Inventory</span>
+      </a>
+
+      <span class="nav-header-title">Sales & Clients</span>
+      <a href="/admin/orders" class="admin-nav-item">
+        <i data-lucide="shopping-bag"></i>
+        <span>Orders</span>
+      </a>
+      <a href="/admin/customers" class="admin-nav-item active">
+        <i data-lucide="users"></i>
+        <span>Customers</span>
+      </a>
+
+      <span class="nav-header-title">Promotions</span>
+      <a href="/admin/offers" class="admin-nav-item">
+        <i data-lucide="sparkles"></i>
+        <span>Update Offer</span>
+      </a>
+
+      <span class="nav-header-title">Settings</span>
+      <a href="/admin/details" class="admin-nav-item">
+        <i data-lucide="settings"></i>
+        <span>Admin Details</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <h1 class="topbar-title">Customer Relationship & VIP Directory</h1>
+      <span style="font-size: 0.8rem; color: #718096;">Boutique Clientele</span>
+    </header>
+
+    <div class="admin-content-area">
+      <div class="table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Customer Name</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Orders Placed</th>
+              <th>Total Spent</th>
+              <th>Registration Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="customers-tbody">
+            <tr><td colspan="7" style="text-align: center; padding: 3rem; color: #718096;">Loading clientele directory...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Customer Detail Modal -->
+  <div class="cust-modal-backdrop" id="cust-modal">
+    <div class="cust-modal-card">
+      <button style="position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: none; font-size: 1.2rem; cursor: pointer;" id="close-modal-btn">✕</button>
+      <div id="cust-modal-body">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.lucide) lucide.createIcons();
+
+      // Check Admin Auth
+      try {
+        const authRes = await fetch('/api/auth/me');
+        const authData = await authRes.json();
+        if (!authData || !authData.user || authData.user.account_type !== 'ADMIN') {
+          window.location.href = '/login?redirect=/admin/customers';
+          return;
+        }
+      } catch (err) {
+        window.location.href = '/login?redirect=/admin/customers';
+        return;
+      }
+
+      loadCustomers();
+
+      async function loadCustomers() {
+        const tbody = document.getElementById('customers-tbody');
+        try {
+          const res = await fetch('/api/admin/customers');
+          const data = await res.json();
+          const customers = data.customers || [];
+
+          if (customers.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 3rem;">No customers registered yet.</td></tr>`;
+            return;
+          }
+
+          tbody.innerHTML = customers.map(c => `
+            <tr>
+              <td><strong>${c.name}</strong></td>
+              <td>${c.email}</td>
+              <td>${c.mobile || '—'}</td>
+              <td><strong>${c.orders_count}</strong></td>
+              <td><strong>₹${Number(c.total_spent).toLocaleString('en-IN')}</strong></td>
+              <td>${new Date(c.created_at).toLocaleDateString('en-IN')}</td>
+              <td>
+                <button class="btn-view-cust" data-id="${c.id}">View Dossier</button>
+              </td>
+            </tr>
+          `).join('');
+
+          // Attach View Dossier
+          document.querySelectorAll('.btn-view-cust').forEach(btn => {
+            btn.addEventListener('click', async () => {
+              const id = btn.dataset.id;
+              const modal = document.getElementById('cust-modal');
+              const body = document.getElementById('cust-modal-body');
+              body.innerHTML = `<p>Loading customer profile...</p>`;
+              modal.style.display = 'flex';
+
+              try {
+                const cRes = await fetch(`/api/admin/customers/${id}`);
+                const cData = await cRes.json();
+                const cust = cData.customer;
+
+                body.innerHTML = `
+                  <h2 style="font-size: 1.4rem; color: #5A161E; margin-bottom: 0.3rem;">${cust.name}</h2>
+                  <p style="font-size: 0.85rem; color: #718096; margin-bottom: 1.5rem;">${cust.email} • ${cust.mobile || 'No mobile'}</p>
+
+                  <h3 style="font-size: 0.95rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.8rem; border-bottom: 1px solid #E2E8F0; padding-bottom: 0.4rem;">
+                    Order History (${cust.orders.length})
+                  </h3>
+                  ${cust.orders.length === 0 ? `<p style="font-size: 0.85rem; color: #718096;">No orders placed yet.</p>` : `
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
+                      ${cust.orders.map(o => `
+                        <div style="border: 1px solid #E2E8F0; padding: 0.75rem; border-radius: 4px; display: flex; justify-content: space-between; font-size: 0.82rem;">
+                          <div>
+                            <strong>${o.order_number}</strong>
+                            <div style="color: #718096;">${new Date(o.created_at).toLocaleDateString('en-IN')}</div>
+                          </div>
+                          <div style="text-align: right;">
+                            <strong>₹${Number(o.total_amount).toLocaleString('en-IN')}</strong>
+                            <div style="color: #2E7D32; font-weight: 600;">${o.order_status}</div>
+                          </div>
+                        </div>
+                      `).join('')}
+                    </div>
+                  `}
+
+                  <h3 style="font-size: 0.95rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.8rem; border-bottom: 1px solid #E2E8F0; padding-bottom: 0.4rem;">
+                    Saved Addresses (${cust.addresses.length})
+                  </h3>
+                  ${cust.addresses.length === 0 ? `<p style="font-size: 0.85rem; color: #718096;">No saved addresses.</p>` : `
+                    <div>
+                      ${cust.addresses.map(a => `
+                        <p style="font-size: 0.85rem; color: #4A5568; line-height: 1.5;">${a.street_address}, ${a.city}, ${a.state} - ${a.pincode}</p>
+                      `).join('')}
+                    </div>
+                  `}
+                `;
+              } catch (err) {
+                body.innerHTML = `<p style="color: #C53030;">Failed to load dossier.</p>`;
+              }
+            });
+          });
+
+        } catch (err) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 3rem; color: #C53030;">Failed to load customers.</td></tr>`;
+        }
+      }
+
+      document.getElementById('close-modal-btn').addEventListener('click', () => {
+        document.getElementById('cust-modal').style.display = 'none';
+      });
+      document.getElementById('cust-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'cust-modal') document.getElementById('cust-modal').style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>

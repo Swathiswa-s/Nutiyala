@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offer Management | Nutiyala Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --admin-bg: #F4F6F9;
+      --admin-sidebar: #1E2024;
+      --admin-card: #FFFFFF;
+      --admin-border: #E2E8F0;
+      --admin-text-main: #1A202C;
+      --admin-text-muted: #718096;
+      --admin-gold: #C59A45;
+      --admin-gold-hover: #AA7E2D;
+      --admin-gold-light: #FDF8ED;
+      --admin-maroon: #5A161E;
+      --admin-green: #2E7D32;
+      --admin-red: #C53030;
+      --font-admin: 'Montserrat', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-admin); background-color: var(--admin-bg); color: var(--admin-text-main); display: flex; min-height: 100vh; }
+
+    /* Admin Sidebar */
+    .admin-sidebar { width: 260px; background-color: var(--admin-sidebar); color: #E2E8F0; display: flex; flex-direction: column; flex-shrink: 0; position: sticky; top: 0; height: 100vh; }
+    .admin-brand { padding: 1.5rem 1.4rem; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .admin-brand-logo { width: 32px; height: 32px; object-fit: contain; }
+    .admin-brand-text { font-size: 1rem; font-weight: 700; letter-spacing: 0.06em; color: #FAF6F0; }
+    .admin-brand-badge { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--admin-gold); display: block; }
+    .sidebar-nav { padding: 1.25rem 0; display: flex; flex-direction: column; gap: 0.25rem; flex: 1; overflow-y: auto; }
+    .nav-header-title { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #718096; padding: 0.8rem 1.4rem 0.4rem; font-weight: 600; }
+    .admin-nav-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.75rem 1.4rem; color: #CBD5E0; text-decoration: none; font-size: 0.84rem; font-weight: 500; transition: all 0.2s; }
+    .admin-nav-item:hover, .admin-nav-item.active { background-color: #2C3036; color: #FFFFFF; font-weight: 600; }
+    .admin-nav-item.active { border-left: 4px solid var(--admin-gold); }
+    .admin-nav-item i { width: 18px; height: 18px; color: var(--admin-gold); }
+    .sidebar-footer { padding: 1.25rem 1.4rem; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; flex-direction: column; gap: 0.65rem; }
+    .view-site-link { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; color: var(--admin-gold); text-decoration: none; font-weight: 600; }
+    .view-site-link:hover { color: #FFFFFF; }
+    .logout-admin-btn { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; color: #E53E3E; background: none; border: none; cursor: pointer; font-weight: 600; }
+
+    /* Admin Main */
+    .admin-main { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; }
+    .admin-topbar { height: 68px; background: var(--admin-card); border-bottom: 1px solid var(--admin-border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+    .topbar-title { font-size: 1.25rem; font-weight: 700; color: var(--admin-text-main); }
+    .topbar-actions { display: flex; align-items: center; gap: 1rem; }
+
+    .btn-gold-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--admin-gold);
+      color: #1A1208;
+      border: 1px solid var(--admin-gold);
+      padding: 0.65rem 1.35rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      border-radius: 4px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+    }
+    .btn-gold-primary:hover {
+      background: var(--admin-gold-hover);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(197, 154, 69, 0.25);
+    }
+
+    .admin-content-area { padding: 2rem; display: flex; flex-direction: column; gap: 1.8rem; }
+
+    /* Live Active Offer Preview Card */
+    .active-offer-card {
+      background: linear-gradient(135deg, #1C1510 0%, #2A1D15 100%);
+      border: 1px solid rgba(197, 154, 69, 0.35);
+      border-radius: 8px;
+      padding: 1.5rem 1.8rem;
+      color: #FAF6F0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .active-offer-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 150px;
+      height: 100%;
+      background: radial-gradient(circle at right, rgba(197, 154, 69, 0.15), transparent 70%);
+      pointer-events: none;
+    }
+    .active-offer-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .active-badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(197, 154, 69, 0.22);
+      color: #F6EEDB;
+      border: 1px solid rgba(197, 154, 69, 0.45);
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .active-badge-tag.pulse-dot::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: #48BB78;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #48BB78;
+    }
+    .system-date-label {
+      font-size: 0.76rem;
+      color: rgba(250, 246, 240, 0.7);
+      letter-spacing: 0.04em;
+    }
+    .active-banner-preview-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px dashed rgba(197, 154, 69, 0.4);
+      border-radius: 6px;
+      padding: 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .active-banner-preview-text {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #FAF6F0;
+      letter-spacing: 0.03em;
+    }
+    .active-banner-preview-meta {
+      font-size: 0.76rem;
+      color: var(--admin-gold);
+      white-space: nowrap;
+      font-weight: 600;
+    }
+    .active-offer-logic-note {
+      font-size: 0.75rem;
+      color: rgba(250, 246, 240, 0.65);
+      line-height: 1.5;
+    }
+
+    /* Enterprise Admin Table Container */
+    .table-container {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      overflow-x: auto;
+    }
+
+    .table-toolbar {
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid var(--admin-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .table-toolbar-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--admin-text-main);
+    }
+    .table-toolbar-meta {
+      font-size: 0.78rem;
+      color: var(--admin-text-muted);
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    .admin-table th {
+      background: #F8FAFC;
+      padding: 0.9rem 1.25rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--admin-text-muted);
+      border-bottom: 1px solid var(--admin-border);
+      white-space: nowrap;
+    }
+
+    .admin-table td {
+      padding: 1.1rem 1.25rem;
+      border-bottom: 1px solid var(--admin-border);
+      vertical-align: middle;
+      color: #2D3748;
+    }
+
+    .admin-table tr:hover td {
+      background-color: #FAFCFE;
+    }
+
+    .admin-table tr.row-live-active td {
+      background-color: #FFFDF7;
+    }
+
+    /* Priority badge & quick editor */
+    .priority-badge-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .priority-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 38px;
+      height: 30px;
+      padding: 0 0.5rem;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      background: #EDF2F7;
+      color: #2D3748;
+      border: 1px solid #CBD5E0;
+    }
+    .priority-pill.rank-1 {
+      background: #FEF3C7;
+      color: #92400E;
+      border-color: #F59E0B;
+    }
+    .priority-input-inline {
+      width: 60px;
+      padding: 0.35rem 0.45rem;
+      border: 1px solid var(--admin-border);
+      border-radius: 4px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      text-align: center;
+      outline: none;
+      font-family: var(--font-admin);
+    }
+    .priority-input-inline:focus {
+      border-color: var(--admin-gold);
+    }
+
+    .offer-text-content {
+      font-weight: 500;
+      line-height: 1.45;
+      color: #1A202C;
+      max-width: 480px;
+    }
+    .offer-tag-live {
+      display: inline-block;
+      margin-left: 0.5rem;
+      background: #D1FAE5;
+      color: #065F46;
+      border: 1px solid #A7F3D0;
+      font-size: 0.68rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      vertical-align: middle;
+    }
+    .offer-tag-scheduled {
+      display: inline-block;
+      margin-left: 0.5rem;
+      background: #EBF8FF;
+      color: #2B6CB0;
+      font-size: 0.68rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+    .offer-tag-expired {
+      display: inline-block;
+      margin-left: 0.5rem;
+      background: #FEE2E2;
+      color: #991B1B;
+      font-size: 0.68rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .date-display {
+      font-weight: 500;
+      color: #4A5568;
+      white-space: nowrap;
+      font-size: 0.83rem;
+    }
+
+    /* Action Buttons */
+    .actions-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      white-space: nowrap;
+    }
+
+    .btn-action-edit {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.75rem;
+      border: 1px solid #CBD5E0;
+      background: #FFFFFF;
+      color: #2D3748;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-action-edit:hover {
+      border-color: var(--admin-gold);
+      color: var(--admin-maroon);
+      background: #FAF8F5;
+    }
+
+    .btn-action-delete {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.75rem;
+      border: 1px solid #FED7D7;
+      background: #FFF5F5;
+      color: #C53030;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-action-delete:hover {
+      background: #C53030;
+      color: #FFFFFF;
+      border-color: #C53030;
+    }
+
+    /* Modal Styles */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 18, 23, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #FFFFFF;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 560px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      border: 1px solid var(--admin-border);
+      overflow: hidden;
+      animation: modalSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalSlideIn {
+      from { transform: translateY(15px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.6rem;
+      background: #FAF8F5;
+      border-bottom: 1px solid var(--admin-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--admin-maroon);
+      letter-spacing: 0.02em;
+    }
+    .modal-close-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--admin-text-muted);
+      padding: 0.2rem;
+    }
+    .modal-close-btn:hover { color: var(--admin-text-main); }
+
+    .modal-body {
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .form-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--admin-text-main);
+    }
+    .form-hint {
+      font-size: 0.72rem;
+      color: var(--admin-text-muted);
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--admin-border);
+      border-radius: 4px;
+      font-size: 0.88rem;
+      font-family: var(--font-admin);
+      color: var(--admin-text-main);
+      outline: none;
+      transition: border 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--admin-gold);
+      box-shadow: 0 0 0 3px rgba(197, 154, 69, 0.15);
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .modal-footer {
+      padding: 1.2rem 1.6rem;
+      background: #F8FAFC;
+      border-top: 1px solid var(--admin-border);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    .btn-secondary {
+      padding: 0.65rem 1.2rem;
+      border: 1px solid #CBD5E0;
+      background: #FFFFFF;
+      color: #4A5568;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-secondary:hover {
+      background: #EDF2F7;
+    }
+
+    /* Toast Notification */
+    .admin-toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #1A202C;
+      color: #FFFFFF;
+      padding: 0.85rem 1.4rem;
+      border-radius: 6px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      border-left: 4px solid var(--admin-gold);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    .admin-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Admin Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <img src="/assets/nutiyala-emblem-gold.png" alt="Nutiyala Emblem" class="admin-brand-logo">
+      <div>
+        <div class="admin-brand-text">NUTIYALA</div>
+        <span class="admin-brand-badge">Atelier Enterprise</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-header-title">Catalog</span>
+      <a href="/admin/products" class="admin-nav-item">
+        <i data-lucide="hanger"></i>
+        <span>All Products</span>
+      </a>
+      <a href="/admin/products/new" class="admin-nav-item">
+        <i data-lucide="plus-circle"></i>
+        <span>Add New Product</span>
+      </a>
+            <a href="/admin/categories" class="admin-nav-item">
+        <i data-lucide="layers"></i>
+        <span>Categories</span>
+      </a>
+      <a href="/admin/inventory" class="admin-nav-item">
+        <i data-lucide="boxes"></i>
+        <span>Inventory</span>
+      </a>
+
+      <span class="nav-header-title">Sales & Clients</span>
+      <a href="/admin/orders" class="admin-nav-item">
+        <i data-lucide="shopping-bag"></i>
+        <span>Orders</span>
+      </a>
+      <a href="/admin/customers" class="admin-nav-item">
+        <i data-lucide="users"></i>
+        <span>Customers</span>
+      </a>
+
+      <span class="nav-header-title">Promotions</span>
+      <a href="/admin/offers" class="admin-nav-item active">
+        <i data-lucide="sparkles"></i>
+        <span>Update Offer</span>
+      </a>
+
+      <span class="nav-header-title">Settings</span>
+      <a href="/admin/details" class="admin-nav-item">
+        <i data-lucide="settings"></i>
+        <span>Admin Details</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="/" target="_blank" class="view-site-link">
+        <i data-lucide="external-link" style="width: 16px; height: 16px;"></i>
+        <span>VIEW WEBSITE</span>
+      </a>
+      <button class="logout-admin-btn" id="admin-logout-btn">
+        <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+        <span>Logout Admin</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Admin Main Content -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <h1 class="topbar-title">Offer Management</h1>
+        <div style="font-size: 0.74rem; color: var(--admin-text-muted); margin-top: 2px;">Promotional Banners & Active Offer Priority Engine</div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="btn-gold-primary" id="btn-open-create-modal">
+          <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+          <span>Add New Offer</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="admin-content-area">
+      <!-- Live Active Offer Status Card -->
+      <div class="active-offer-card" id="active-offer-preview-card">
+        <div class="active-offer-card-top">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span class="active-badge-tag pulse-dot">Live Public Banner</span>
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--admin-gold);" id="active-offer-status-title">Active Offer Synchronized</span>
+          </div>
+          <span class="system-date-label" id="current-server-date">Date: Loading...</span>
+        </div>
+
+        <div class="active-banner-preview-box">
+          <div class="active-banner-preview-text" id="active-banner-text">Loading currently active promotional offer...</div>
+          <div class="active-banner-preview-meta" id="active-banner-meta">Priority 1</div>
+        </div>
+
+        <div class="active-offer-logic-note">
+          <strong>Active Offer Logic:</strong> An offer is active when today's date falls between its <em>From Date</em> and <em>End Date</em>. If multiple offers are active simultaneously, the system serves the offer with the highest priority (Priority 1 is highest).
+        </div>
+      </div>
+
+      <!-- Offer Table Container -->
+      <div class="table-container">
+        <div class="table-toolbar">
+          <div>
+            <div class="table-toolbar-title">All Promotional Offers</div>
+            <div class="table-toolbar-meta" id="offers-count-label">Loading offers...</div>
+          </div>
+          <button class="btn-gold-primary" id="btn-open-create-modal-2" style="padding: 0.5rem 1rem; font-size: 0.76rem;">
+            <i data-lucide="plus" style="width: 14px; height: 14px;"></i>
+            <span>Add New Offer</span>
+          </button>
+        </div>
+
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width: 140px;">Offer Priority</th>
+              <th>Offer</th>
+              <th style="width: 150px;">From Date</th>
+              <th style="width: 150px;">End Date</th>
+              <th style="width: 150px; text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="offers-tbody">
+            <tr>
+              <td colspan="5" style="text-align: center; padding: 3rem; color: #718096;">
+                Loading offers database...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add / Edit Offer Modal -->
+  <div class="modal-backdrop" id="offer-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-heading">Add New Offer</h2>
+        <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <form id="offer-form">
+        <input type="hidden" id="modal-offer-id" value="">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="modal-offer-priority">Offer Priority</label>
+            <input type="number" id="modal-offer-priority" class="form-input" min="1" step="1" required placeholder="e.g. 1">
+            <span class="form-hint">Numeric rank. Priority 1 is the highest priority.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="modal-offer-text">Offer</label>
+            <textarea id="modal-offer-text" class="form-textarea" rows="3" required placeholder="e.g. Complimentary Worldwide Couture Shipping on Orders Over ₹5,000 • Code: AURA2026"></textarea>
+            <span class="form-hint">The promotional text displayed globally on the top announcement banner.</span>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="modal-offer-from">From Date</label>
+              <input type="date" id="modal-offer-from" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="modal-offer-end">End Date</label>
+              <input type="date" id="modal-offer-end" class="form-input" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-gold-primary" id="modal-submit-btn">
+            <i data-lucide="check" style="width: 16px; height: 16px;"></i>
+            <span id="modal-submit-label">Save Offer</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Element -->
+  <div class="admin-toast" id="admin-toast">
+    <i data-lucide="check-circle" style="color: var(--admin-gold);"></i>
+    <span id="toast-message">Action completed successfully.</span>
+  </div>
+
+  <script>
+    let offersList = [];
+    let serverToday = new Date().toISOString().split('T')[0];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.lucide) lucide.createIcons();
+
+      // 1. Strict Admin Authentication Verification
+      try {
+        const authRes = await fetch('/api/auth/me');
+        const authData = await authRes.json();
+        if (!authData || !authData.user || authData.user.account_type !== 'ADMIN') {
+          window.location.href = '/login?redirect=/admin/offers';
+          return;
+        }
+      } catch (err) {
+        window.location.href = '/login?redirect=/admin/offers';
+        return;
+      }
+
+      // Logout handler
+      const logoutBtn = document.getElementById('admin-logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+          try {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            window.location.href = '/login';
+          } catch (e) {
+            window.location.href = '/login';
+          }
+        });
+      }
+
+      // 2. Load Offers
+      await loadOffers();
+
+      // 3. Modal Events
+      const modal = document.getElementById('offer-modal');
+      const openBtn1 = document.getElementById('btn-open-create-modal');
+      const openBtn2 = document.getElementById('btn-open-create-modal-2');
+      const closeBtn = document.getElementById('modal-close-btn');
+      const cancelBtn = document.getElementById('modal-cancel-btn');
+      const offerForm = document.getElementById('offer-form');
+
+      function openCreateModal() {
+        document.getElementById('modal-heading').textContent = 'Add New Offer';
+        document.getElementById('modal-submit-label').textContent = 'Create Offer';
+        document.getElementById('modal-offer-id').value = '';
+
+        // Suggest next priority
+        let nextPriority = 1;
+        if (offersList.length > 0) {
+          const maxP = Math.max(...offersList.map(o => parseInt(o.priority) || 1));
+          nextPriority = maxP + 1;
+        }
+        document.getElementById('modal-offer-priority').value = nextPriority;
+        document.getElementById('modal-offer-text').value = '';
+        document.getElementById('modal-offer-from').value = serverToday;
+        
+        // Default end date 1 month from today
+        const defaultEnd = new Date(serverToday);
+        defaultEnd.setDate(defaultEnd.getDate() + 30);
+        document.getElementById('modal-offer-end').value = defaultEnd.toISOString().split('T')[0];
+
+        modal.classList.add('open');
+        document.getElementById('modal-offer-text').focus();
+        if (window.lucide) lucide.createIcons();
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+      }
+
+      if (openBtn1) openBtn1.addEventListener('click', openCreateModal);
+      if (openBtn2) openBtn2.addEventListener('click', openCreateModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      // 4. Form Submit (Create or Update)
+      offerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const offerId = document.getElementById('modal-offer-id').value;
+        const priority = parseInt(document.getElementById('modal-offer-priority').value, 10);
+        const offerText = document.getElementById('modal-offer-text').value.trim();
+        const fromDate = document.getElementById('modal-offer-from').value;
+        const endDate = document.getElementById('modal-offer-end').value;
+
+        if (!offerText) {
+          alert('Offer text is required.');
+          return;
+        }
+        if (!fromDate || !endDate) {
+          alert('From Date and End Date are required.');
+          return;
+        }
+        if (fromDate > endDate) {
+          alert('End Date must be on or after From Date.');
+          return;
+        }
+        if (isNaN(priority) || priority < 1) {
+          alert('Offer Priority must be a valid number >= 1.');
+          return;
+        }
+
+        const submitBtn = document.getElementById('modal-submit-btn');
+        submitBtn.disabled = true;
+
+        try {
+          const isEdit = !!offerId;
+          const url = isEdit ? `/api/admin/offers/${offerId}` : '/api/admin/offers';
+          const method = isEdit ? 'PUT' : 'POST';
+
+          const res = await fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              offer: offerText,
+              priority: priority,
+              from_date: fromDate,
+              end_date: endDate
+            })
+          });
+
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Operation failed');
+
+          closeModal();
+          showToast(isEdit ? 'Offer updated successfully.' : 'New offer created successfully.');
+          await loadOffers();
+        } catch (err) {
+          alert(err.message || 'Failed to save offer.');
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+    });
+
+    // Load offers from backend
+    async function loadOffers() {
+      const tbody = document.getElementById('offers-tbody');
+      try {
+        const res = await fetch('/api/admin/offers');
+        if (!res.ok) throw new Error('Failed to fetch offers');
+        const data = await res.json();
+        offersList = data.offers || [];
+        if (data.server_date) serverToday = data.server_date;
+
+        document.getElementById('current-server-date').textContent = `Current Date: ${formatDateDisplay(serverToday)}`;
+        document.getElementById('offers-count-label').textContent = `${offersList.length} total offers configured in database`;
+
+        renderOffersTable();
+        updateActiveOfferPreview();
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 3rem; color: #C53030;">Failed to load offers from server.</td></tr>`;
+      }
+    }
+
+    // Determine the highest priority active offer
+    function getActiveOffer() {
+      const activeOffers = offersList.filter(o => o.from_date <= serverToday && o.end_date >= serverToday);
+      if (activeOffers.length === 0) return null;
+      // Sort priority ascending (1 is highest), tie-break by ID
+      activeOffers.sort((a, b) => {
+        if (a.priority !== b.priority) return a.priority - b.priority;
+        return a.id - b.id;
+      });
+      return activeOffers[0];
+    }
+
+    function updateActiveOfferPreview() {
+      const active = getActiveOffer();
+      const bannerText = document.getElementById('active-banner-text');
+      const bannerMeta = document.getElementById('active-banner-meta');
+      const statusTitle = document.getElementById('active-offer-status-title');
+
+      if (active) {
+        bannerText.textContent = active.offer || active.offer_text;
+        bannerMeta.textContent = `Priority #${active.priority} • Active until ${formatDateDisplay(active.end_date)}`;
+        statusTitle.textContent = 'Active Offer Live on Public Website';
+      } else {
+        bannerText.textContent = 'No offer is active today. The top promotional banner is hidden.';
+        bannerMeta.textContent = 'None Active';
+        statusTitle.textContent = 'No Active Offer';
+      }
+    }
+
+    function renderOffersTable() {
+      const tbody = document.getElementById('offers-tbody');
+      if (offersList.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align: center; padding: 3rem; color: #718096;">
+              No offers created yet. Click "Add New Offer" to create the first promotional offer.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      const activeOffer = getActiveOffer();
+
+      tbody.innerHTML = offersList.map(item => {
+        const isLive = activeOffer && activeOffer.id === item.id;
+        const isCurrentlyActivePeriod = (item.from_date <= serverToday && item.end_date >= serverToday);
+        const isFuture = item.from_date > serverToday;
+        const isPast = item.end_date < serverToday;
+
+        let statusTag = '';
+        if (isLive) {
+          statusTag = '<span class="offer-tag-live">Active on Website</span>';
+        } else if (isCurrentlyActivePeriod) {
+          statusTag = '<span class="offer-tag-scheduled" style="background:#FEF3C7; color:#92400E;">Active (Lower Priority)</span>';
+        } else if (isFuture) {
+          statusTag = '<span class="offer-tag-scheduled">Scheduled</span>';
+        } else if (isPast) {
+          statusTag = '<span class="offer-tag-expired">Expired</span>';
+        }
+
+        const priorityClass = item.priority === 1 ? 'priority-pill rank-1' : 'priority-pill';
+
+        return `
+          <tr class="${isLive ? 'row-live-active' : ''}">
+            <!-- Column 1: Offer Priority -->
+            <td>
+              <div class="priority-badge-box">
+                <span class="${priorityClass}">#${item.priority}</span>
+                <input
+                  type="number"
+                  min="1"
+                  step="1"
+                  class="priority-input-inline"
+                  value="${item.priority}"
+                  data-offer-id="${item.id}"
+                  title="Change Priority directly and press Enter or Tab"
+                />
+              </div>
+            </td>
+
+            <!-- Column 2: Offer -->
+            <td>
+              <div class="offer-text-content">
+                <span>${escapeHtml(item.offer || item.offer_text)}</span>
+                ${statusTag}
+              </div>
+            </td>
+
+            <!-- Column 3: From Date -->
+            <td>
+              <div class="date-display">${formatDateDisplay(item.from_date)}</div>
+              <div style="font-size: 0.7rem; color: #A0AEC0;">${item.from_date}</div>
+            </td>
+
+            <!-- Column 4: End Date -->
+            <td>
+              <div class="date-display">${formatDateDisplay(item.end_date)}</div>
+              <div style="font-size: 0.7rem; color: #A0AEC0;">${item.end_date}</div>
+            </td>
+
+            <!-- Column 5: Actions -->
+            <td style="text-align: right;">
+              <div class="actions-group" style="justify-content: flex-end;">
+                <button class="btn-action-edit" onclick="editOffer(${item.id})">
+                  <i data-lucide="edit-2" style="width: 13px; height: 13px;"></i>
+                  <span>Edit</span>
+                </button>
+                <button class="btn-action-delete" onclick="deleteOffer(${item.id})">
+                  <i data-lucide="trash-2" style="width: 13px; height: 13px;"></i>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      if (window.lucide) lucide.createIcons();
+
+      // Attach inline priority change listeners
+      document.querySelectorAll('.priority-input-inline').forEach(input => {
+        input.addEventListener('change', async (e) => {
+          const offerId = e.target.dataset.offerId;
+          const newPriority = parseInt(e.target.value, 10);
+          if (isNaN(newPriority) || newPriority < 1) {
+            alert('Priority must be a valid number >= 1');
+            await loadOffers();
+            return;
+          }
+          const offer = offersList.find(o => o.id == offerId);
+          if (!offer) return;
+
+          e.target.disabled = true;
+          try {
+            const res = await fetch(`/api/admin/offers/${offerId}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                offer: offer.offer || offer.offer_text,
+                priority: newPriority,
+                from_date: offer.from_date,
+                end_date: offer.end_date
+              })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Failed to update priority');
+            showToast(`Priority updated to #${newPriority}`);
+            await loadOffers();
+          } catch (err) {
+            alert(err.message || 'Could not update priority');
+            await loadOffers();
+          }
+        });
+      });
+    }
+
+    // Edit Offer - Populate modal and open
+    window.editOffer = function(offerId) {
+      const offer = offersList.find(o => o.id == offerId);
+      if (!offer) return;
+
+      document.getElementById('modal-heading').textContent = 'Edit Offer';
+      document.getElementById('modal-submit-label').textContent = 'Update Offer';
+      document.getElementById('modal-offer-id').value = offer.id;
+      document.getElementById('modal-offer-priority').value = offer.priority;
+      document.getElementById('modal-offer-text').value = offer.offer || offer.offer_text;
+      document.getElementById('modal-offer-from').value = offer.from_date;
+      document.getElementById('modal-offer-end').value = offer.end_date;
+
+      document.getElementById('offer-modal').classList.add('open');
+      document.getElementById('modal-offer-text').focus();
+      if (window.lucide) lucide.createIcons();
+    };
+
+    // Delete Offer
+    window.deleteOffer = async function(offerId) {
+      const offer = offersList.find(o => o.id == offerId);
+      const promptText = offer ? `"${(offer.offer || offer.offer_text).slice(0, 40)}..."` : 'this offer';
+      if (!confirm(`Are you sure you want to delete ${promptText}? This action cannot be undone.`)) {
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/admin/offers/${offerId}`, {
+          method: 'DELETE'
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Delete failed');
+
+        showToast('Offer deleted successfully.');
+        await loadOffers();
+      } catch (err) {
+        alert(err.message || 'Failed to delete offer.');
+      }
+    };
+
+    function formatDateDisplay(dateStr) {
+      if (!dateStr) return '';
+      try {
+        const parts = dateStr.split('-');
+        if (parts.length === 3) {
+          const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+          return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+        return dateStr;
+      } catch (e) {
+        return dateStr;
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('admin-toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Products — Haute Couture Collections | Nutiyala Couture</title>
+  <meta name="description" content="Browse Nutiyala Couture's complete collection — handcrafted artisanal kurtis, luxury co-ord sets, silk hijabs and heirloom shawls. Filter by size, category and price.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --maroon:       #3E0F15;
+      --maroon-dark:  #27080D;
+      --maroon-hover: #50131B;
+      --gold:         #B38A55;
+      --gold-light:   #D8B982;
+      --gold-border:  rgba(179,138,85,0.28);
+      --ivory:        #FAF6F0;
+      --cream:        #F5EFEB;
+      --cream-card:   #FFFFFF;
+      --text-dark:    #320C10;
+      --text-muted:   #735D60;
+      --font-serif:   'Cormorant Garamond', Georgia, serif;
+      --font-sans:    'Montserrat', -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { overflow-x: clip; }
+
+    body.nc-products-page {
+      background: var(--ivory);
+      font-family: var(--font-sans);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ═══════════════════════════════════════
+       STICKY HEADER
+    ═══════════════════════════════════════ */
+    body.nc-products-page .site-header {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 900;
+      background: #3F1116 !important;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(216,185,130,0.2);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.28);
+    }
+    
+    body.nc-products-page.admin-bar-active .site-header {
+      top: 40px !important;
+    }
+    
+    body.nc-products-page .header-inner { height: 70px; }
+
+    /* ═══════════════════════════════════════
+       QUICK CATEGORY PILL STRIP
+    ═══════════════════════════════════════ */
+    .hero-pills-strip {
+      background: #FFFFFF;
+      border-bottom: 1px solid rgba(179, 138, 85, 0.2);
+      padding: 0.65rem 2rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+
+    .hero-pills-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .hero-pills-inner::-webkit-scrollbar { display: none; }
+
+    .q-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.38rem 1rem;
+      border-radius: 24px;
+      border: 1px solid var(--gold-border);
+      background: #FAF8F5;
+      color: var(--maroon);
+      font-size: 0.74rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .q-pill:hover, .q-pill.active {
+      background: var(--maroon);
+      color: var(--ivory);
+      border-color: var(--maroon);
+      box-shadow: 0 2px 8px rgba(62,15,21,0.18);
+    }
+
+    .q-pill-count {
+      font-size: 0.68rem;
+      font-weight: 500;
+      opacity: 0.75;
+      background: rgba(0,0,0,0.06);
+      padding: 0.05rem 0.35rem;
+      border-radius: 10px;
+    }
+
+    .q-pill.active .q-pill-count {
+      background: rgba(255,255,255,0.22);
+      color: #FFF;
+    }
+
+    /* ═══════════════════════════════════════
+       MAIN LAYOUT & TOP HORIZONTAL FILTER BAR
+    ═══════════════════════════════════════ */
+    .catalog-shell {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 1.15rem 2rem 3rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Top Horizontal Filter Bar */
+    .h-filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1.15rem;
+      background: #FFFFFF;
+      border: 1px solid var(--gold-border);
+      border-radius: 6px;
+      box-shadow: 0 4px 16px rgba(62, 15, 21, 0.03);
+      margin-bottom: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .h-filter-group-left {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .h-filter-group-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    /* Search Input Pill */
+    .h-search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-width: 200px;
+      max-width: 260px;
+    }
+
+    .h-search-icon {
+      position: absolute;
+      left: 0.75rem;
+      color: var(--gold);
+      width: 13px;
+      height: 13px;
+      pointer-events: none;
+    }
+
+    .h-search-input {
+      width: 100%;
+      height: 36px;
+      padding: 0 0.85rem 0 2.15rem;
+      border: 1px solid rgba(179,138,85,0.3);
+      border-radius: 20px;
+      background: #FAF8F5;
+      font-size: 0.78rem;
+      color: var(--maroon);
+      font-family: var(--font-sans);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .h-search-input:focus {
+      border-color: var(--maroon);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 2px rgba(62,15,21,0.08);
+    }
+
+    /* Horizontal Option Filter Buttons */
+    .h-filter-dropdown {
+      position: relative;
+    }
+
+    .h-filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      height: 36px;
+      padding: 0 0.95rem;
+      background: #FAF8F5;
+      border: 1px solid rgba(179,138,85,0.3);
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--maroon);
+      cursor: pointer;
+      font-family: var(--font-sans);
+      letter-spacing: 0.03em;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .h-filter-btn:hover {
+      border-color: var(--gold);
+      background: #FFFFFF;
+    }
+
+    .h-filter-btn.active {
+      background: var(--maroon);
+      color: var(--ivory);
+      border-color: var(--maroon);
+    }
+
+    .h-btn-icon {
+      width: 13px;
+      height: 13px;
+      color: var(--gold);
+    }
+
+    .h-filter-btn.active .h-btn-icon {
+      color: var(--gold-light);
+    }
+
+    .h-chevron {
+      width: 12px;
+      height: 12px;
+      transition: transform 0.2s ease;
+      color: #9C888B;
+    }
+
+    .h-filter-btn.active .h-chevron {
+      color: var(--ivory);
+    }
+
+    .h-filter-dropdown.open .h-chevron {
+      transform: rotate(180deg);
+    }
+
+    .h-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold);
+      color: var(--maroon);
+      font-size: 0.65rem;
+      font-weight: 700;
+      min-width: 16px;
+      height: 16px;
+      border-radius: 10px;
+      padding: 0 4px;
+    }
+
+    .h-filter-btn.active .h-badge {
+      background: var(--ivory);
+      color: var(--maroon);
+    }
+
+    /* Popover Menus */
+    .h-filter-popover {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      background: #FFFFFF;
+      border: 1px solid rgba(179,138,85,0.35);
+      border-radius: 6px;
+      padding: 1rem;
+      box-shadow: 0 12px 32px rgba(62,15,21,0.12);
+      z-index: 500;
+      min-width: 230px;
+    }
+
+    .h-filter-dropdown.open .h-filter-popover {
+      display: block;
+      animation: popoverFadeIn 0.18s ease-out;
+    }
+
+    @keyframes popoverFadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .popover-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--maroon);
+    }
+
+    .popover-clear {
+      background: none;
+      border: none;
+      font-size: 0.68rem;
+      color: var(--gold);
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .popover-clear:hover {
+      text-decoration: underline;
+      color: var(--maroon);
+    }
+
+    /* In Stock Indicator Dot */
+    .stock-indicator {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #CCC;
+      transition: background 0.2s ease;
+    }
+
+    .h-filter-btn.active .stock-indicator {
+      background: #4ADE80;
+      box-shadow: 0 0 6px #4ADE80;
+    }
+
+    /* Reset button */
+    .h-reset-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      height: 36px;
+      padding: 0 0.85rem;
+      background: transparent;
+      border: 1px dashed rgba(62,15,21,0.25);
+      border-radius: 20px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .h-reset-btn:hover {
+      background: rgba(62,15,21,0.06);
+      color: var(--maroon);
+      border-style: solid;
+      border-color: var(--maroon);
+    }
+
+    .h-reset-btn svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Results Count & Sort */
+    .results-count {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .results-count strong {
+      color: var(--maroon);
+      font-weight: 700;
+    }
+
+    .sort-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .sort-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .sort-select {
+      background: #FAF8F5;
+      border: 1px solid rgba(179,138,85,0.3);
+      border-radius: 20px;
+      padding: 0.45rem 2.2rem 0.45rem 0.95rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--maroon);
+      cursor: pointer;
+      outline: none;
+      font-family: var(--font-sans);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%233E0F15' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.8rem center;
+      transition: border-color 0.2s;
+    }
+
+    .sort-select:focus { border-color: var(--maroon); }
+
+    /* Active Filter Chips Strip */
+    .chip-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.9rem;
+    }
+
+    .f-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.28rem 0.65rem;
+      background: rgba(62,15,21,0.07);
+      border: 1px solid rgba(62,15,21,0.18);
+      border-radius: 20px;
+      font-size: 0.72rem;
+      color: var(--maroon);
+      font-weight: 600;
+    }
+
+    .f-chip-x {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0;
+      font-size: 0.9rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      transition: color 0.15s;
+    }
+
+    .f-chip-x:hover { color: var(--maroon); }
+
+    .clear-btn {
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 0 0.4rem;
+      transition: color 0.2s;
+      white-space: nowrap;
+      font-family: var(--font-sans);
+    }
+
+    .clear-btn:hover { color: var(--maroon); text-decoration: underline; }
+
+    /* Full-Width Catalog Body */
+    .catalog-body {
+      display: block;
+      width: 100%;
+    }
+
+    /* Size chips */
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.4rem;
+    }
+
+    .size-chip {
+      padding: 0.42rem 0.2rem;
+      text-align: center;
+      font-size: 0.73rem;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      border: 1px solid var(--gold-border);
+      border-radius: 3px;
+      background: var(--cream);
+      color: var(--maroon);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      user-select: none;
+    }
+
+    .size-chip:hover { border-color: var(--maroon); background: #fff; }
+
+    .size-chip.active {
+      background: var(--maroon);
+      color: var(--ivory);
+      border-color: var(--maroon);
+      box-shadow: 0 2px 8px rgba(62,15,21,0.22);
+    }
+
+    /* Price range */
+    .price-ranges {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .price-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      color: #3D2D30;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.15s;
+    }
+
+    .price-item:hover { color: var(--maroon); }
+
+    .price-item input[type="checkbox"] {
+      accent-color: var(--maroon);
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    /* Availability */
+    .avail-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      color: #3D2D30;
+      cursor: pointer;
+    }
+
+    .avail-item input[type="checkbox"] {
+      accent-color: var(--maroon);
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       PRODUCT GRID
+    ═══════════════════════════════════════ */
+    .products-section { min-width: 0; }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem 0.85rem;
+    }
+
+    /* Product Card */
+    .nc-card {
+      background: var(--cream-card);
+      border: 1px solid rgba(179,138,85,0.18);
+      border-radius: 5px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      height: 100%;
+      transition: transform 0.32s cubic-bezier(0.16,1,0.3,1), box-shadow 0.28s ease, border-color 0.22s;
+      cursor: pointer;
+    }
+
+    .nc-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(62,15,21,0.1);
+      border-color: var(--gold);
+    }
+
+    /* Image */
+    .nc-card-img-wrap {
+      position: relative;
+      aspect-ratio: 4/5;
+      background: #320C10;
+      overflow: hidden;
+      max-height: 280px;
+    }
+
+    .nc-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.55s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .nc-card:hover .nc-card-img { transform: scale(1.07); }
+
+    /* Badges */
+    .nc-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 0.26rem 0.58rem;
+      border-radius: 2px;
+      z-index: 3;
+    }
+
+    .nc-badge.new { background: var(--maroon); color: var(--ivory); }
+    .nc-badge.sale { background: #A33; color: #fff; }
+    .nc-badge.oos { background: #555; color: #fff; }
+    .nc-badge.featured { background: var(--gold); color: #320C10; }
+
+    /* Wishlist */
+    .nc-wish-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--gold-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--maroon);
+      transition: all 0.2s ease;
+      z-index: 3;
+    }
+
+    .nc-wish-btn:hover {
+      background: var(--maroon);
+      color: var(--ivory);
+      transform: scale(1.1);
+    }
+
+    .nc-wish-btn.active {
+      background: #fff;
+      color: #E03131;
+      border-color: #E03131;
+    }
+
+    /* Rating pill */
+    .nc-rating {
+      position: absolute;
+      bottom: 9px;
+      left: 9px;
+      background: rgba(255,255,255,0.93);
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--gold-border);
+      border-radius: 20px;
+      padding: 0.22rem 0.5rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--maroon);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      z-index: 2;
+    }
+
+    .nc-rating .star { color: #D97706; width: 10px; height: 10px; }
+    .nc-rating .rev { color: #735D60; font-weight: 500; font-size: 0.62rem; padding-left: 0.18rem; border-left: 1px solid #D8CFC8; }
+
+    /* Card Body */
+    .nc-card-body {
+      padding: 0.65rem 0.75rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 0.28rem;
+    }
+
+    .nc-brand-tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .nc-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--maroon);
+      line-height: 1.25;
+      margin: 0 0 0.2rem 0;
+      text-decoration: none;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      transition: color 0.2s;
+    }
+    
+    .nc-card-desc {
+      font-size: 0.72rem;
+      color: #666;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 0.3rem;
+    }
+
+    .nc-card-title:hover { color: var(--gold); }
+
+    .nc-sizes {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .nc-sizes strong { color: var(--maroon); font-weight: 600; }
+
+    .nc-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      padding-top: 0.55rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      margin-top: auto;
+    }
+
+    .nc-price { font-size: 1.08rem; font-weight: 700; color: var(--maroon); }
+    .nc-price-orig { font-size: 0.8rem; color: #9C888B; text-decoration: line-through; }
+    .nc-price-off {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #B45309;
+      background: #FEF3C7;
+      padding: 0.12rem 0.38rem;
+      border-radius: 2px;
+    }
+
+    /* Quick action row */
+    .nc-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.3rem;
+      margin-top: 0.4rem;
+    }
+
+    .nc-btn {
+      height: 30px;
+      border-radius: 2px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      transition: all 0.2s ease;
+      border: none;
+      font-family: var(--font-sans);
+    }
+
+    .nc-btn-bag {
+      background: var(--cream);
+      color: var(--maroon);
+      border: 1px solid rgba(62,15,21,0.2);
+    }
+
+    .nc-btn-bag:hover:not(:disabled) {
+      background: rgba(62,15,21,0.05);
+    }
+
+    .nc-btn-buy {
+      background: var(--maroon);
+      color: var(--ivory);
+      border: 1px solid var(--maroon);
+    }
+
+    .nc-btn-buy:hover:not(:disabled) {
+      background: #2D0A0F;
+      border-color: #2D0A0F;
+    }
+
+    .nc-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ═══════════════════════════════════════
+       PAGINATION
+    ═══════════════════════════════════════ */
+    .pagination-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--gold-border);
+    }
+
+    .pg-btn {
+      min-width: 36px;
+      height: 36px;
+      border-radius: 3px;
+      border: 1px solid var(--gold-border);
+      background: var(--cream-card);
+      color: var(--maroon);
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s ease;
+      padding: 0 0.6rem;
+    }
+
+    .pg-btn:hover:not(:disabled) {
+      background: var(--maroon);
+      color: var(--ivory);
+      border-color: var(--maroon);
+    }
+
+    .pg-btn.active {
+      background: var(--maroon);
+      color: var(--ivory);
+      border-color: var(--maroon);
+      box-shadow: 0 2px 10px rgba(62,15,21,0.22);
+    }
+
+    .pg-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .pg-ellipsis { color: var(--text-muted); font-size: 0.82rem; padding: 0 0.3rem; }
+
+    /* ═══════════════════════════════════════
+       LOADING / EMPTY STATES
+    ═══════════════════════════════════════ */
+    .state-box {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 5rem 2rem;
+      background: var(--cream-card);
+      border: 1px solid var(--gold-border);
+      border-radius: 6px;
+    }
+
+    .state-box h3 {
+      font-family: var(--font-serif);
+      font-size: 1.9rem;
+      color: var(--maroon);
+      margin: 0.8rem 0 0.5rem;
+      font-weight: 500;
+    }
+
+    .state-box p {
+      color: var(--text-muted);
+      font-size: 0.87rem;
+      line-height: 1.65;
+      max-width: 400px;
+      margin: 0 auto 1.8rem;
+    }
+
+    .reset-btn {
+      display: inline-block;
+      padding: 0.72rem 1.8rem;
+      background: var(--maroon);
+      color: var(--ivory);
+      border: 1px solid var(--gold);
+      border-radius: 2px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: all 0.22s ease;
+    }
+
+    .reset-btn:hover { background: var(--gold); color: #320C10; }
+
+    /* Spin animation */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin 1.1s linear infinite; }
+
+    /* Mobile Filter Trigger */
+    .mobile-filter-bar {
+      display: none;
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--cream-card);
+      border-top: 1px solid var(--gold-border);
+      padding: 0.7rem 1rem;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+      z-index: 100;
+    }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .nc-footer {
+      background: #320C10;
+      border-top: 1px solid rgba(179,138,85,0.25);
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .nc-footer img { width: 42px; margin-bottom: 0.5rem; }
+
+    .nc-footer h3 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      color: var(--ivory);
+      font-weight: 500;
+      margin: 0 0 0.25rem;
+    }
+
+    .nc-footer .tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .nc-footer .copy { font-size: 0.73rem; color: rgba(250,246,240,0.55); }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 1280px) {
+      .product-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    @media (max-width: 992px) {
+      .product-grid { grid-template-columns: repeat(3, 1fr); gap: 0.85rem 0.65rem; }
+      .h-filter-group-right { width: 100%; justify-content: space-between; margin-top: 0.25rem; }
+    }
+
+    @media (max-width: 640px) {
+      .catalog-shell { padding: 0.85rem 1rem 2rem; }
+      .h-filter-bar { padding: 0.75rem; gap: 0.5rem; }
+      .h-search-box { min-width: 100%; max-width: 100%; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem 0.5rem; }
+      .h-filter-btn { font-size: 0.72rem; padding: 0 0.75rem; height: 34px; }
+    }
+
+    @media (max-width: 600px) {
+      .catalog-shell { padding: 1rem 0.85rem 4rem; }
+      .hero-pills-strip { padding: 0.5rem 0.75rem; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem 0.5rem; }
+      .nc-card-title { font-size: 0.95rem; }
+      .nc-price { font-size: 0.95rem; }
+    }
+
+    @media (max-width: 360px) {
+      .product-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body class="nc-products-page luxury-catalog-body">
+
+  <!-- ══════════ HEADER ══════════ -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="index.html" class="header-icon-btn" aria-label="Return to Home" title="Home" style="color: #EEDFA9;">
+          <i data-lucide="arrow-left"></i>
+        </a>
+        <a href="index.html" class="brand-logo" id="brand-logo" aria-label="Nutiyala Couture Home">
+          <div class="brand-title-group" style="margin-left: 0;">
+            <span class="brand-name" style="color: #EEDFA9; font-size: 2.4rem; letter-spacing: 0.05em; text-shadow: none;">Nutiyala</span>
+          </div>
+        </a>
+      </div>
+      <div class="header-actions">
+        <a href="account.html#wishlist" class="header-icon-btn" aria-label="Wishlist" title="Wishlist" style="color: #EEDFA9;">
+          <i data-lucide="heart"></i>
+          <span class="badge-count" id="wishlist-count" style="background: #EEDFA9; color: #3F1116;">0</span>
+        </a>
+        <a href="account.html#cart" class="header-icon-btn cart-btn-wrap" id="cart-btn" aria-label="Shopping Bag" title="Shopping Bag" style="color: #EEDFA9;">
+          <i data-lucide="shopping-bag"></i>
+          <span class="badge-count" id="cart-count" style="background: #EEDFA9; color: #3F1116;">0</span>
+        </a>
+        <a href="login.html" class="header-login-btn" id="account-btn" aria-label="Client Login" title="Client Login / Account" style="color: #EEDFA9;">
+          <i data-lucide="user"></i>
+          <span class="login-btn-label">LOGIN</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick Category Pills -->
+  <div class="hero-pills-strip">
+    <div class="hero-pills-inner" id="quick-pills">
+      <button class="q-pill active" data-cat="">All Creations</button>
+      <!-- dynamic -->
+    </div>
+  </div>
+
+  <!-- ══════════ MAIN CATALOG ══════════ -->
+  <main class="catalog-shell">
+
+    <!-- Top Horizontal Filter & Controls Bar -->
+    <div class="h-filter-bar" id="h-filter-bar">
+      <!-- Left Filters -->
+      <div class="h-filter-group-left">
+        <!-- Search Input -->
+        <div class="h-search-box">
+          <i data-lucide="search" class="h-search-icon"></i>
+          <input type="text" id="search-input" class="h-search-input" placeholder="Search silk, kurti, code..." aria-label="Search catalog">
+        </div>
+
+        <!-- Size Dropdown Popover -->
+        <div class="h-filter-dropdown" id="dropdown-size">
+          <button type="button" class="h-filter-btn" id="btn-size-dropdown" aria-haspopup="true" aria-expanded="false">
+            <i data-lucide="scissors" class="h-btn-icon"></i>
+            <span>Size</span>
+            <span class="h-badge" id="size-count-badge" style="display:none;">0</span>
+            <i data-lucide="chevron-down" class="h-chevron"></i>
+          </button>
+          <div class="h-filter-popover" id="popover-size" style="width:240px;">
+            <div class="popover-head">
+              <span>Select Sizes</span>
+              <button type="button" class="popover-clear" id="clear-size-btn">Clear</button>
+            </div>
+            <div class="size-grid" id="size-grid">
+              <button type="button" class="size-chip" data-size="XS">XS</button>
+              <button type="button" class="size-chip" data-size="S">S</button>
+              <button type="button" class="size-chip" data-size="M">M</button>
+              <button type="button" class="size-chip" data-size="L">L</button>
+              <button type="button" class="size-chip" data-size="XL">XL</button>
+              <button type="button" class="size-chip" data-size="XXL">XXL</button>
+              <button type="button" class="size-chip" data-size="Free Size">Free</button>
+              <button type="button" class="size-chip" data-size="Standard">Std</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Price Dropdown Popover -->
+        <div class="h-filter-dropdown" id="dropdown-price">
+          <button type="button" class="h-filter-btn" id="btn-price-dropdown" aria-haspopup="true" aria-expanded="false">
+            <i data-lucide="tag" class="h-btn-icon"></i>
+            <span>Price</span>
+            <span class="h-badge" id="price-count-badge" style="display:none;">0</span>
+            <i data-lucide="chevron-down" class="h-chevron"></i>
+          </button>
+          <div class="h-filter-popover" id="popover-price" style="min-width:220px;">
+            <div class="popover-head">
+              <span>Price Range</span>
+              <button type="button" class="popover-clear" id="clear-price-btn">Clear</button>
+            </div>
+            <div class="price-ranges">
+              <label class="price-item">
+                <input type="checkbox" name="price_range" value="0-2000">
+                <span>Under ₹2,000</span>
+              </label>
+              <label class="price-item">
+                <input type="checkbox" name="price_range" value="2000-5000">
+                <span>₹2,000 – ₹5,000</span>
+              </label>
+              <label class="price-item">
+                <input type="checkbox" name="price_range" value="5000-10000">
+                <span>₹5,000 – ₹10,000</span>
+              </label>
+              <label class="price-item">
+                <input type="checkbox" name="price_range" value="10000-99999">
+                <span>Above ₹10,000</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- In Stock Toggle -->
+        <button type="button" class="h-filter-btn" id="btn-in-stock">
+          <span class="stock-indicator"></span>
+          <span>In Stock Only</span>
+          <input type="checkbox" id="in-stock-only" style="display:none;">
+        </button>
+
+        <!-- Reset Button -->
+        <button type="button" class="h-reset-btn" id="clear-btn" style="display:none;" title="Clear all filters">
+          <i data-lucide="rotate-ccw"></i>
+          <span>Reset</span>
+        </button>
+      </div>
+
+      <!-- Right Controls: Count & Sort -->
+      <div class="h-filter-group-right">
+        <span class="results-count" id="results-count">Showing <strong id="count-val">0</strong> products</span>
+        <div class="sort-wrap">
+          <span class="sort-label">Sort:</span>
+          <select class="sort-select" id="sort-select" aria-label="Sort products">
+            <option value="featured">Recommended</option>
+            <option value="newest">What's New</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Filter Chips Strip -->
+    <div class="chip-strip" id="chip-strip"></div>
+
+    <!-- ══ FULL-WIDTH PRODUCT CATALOG ══ -->
+    <div class="catalog-body">
+      <section class="products-section">
+        <div class="product-grid" id="product-grid">
+          <!-- Loading state -->
+          <div class="state-box">
+            <i data-lucide="loader-2" class="spin" style="width:36px;height:36px;color:var(--gold);margin-bottom:1rem;"></i>
+            <h3>Curating Atelier Collections…</h3>
+            <p>Loading your bespoke couture creations.</p>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-wrap" id="pagination-wrap" style="display:none;"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer simple-footer bg-deep-chocolate text-light" id="contact-footer">
+    <div class="container footer-simple-wrap">
+      <div class="footer-simple-brand">
+        <a href="index.html" class="footer-brand-link" aria-label="Nutiyala Home">
+          <img id="footer-logo" src="assets/nutiyala-emblem-gold.png" alt="Nutiyala Couture Emblem" class="footer-simple-logo">
+        </a>
+        <h3 id="footer-boutique-name" class="footer-simple-name">Nutiyala Couture</h3>
+      </div>
+      <div class="footer-simple-contacts">
+        <a id="footer-email-link" href="mailto:contact@nutiyala.com" class="footer-contact-item" title="Send us an email">
+          <i data-lucide="mail"></i>
+          <span id="footer-email">contact@nutiyala.com</span>
+        </a>
+        <a id="footer-phone-link" href="tel:+919876543210" class="footer-contact-item" title="Call or WhatsApp us">
+          <i data-lucide="phone"></i>
+          <span id="footer-phone">+91 98765 43210</span>
+        </a>
+        <a id="footer-insta-link" href="https://instagram.com/nutiyala_couture" target="_blank" rel="noopener noreferrer" class="footer-contact-item" title="Follow us on Instagram">
+          <svg class="instagram-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          <span id="footer-instagram">@nutiyala_couture</span>
+        </a>
+      </div>
+      <div class="footer-simple-copy">
+        © 2026 <span class="footer-copy-name">Nutiyala Couture</span>. All rights reserved. Grace in Every Thread.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════ SCRIPTS ══════════ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) lucide.createIcons();
+
+      const ITEMS_PER_PAGE = 12;
+
+      // ── API Endpoint Resolver (Resolves file:// and standard origins) ──
+      function getApiUrl(endpoint) {
+        if (!endpoint) return '';
+        if (endpoint.startsWith('http://') || endpoint.startsWith('https://')) return endpoint;
+        if (window.location.protocol === 'file:' || !window.location.origin || window.location.origin === 'null') {
+          return 'http://localhost:5173' + endpoint;
+        }
+        return endpoint;
+      }
+
+      // ── State ──────────────────────────────────────
+      const state = {
+        categories: new Set(),
+        priceRanges: new Set(),
+        sizes: new Set(),
+        inStockOnly: false,
+        search: '',
+        sort: 'featured',
+        page: 1,
+        totalProducts: 0,
+        allProducts: [],
+        allCategories: [],
+        wishlistIds: new Set(),
+      };
+
+      // ── Auth & Badges ──────────────────────────────
+      fetch(getApiUrl('/api/auth/me')).then(r => r.json()).then(data => {
+        const btn = document.getElementById('account-btn');
+        if (data && data.user) {
+          const label = btn.querySelector('.login-btn-label');
+          if (label) label.textContent = data.user.account_type === 'ADMIN' ? 'ADMIN' : (data.user.name.split(' ')[0].toUpperCase());
+          btn.setAttribute('href', data.user.account_type === 'ADMIN' ? '/admin-orders.html' : '/account');
+          btn.onclick = e => { e.preventDefault(); window.location.href = data.user.account_type === 'ADMIN' ? '/admin-orders.html' : '/account'; };
+        }
+      }).catch(() => {});
+
+      function refreshBadges() {
+        fetch(getApiUrl('/api/cart')).then(r => r.json()).then(d => {
+          const el = document.getElementById('cart-count');
+          if (el && d.item_count !== undefined) el.textContent = d.item_count;
+        }).catch(() => {});
+
+        fetch(getApiUrl('/api/wishlist')).then(r => r.json()).then(d => {
+          const el = document.getElementById('wishlist-count');
+          if (el && d.items) {
+            el.textContent = d.items.length;
+            state.wishlistIds = new Set(d.items.map(i => i.product_id));
+            syncWishlistButtons();
+          }
+        }).catch(() => {});
+      }
+      refreshBadges();
+
+      function syncWishlistButtons() {
+        document.querySelectorAll('.nc-wish-btn').forEach(btn => {
+          btn.classList.toggle('active', state.wishlistIds.has(parseInt(btn.dataset.id)));
+        });
+      }
+
+      // ── URL Params on Load ─────────────────────────
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlCat = urlParams.get('category');
+      if (urlCat) urlCat.split(',').forEach(c => state.categories.add(c.trim()));
+      const urlSize = urlParams.get('size');
+      if (urlSize) urlSize.split(',').forEach(s => state.sizes.add(s.trim()));
+      const urlSearch = urlParams.get('search');
+      if (urlSearch) { state.search = urlSearch; document.getElementById('search-input').value = urlSearch; }
+
+      // ── Categories & Top Pills ────────────────────
+      async function initCategories() {
+        try {
+          const res = await fetch(getApiUrl('/api/categories'));
+          const data = await res.json();
+          state.allCategories = data.categories || [];
+
+          const pillsWrap = document.getElementById('quick-pills');
+          if (pillsWrap) {
+            const totalCount = state.allCategories.reduce((acc, c) => acc + (c.product_count || 0), 0);
+            pillsWrap.innerHTML = `
+              <button class="q-pill ${state.categories.size === 0 ? 'active' : ''}" data-cat="">
+                All Creations
+                <span class="q-pill-count">${totalCount}</span>
+              </button>
+            `;
+
+            state.allCategories.forEach(cat => {
+              const btn = document.createElement('button');
+              btn.className = `q-pill ${state.categories.has(cat.slug) ? 'active' : ''}`;
+              btn.dataset.cat = cat.slug;
+              btn.innerHTML = `${cat.name} <span class="q-pill-count">${cat.product_count || 0}</span>`;
+              btn.addEventListener('click', () => {
+                if (state.categories.has(cat.slug) && state.categories.size === 1) {
+                  state.categories.clear();
+                } else {
+                  state.categories.clear();
+                  state.categories.add(cat.slug);
+                }
+                state.page = 1;
+                syncQuickPills();
+                renderChips();
+                loadProducts();
+              });
+              pillsWrap.appendChild(btn);
+            });
+
+            pillsWrap.querySelector('.q-pill[data-cat=""]')?.addEventListener('click', () => {
+              state.categories.clear();
+              state.page = 1;
+              syncQuickPills();
+              renderChips();
+              loadProducts();
+            });
+          }
+
+          syncQuickPills();
+        } catch (err) {
+          console.error('Category load error:', err);
+        }
+      }
+
+      function syncQuickPills() {
+        document.querySelectorAll('.q-pill').forEach(p => {
+          const cat = p.dataset.cat;
+          p.classList.toggle('active', cat === '' ? state.categories.size === 0 : state.categories.has(cat));
+        });
+      }
+
+      // ── Dropdown Popovers (Size & Price) ───────────
+      const sizeDropdown = document.getElementById('dropdown-size');
+      const priceDropdown = document.getElementById('dropdown-price');
+      const btnSize = document.getElementById('btn-size-dropdown');
+      const btnPrice = document.getElementById('btn-price-dropdown');
+
+      btnSize?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        priceDropdown?.classList.remove('open');
+        sizeDropdown?.classList.toggle('open');
+      });
+
+      btnPrice?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sizeDropdown?.classList.remove('open');
+        priceDropdown?.classList.toggle('open');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#dropdown-size')) sizeDropdown?.classList.remove('open');
+        if (!e.target.closest('#dropdown-price')) priceDropdown?.classList.remove('open');
+      });
+
+      // Popover clear actions
+      document.getElementById('clear-size-btn')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        state.sizes.clear();
+        document.querySelectorAll('.size-chip').forEach(b => b.classList.remove('active'));
+        state.page = 1;
+        renderChips();
+        loadProducts();
+      });
+
+      document.getElementById('clear-price-btn')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        state.priceRanges.clear();
+        document.querySelectorAll('input[name="price_range"]').forEach(cb => cb.checked = false);
+        state.page = 1;
+        renderChips();
+        loadProducts();
+      });
+
+      // ── Size Chips Selection ───────────────────────
+      document.querySelectorAll('.size-chip').forEach(btn => {
+        const sz = btn.dataset.size;
+        if (state.sizes.has(sz)) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+          if (state.sizes.has(sz)) { state.sizes.delete(sz); btn.classList.remove('active'); }
+          else { state.sizes.add(sz); btn.classList.add('active'); }
+          state.page = 1;
+          renderChips();
+          loadProducts();
+        });
+      });
+
+      // ── Price Checkboxes ───────────────────────────
+      document.querySelectorAll('input[name="price_range"]').forEach(cb => {
+        cb.addEventListener('change', e => {
+          if (e.target.checked) state.priceRanges.add(e.target.value);
+          else state.priceRanges.delete(e.target.value);
+          state.page = 1;
+          renderChips();
+          loadProducts();
+        });
+      });
+
+      // ── In Stock Toggle ────────────────────────────
+      const btnInStock = document.getElementById('btn-in-stock');
+      const inStockCb = document.getElementById('in-stock-only');
+
+      btnInStock?.addEventListener('click', () => {
+        state.inStockOnly = !state.inStockOnly;
+        if (inStockCb) inStockCb.checked = state.inStockOnly;
+        btnInStock.classList.toggle('active', state.inStockOnly);
+        state.page = 1;
+        renderChips();
+        loadProducts();
+      });
+
+      // ── Search (debounced) ─────────────────────────
+      let searchTimer = null;
+      document.getElementById('search-input')?.addEventListener('input', e => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+          state.search = e.target.value.trim();
+          state.page = 1;
+          renderChips();
+          loadProducts();
+        }, 320);
+      });
+
+      // ── Sort ───────────────────────────────────────
+      document.getElementById('sort-select')?.addEventListener('change', e => {
+        state.sort = e.target.value;
+        state.page = 1;
+        loadProducts();
+      });
+
+      // ── Reset All ──────────────────────────────────
+      function resetAll() {
+        state.categories.clear();
+        state.priceRanges.clear();
+        state.sizes.clear();
+        state.inStockOnly = false;
+        state.search = '';
+        state.sort = 'featured';
+        state.page = 1;
+
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) searchInput.value = '';
+        if (inStockCb) inStockCb.checked = false;
+        if (btnInStock) btnInStock.classList.remove('active');
+        document.querySelectorAll('input[name="price_range"]').forEach(c => c.checked = false);
+        document.querySelectorAll('.size-chip').forEach(b => b.classList.remove('active'));
+        const sortSelect = document.getElementById('sort-select');
+        if (sortSelect) sortSelect.value = 'featured';
+
+        syncQuickPills();
+        renderChips();
+        loadProducts();
+      }
+
+      document.getElementById('clear-btn')?.addEventListener('click', resetAll);
+
+      // ── Active Filter Chips ────────────────────────
+      function renderChips() {
+        const strip = document.getElementById('chip-strip');
+        const clearBtn = document.getElementById('clear-btn');
+        if (strip) strip.innerHTML = '';
+
+        let hasFilters = false;
+
+        // Categories chips
+        state.categories.forEach(slug => {
+          hasFilters = true;
+          const cat = state.allCategories.find(c => c.slug === slug);
+          strip?.appendChild(makeChip(cat ? cat.name : slug, () => {
+            state.categories.delete(slug);
+            syncQuickPills();
+            renderChips();
+            loadProducts();
+          }));
+        });
+
+        // Price dropdown badge & chips
+        const priceBadge = document.getElementById('price-count-badge');
+        if (priceBadge && btnPrice) {
+          if (state.priceRanges.size > 0) {
+            priceBadge.textContent = state.priceRanges.size;
+            priceBadge.style.display = 'inline-flex';
+            btnPrice.classList.add('active');
+          } else {
+            priceBadge.style.display = 'none';
+            btnPrice.classList.remove('active');
+          }
+        }
+
+        state.priceRanges.forEach(r => {
+          hasFilters = true;
+          const labels = { '0-2000': 'Under ₹2,000', '2000-5000': '₹2,000–₹5,000', '5000-10000': '₹5,000–₹10,000', '10000-99999': 'Above ₹10,000' };
+          strip?.appendChild(makeChip(labels[r] || r, () => {
+            state.priceRanges.delete(r);
+            const cb = document.querySelector(`input[name="price_range"][value="${r}"]`);
+            if (cb) cb.checked = false;
+            renderChips();
+            loadProducts();
+          }));
+        });
+
+        // Size dropdown badge & chips
+        const sizeBadge = document.getElementById('size-count-badge');
+        if (sizeBadge && btnSize) {
+          if (state.sizes.size > 0) {
+            sizeBadge.textContent = state.sizes.size;
+            sizeBadge.style.display = 'inline-flex';
+            btnSize.classList.add('active');
+          } else {
+            sizeBadge.style.display = 'none';
+            btnSize.classList.remove('active');
+          }
+        }
+
+        state.sizes.forEach(sz => {
+          hasFilters = true;
+          strip?.appendChild(makeChip(`Size: ${sz}`, () => {
+            state.sizes.delete(sz);
+            const btn = document.querySelector(`.size-chip[data-size="${sz}"]`);
+            if (btn) btn.classList.remove('active');
+            renderChips();
+            loadProducts();
+          }));
+        });
+
+        if (state.search) {
+          hasFilters = true;
+          strip?.appendChild(makeChip(`"${state.search}"`, () => {
+            state.search = '';
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.value = '';
+            renderChips();
+            loadProducts();
+          }));
+        }
+
+        if (btnInStock) {
+          btnInStock.classList.toggle('active', state.inStockOnly);
+        }
+
+        if (state.inStockOnly) {
+          hasFilters = true;
+          strip?.appendChild(makeChip('In Stock', () => {
+            state.inStockOnly = false;
+            if (inStockCb) inStockCb.checked = false;
+            if (btnInStock) btnInStock.classList.remove('active');
+            renderChips();
+            loadProducts();
+          }));
+        }
+
+        if (clearBtn) {
+          clearBtn.style.display = hasFilters ? 'inline-flex' : 'none';
+        }
+
+        // Breadcrumb & Page Heading
+        const headingEl = document.getElementById('catalog-heading');
+        const bc = document.getElementById('bc-current');
+        if (state.categories.size === 1) {
+          const cat = state.allCategories.find(c => c.slug === [...state.categories][0]);
+          if (headingEl && cat) headingEl.textContent = cat.name;
+          if (bc && cat) bc.textContent = cat.name;
+        } else {
+          if (headingEl) headingEl.textContent = 'All Products';
+          if (bc) bc.textContent = 'All Products';
+        }
+
+        if (window.lucide) lucide.createIcons();
+      }
+
+      function makeChip(text, onRemove) {
+        const d = document.createElement('div');
+        d.className = 'f-chip';
+        d.innerHTML = `<span>${text}</span><button class="f-chip-x" aria-label="Remove filter">×</button>`;
+        d.querySelector('.f-chip-x').addEventListener('click', onRemove);
+        return d;
+      }
+
+      // ── Build API Query ────────────────────────────
+      function buildQuery() {
+        const p = new URLSearchParams();
+        if (state.categories.size) p.append('category', [...state.categories].join(','));
+        if (state.sizes.size) p.append('size', [...state.sizes].join(','));
+        if (state.search) p.append('search', state.search);
+        if (state.inStockOnly) p.append('availability', 'in_stock');
+        if (state.sort) p.append('sort', state.sort);
+
+        if (state.priceRanges.size) {
+          let mn = null, mx = null;
+          state.priceRanges.forEach(r => {
+            const [a, b] = r.split('-').map(Number);
+            if (mn === null || a < mn) mn = a;
+            if (mx === null || b > mx) mx = b;
+          });
+          if (mn !== null) p.append('min_price', mn);
+          if (mx !== null) p.append('max_price', mx);
+        }
+
+        return p.toString();
+      }
+
+      // ── Fetch & Render Products ────────────────────
+      async function loadProducts() {
+        const grid = document.getElementById('product-grid');
+        grid.innerHTML = `
+          <div class="state-box">
+            <i data-lucide="loader-2" class="spin" style="width:34px;height:34px;color:var(--gold);margin-bottom:0.8rem;"></i>
+            <h3>Curating Atelier Collections…</h3>
+            <p>Fetching your bespoke couture creations.</p>
+          </div>`;
+        if (window.lucide) lucide.createIcons();
+
+        try {
+          const res = await fetch(getApiUrl(`/api/products?${buildQuery()}`));
+          const data = await res.json();
+          state.allProducts = data.products || [];
+          state.totalProducts = state.allProducts.length;
+
+          // Update count
+          const countEl = document.getElementById('count-val');
+          const total = state.totalProducts;
+          if (countEl) countEl.textContent = total;
+
+          // Count display
+          const startIdx = (state.page - 1) * ITEMS_PER_PAGE + 1;
+          const endIdx = Math.min(state.page * ITEMS_PER_PAGE, total);
+          const resultsEl = document.getElementById('results-count');
+          if (resultsEl) {
+            if (total === 0) {
+              resultsEl.innerHTML = `<strong>0</strong> products found`;
+            } else {
+              resultsEl.innerHTML = `Showing <strong>${startIdx}–${endIdx}</strong> of <strong>${total}</strong> products`;
+            }
+          }
+
+          renderPage();
+        } catch (err) {
+          console.error('Products load error:', err);
+          grid.innerHTML = `
+            <div class="state-box">
+              <i data-lucide="alert-triangle" style="width:36px;height:36px;color:#9B1C1C;margin-bottom:1rem;"></i>
+              <h3>Connection Error</h3>
+              <p>Unable to reach the atelier database server. Please ensure the local server is running at <strong>http://localhost:5173</strong> and refresh your browser.</p>
+              <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+                <a href="http://localhost:5173/products.html" class="reset-btn" style="text-decoration:none; display:inline-flex; align-items:center;">Open via Local Server (Port 5173)</a>
+                <button class="reset-btn" onclick="location.reload()" style="background: transparent; color: var(--maroon); border: 1px solid var(--maroon);">Retry</button>
+              </div>
+            </div>`;
+          if (window.lucide) lucide.createIcons();
+        }
+      }
+
+      function renderPage() {
+        const grid = document.getElementById('product-grid');
+        const start = (state.page - 1) * ITEMS_PER_PAGE;
+        const pageProducts = state.allProducts.slice(start, start + ITEMS_PER_PAGE);
+
+        if (pageProducts.length === 0) {
+          grid.innerHTML = `
+            <div class="state-box">
+              <i data-lucide="sparkles" style="width:36px;height:36px;color:var(--gold);margin-bottom:1rem;"></i>
+              <h3>No Creations Found</h3>
+              <p>No pieces match your current filters. Try clearing some refinements to explore the full atelier collection.</p>
+              <button class="reset-btn" id="empty-reset">Reset All Refinements</button>
+            </div>`;
+          if (window.lucide) lucide.createIcons();
+          document.getElementById('empty-reset')?.addEventListener('click', resetAll);
+          document.getElementById('pagination-wrap').style.display = 'none';
+          return;
+        }
+
+        grid.innerHTML = pageProducts.map(prod => {
+          const hasDiscount = prod.discount_price && prod.discount_price < prod.price;
+          const finalPrice = hasDiscount ? prod.discount_price : prod.price;
+          const discPct = hasDiscount ? Math.round(((prod.price - prod.discount_price) / prod.price) * 100) : 0;
+          const img = prod.primary_image || 'assets/category-single.jpg';
+          const inStock = prod.is_in_stock;
+          const sizesStr = prod.available_sizes && prod.available_sizes.length > 0
+            ? prod.available_sizes.slice(0, 4).join(', ') + (prod.available_sizes.length > 4 ? '…' : '')
+            : 'Standard';
+
+          let badge = '';
+          if (!inStock) badge = `<span class="nc-badge oos">SOLD OUT</span>`;
+          else if (hasDiscount && discPct >= 10) badge = `<span class="nc-badge sale">SALE</span>`;
+          else if (prod.is_featured) badge = `<span class="nc-badge featured">FEATURED</span>`;
+          else if (prod.id && prod.id > (state.allProducts.length > 5 ? state.allProducts[4].id : 0)) badge = `<span class="nc-badge new">NEW</span>`;
+
+          const isWished = state.wishlistIds.has(prod.id);
+
+          return `
+            <article class="nc-card" data-id="${prod.id}" onclick="window.location.href='/products/${prod.slug}'">
+              <div class="nc-card-img-wrap">
+                <a href="/products/${prod.slug}" onclick="event.stopPropagation()">
+                  <img src="${img}" alt="${prod.name}" class="nc-card-img" loading="lazy">
+                </a>
+                ${badge}
+                <button class="nc-wish-btn ${isWished ? 'active' : ''}" data-id="${prod.id}" aria-label="Save to Wishlist" title="Save to Wishlist" onclick="event.stopPropagation()">
+                  <i data-lucide="heart" style="width:15px;height:15px;"></i>
+                </button>
+                <div class="nc-rating">
+                  <i data-lucide="star" class="star" fill="currentColor"></i>
+                  <span>4.8</span>
+                  <span class="rev">120+</span>
+                </div>
+              </div>
+              <div class="nc-card-body">
+                <div>
+                  <a href="/products/${prod.slug}" class="nc-card-title" title="${prod.name}" onclick="event.stopPropagation()">${prod.name}</a>
+                  <div class="nc-card-desc">${prod.description ? prod.description : ''}</div>
+                </div>
+                <div class="nc-sizes">Sizes: <strong>${sizesStr}</strong></div>
+                <div class="nc-price-row">
+                  <span class="nc-price">₹${finalPrice.toLocaleString('en-IN')}</span>
+                  ${hasDiscount ? `<span class="nc-price-orig">₹${prod.price.toLocaleString('en-IN')}</span>` : ''}
+                  ${hasDiscount && discPct >= 5 ? `<span class="nc-price-off">${discPct}% OFF</span>` : ''}
+                </div>
+                <div class="nc-actions">
+                  <button class="nc-btn nc-btn-bag" data-id="${prod.id}" ${!inStock ? 'disabled' : ''} onclick="event.stopPropagation()" title="${inStock ? 'Add to Bag' : 'Sold Out'}">
+                    <span>${inStock ? 'ADD TO BAG' : 'SOLD OUT'}</span>
+                  </button>
+                  <button class="nc-btn nc-btn-buy" data-id="${prod.id}" ${!inStock ? 'disabled' : ''} onclick="event.stopPropagation()" title="${inStock ? 'Buy Now' : 'Sold Out'}">
+                    <span>BUY NOW</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        if (window.lucide) lucide.createIcons();
+        attachListeners();
+        renderPagination();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // ── Pagination ─────────────────────────────────
+      function renderPagination() {
+        const wrap = document.getElementById('pagination-wrap');
+        const totalPages = Math.ceil(state.totalProducts / ITEMS_PER_PAGE);
+
+        if (totalPages <= 1) { wrap.style.display = 'none'; return; }
+        wrap.style.display = 'flex';
+
+        let html = '';
+
+        // Prev
+        html += `<button class="pg-btn" id="pg-prev" ${state.page === 1 ? 'disabled' : ''} aria-label="Previous page">
+          <i data-lucide="chevron-left" style="width:14px;height:14px;"></i>
+        </button>`;
+
+        // Pages
+        const pages = getPaginationRange(state.page, totalPages);
+        pages.forEach(p => {
+          if (p === '…') {
+            html += `<span class="pg-ellipsis">…</span>`;
+          } else {
+            html += `<button class="pg-btn ${p === state.page ? 'active' : ''}" data-page="${p}">${p}</button>`;
+          }
+        });
+
+        // Next
+        html += `<button class="pg-btn" id="pg-next" ${state.page === totalPages ? 'disabled' : ''} aria-label="Next page">
+          <i data-lucide="chevron-right" style="width:14px;height:14px;"></i>
+        </button>`;
+
+        wrap.innerHTML = html;
+        if (window.lucide) lucide.createIcons();
+
+        // Bind
+        wrap.querySelectorAll('[data-page]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            state.page = parseInt(btn.dataset.page);
+            renderPage();
+          });
+        });
+
+        const prev = wrap.querySelector('#pg-prev');
+        const next = wrap.querySelector('#pg-next');
+        if (prev) prev.addEventListener('click', () => { if (state.page > 1) { state.page--; renderPage(); } });
+        if (next) next.addEventListener('click', () => { if (state.page < totalPages) { state.page++; renderPage(); } });
+      }
+
+      function getPaginationRange(current, total) {
+        if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+        const pages = [];
+        if (current <= 4) {
+          for (let i = 1; i <= 5; i++) pages.push(i);
+          pages.push('…'); pages.push(total);
+        } else if (current >= total - 3) {
+          pages.push(1); pages.push('…');
+          for (let i = total - 4; i <= total; i++) pages.push(i);
+        } else {
+          pages.push(1); pages.push('…');
+          for (let i = current - 1; i <= current + 1; i++) pages.push(i);
+          pages.push('…'); pages.push(total);
+        }
+        return pages;
+      }
+
+      // ── Card Listeners ─────────────────────────────
+      function attachListeners() {
+        // Add to Bag
+        document.querySelectorAll('.nc-btn-bag').forEach(btn => {
+          btn.addEventListener('click', e => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (window.NutiyalaCart) window.NutiyalaCart.addToCart(btn.dataset.id);
+          });
+        });
+
+        // Buy Now
+        document.querySelectorAll('.nc-btn-buy').forEach(btn => {
+          btn.addEventListener('click', e => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (window.NutiyalaCart) window.NutiyalaCart.buyNow(btn.dataset.id);
+          });
+        });
+
+        // Wishlist
+        document.querySelectorAll('.nc-wish-btn').forEach(btn => {
+          btn.addEventListener('click', async e => {
+            e.preventDefault();
+            e.stopPropagation();
+            const prodId = parseInt(btn.dataset.id);
+
+            if (window.NutiyalaAuth && !window.NutiyalaAuth.getUser()) {
+              window.NutiyalaAuth.promptWishlistLogin(prodId, wishlisted => {
+                if (wishlisted) { state.wishlistIds.add(prodId); btn.classList.add('active'); }
+                else { state.wishlistIds.delete(prodId); btn.classList.remove('active'); }
+              });
+              return;
+            }
+
+            try {
+              const res = await fetch(getApiUrl('/api/wishlist/toggle'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ product_id: prodId })
+              });
+              if (res.status === 401) {
+                if (window.NutiyalaAuth && window.NutiyalaAuth.promptWishlistLogin) {
+                  window.NutiyalaAuth.promptWishlistLogin(prodId, w => {
+                    if (w) { state.wishlistIds.add(prodId); btn.classList.add('active'); }
+                  });
+                }
+                return;
+              }
+              const data = await res.json();
+              if (data.wishlisted) { state.wishlistIds.add(prodId); btn.classList.add('active'); }
+              else { state.wishlistIds.delete(prodId); btn.classList.remove('active'); }
+              const wc = document.getElementById('wishlist-count');
+              if (wc) wc.textContent = state.wishlistIds.size;
+            } catch (err) {
+              console.error('Wishlist error', err);
+            }
+          });
+        });
+      }
+
+      // ── INIT ───────────────────────────────────────
+      initCategories()
+        .then(() => {
+          renderChips();
+          loadProducts();
+        })
+        .catch(() => {
+          renderChips();
+          loadProducts();
+        });
+    });
+  </script>
+
+  <script src="js/nutiyala-auth.js"></script>
+  <script src="js/nutiyala-cart.js"></script>
+</body>
+</html>
