@@ -765,13 +765,37 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   const categoryAccordion = document.getElementById('category-accordion');
 
+  function renderSidebarShopCategories(activeCats) {
+    const sidebarSubnav = document.getElementById('sidebar-shop-subnav') || document.querySelector('.sidebar-subnav');
+    if (!sidebarSubnav || !activeCats || activeCats.length === 0) return;
+
+    sidebarSubnav.innerHTML = activeCats.map(cat => {
+      let displayName = (cat.name || '').trim();
+      if (displayName.toLowerCase() === 'sareee') {
+        displayName = 'Sarees';
+      } else if (displayName.length > 0) {
+        displayName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+      }
+      return `<a href="products.html?category=${encodeURIComponent(cat.slug)}" class="sidebar-subnav-link"><span>•</span> ${displayName}</a>`;
+    }).join('');
+
+    sidebarSubnav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        closeSidebar();
+      });
+    });
+  }
+
   async function loadShopByCategory() {
-    if (!categoryAccordion) return;
     try {
       const res = await fetch('/api/categories');
       const data = await res.json();
       const activeCats = (data.categories || []).filter(c => c.status !== 'Inactive');
-      if (activeCats.length > 0) {
+
+      // Synchronize side menu shop subnav with existing active categories
+      renderSidebarShopCategories(activeCats);
+
+      if (categoryAccordion && activeCats.length > 0) {
         categoryAccordion.innerHTML = activeCats.map((cat, idx) => {
           const img = cat.image_url || 'assets/emerald_green.png';
           const indexNum = String(idx + 1).padStart(2, '0');
