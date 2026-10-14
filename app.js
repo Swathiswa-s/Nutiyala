@@ -950,6 +950,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<span class="swatch-dot ${i === 0 ? 'active' : ''}" style="background-color: ${hex};" title="${c}"></span>`;
       }).join('');
 
+      const prodSlug = p.slug || p.id;
+
       return `
         <div class="product-card" data-category="${p.category_slug}" data-id="${p.id}">
           <div class="product-image-container">
@@ -957,7 +959,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <button class="product-wishlist-toggle ${isWishlisted ? 'active' : ''}" data-id="${p.id}" aria-label="Add to Wishlist">
               <i data-lucide="heart"></i>
             </button>
-            <a href="product-detail.html?slug=${p.slug}" style="display:block; width:100%; height:100%;">
+            <a href="product-detail.html?slug=${encodeURIComponent(prodSlug)}" style="display:block; width:100%; height:100%;">
               <img src="${img}" alt="${p.name}" class="primary-prod-img" loading="lazy">
             </a>
             <div class="product-quick-actions">
@@ -967,7 +969,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div class="product-info-block">
             <h3 class="prod-card-title">
-              <a href="product-detail.html?slug=${p.slug}" style="color:inherit; text-decoration:none;">${p.name}</a>
+              <a href="product-detail.html?slug=${encodeURIComponent(prodSlug)}" style="color:inherit; text-decoration:none;">${p.name}</a>
             </h3>
             <div class="prod-card-price-row">
               <span class="prod-price">₹${displayPrice.toLocaleString()}</span>

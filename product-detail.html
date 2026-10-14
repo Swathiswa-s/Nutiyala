@@ -863,11 +863,19 @@
     document.addEventListener('DOMContentLoaded', () => {
       if (window.lucide) lucide.createIcons();
 
-      // Determine slug from URL
-      let slug = window.location.pathname.replace('/products/', '').replace('/products', '').replace('/', '');
-      if (!slug || slug === 'product') {
-        const params = new URLSearchParams(window.location.search);
-        slug = params.get('slug') || params.get('id') || 'beige-embroidered-silk-kurti';
+      // Determine slug or ID from URL parameters (?slug= or ?id=) or pathname (/products/slug)
+      const params = new URLSearchParams(window.location.search);
+      let slug = params.get('slug') || params.get('id');
+
+      if (!slug) {
+        let cleanPath = window.location.pathname.replace(/^\/products\/?/, '').replace(/^\//, '').replace(/\.html$/, '');
+        if (cleanPath && cleanPath !== 'product' && cleanPath !== 'product-detail') {
+          slug = cleanPath;
+        }
+      }
+
+      if (!slug) {
+        slug = 'beige-embroidered-silk-kurti';
       }
 
       // User header auth
