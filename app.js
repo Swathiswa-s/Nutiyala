@@ -282,7 +282,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   const siteHeader = document.getElementById('site-header');
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
+    const bannerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--announcement-bar-height')) || 0;
+    const threshold = document.body.classList.contains('has-active-offer') ? Math.max(15, bannerHeight - 10) : 40;
+    if (window.scrollY > threshold) {
       siteHeader.classList.add('scrolled');
     } else {
       siteHeader.classList.remove('scrolled');
@@ -1483,16 +1485,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3500);
   }
 
-  // Dynamically load active offer promotional banner
+  // Dynamically load active offer promotional banner & synchronize height
   async function loadActiveOfferBanner() {
     const bannerEl = document.getElementById('top-announcement-bar');
     const textEl = document.getElementById('top-announcement-text');
     if (!bannerEl && !textEl) return;
+
+    const syncBannerHeight = () => {
+      if (bannerEl && bannerEl.offsetHeight > 0) {
+        document.documentElement.style.setProperty('--announcement-bar-height', `${bannerEl.offsetHeight}px`);
+      } else {
+        document.documentElement.style.setProperty('--announcement-bar-height', '0px');
+      }
+    };
+
     try {
       const res = await fetch('/api/offers/active');
       if (!res.ok) {
         if (bannerEl) bannerEl.style.display = 'none';
         document.body.classList.remove('has-active-offer');
+        document.documentElement.style.setProperty('--announcement-bar-height', '0px');
         return;
       }
       const data = await res.json();
@@ -1501,14 +1513,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (textEl) textEl.textContent = offerText;
         if (bannerEl) bannerEl.style.display = '';
         document.body.classList.add('has-active-offer');
+        requestAnimationFrame(() => {
+          syncBannerHeight();
+        });
       } else {
         if (bannerEl) bannerEl.style.display = 'none';
         document.body.classList.remove('has-active-offer');
+        document.documentElement.style.setProperty('--announcement-bar-height', '0px');
       }
     } catch (e) {
       if (bannerEl) bannerEl.style.display = 'none';
       document.body.classList.remove('has-active-offer');
+      document.documentElement.style.setProperty('--announcement-bar-height', '0px');
       console.warn('Could not load active offer banner:', e);
+    }
+
+    window.addEventListener('resize', syncBannerHeight, { passive: true });
+    if (window.ResizeObserver && bannerEl) {
+      new ResizeObserver(syncBannerHeight).observe(bannerEl);
     }
   }
 
