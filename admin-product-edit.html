@@ -257,6 +257,74 @@
       border-bottom: 1px solid var(--admin-border);
     }
 
+    /* Color Palette Bar & Picker Styles */
+    .color-palette-bar {
+      margin-bottom: 1rem;
+      padding: 0.85rem;
+      background: #FAF8F5;
+      border: 1px solid var(--admin-border);
+      border-radius: 6px;
+    }
+
+    .palette-chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .palette-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.65rem;
+      background: #FFFFFF;
+      border: 1px solid var(--admin-border);
+      border-radius: 20px;
+      font-size: 0.74rem;
+      font-weight: 500;
+      color: var(--admin-text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .palette-chip:hover {
+      border-color: var(--admin-gold);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .palette-chip-dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+
+    .variant-color-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .v-color-picker {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid var(--admin-border);
+      border-radius: 4px;
+      padding: 2px;
+      cursor: pointer;
+      background: #FFFFFF;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+
+    .v-color-picker:hover,
+    .v-color-picker:focus {
+      border-color: var(--admin-gold);
+    }
+
     .btn-add-variant {
       align-self: flex-start;
       padding: 0.5rem 1rem;
@@ -742,47 +810,67 @@
           <!-- 5. Product Variants -->
           <div class="form-section-card"
             style="margin-bottom: 0; display: flex; flex-direction: column; min-width: 0; overflow-x: auto;">
-            <h2 class="section-title"><i data-lucide="layers" style="width: 16px;"></i> Variants & Inventory Stock</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h2 class="section-title" style="margin-bottom: 0;"><i data-lucide="layers" style="width: 16px;"></i> Variants & Inventory Stock</h2>
+              <span style="font-size: 0.72rem; color: var(--admin-text-muted);">Choose from palette or type custom color names</span>
+            </div>
+
+            <!-- Couture Quick Color Palette Bar -->
+            <div class="color-palette-bar">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.4rem;">
+                <span style="font-size: 0.76rem; font-weight: 700; color: var(--admin-maroon); letter-spacing: 0.05em; text-transform: uppercase;">
+                  🎨 Couture Color Palette (Click swatch to apply)
+                </span>
+                <span style="font-size: 0.7rem; color: var(--admin-text-muted);">Click chip to set color on active row</span>
+              </div>
+              <div class="palette-chips-row" id="palette-chips-row">
+                <!-- Dynamically populated with palette swatches -->
+              </div>
+            </div>
+
             <table class="variant-table" style="flex: 1;">
               <thead>
                 <tr>
-                  <th>Size</th>
-                  <th>Color</th>
-                  <th>Stock Quantity</th>
-                  <th>Action</th>
+                  <th style="width: 90px;">Size</th>
+                  <th>Color (Palette & Name)</th>
+                  <th style="width: 110px;">Stock Qty</th>
+                  <th style="width: 50px;">Action</th>
                 </tr>
               </thead>
               <tbody id="variants-tbody">
                 <!-- Default rows -->
                 <tr>
-                  <td><input type="text" class="form-input v-size" value="XS" style="padding: 0.4rem; max-width: 80px;">
+                  <td><input type="text" class="form-input v-size" value="XS" style="padding: 0.4rem; max-width: 80px;" placeholder="Size" required></td>
+                  <td>
+                    <div class="variant-color-wrap">
+                      <input type="color" class="v-color-picker" value="#5A161E" title="Choose color from palette">
+                      <input type="text" class="form-input v-color" value="Maroon" placeholder="Color name (e.g. Maroon)" style="padding: 0.4rem; min-width: 130px; flex: 1;" required>
+                    </div>
                   </td>
-                  <td><input type="text" class="form-input v-color" value="Maroon"
-                      style="padding: 0.4rem; max-width: 120px;"></td>
-                  <td><input type="number" class="form-input v-stock" value="5" min="0"
-                      style="padding: 0.4rem; max-width: 100px;"></td>
-                  <td><button type="button" class="btn-del-variant"
-                      style="color: #E53E3E; background:none; border:none; cursor:pointer;">✕</button></td>
+                  <td><input type="number" class="form-input v-stock" value="5" min="0" style="padding: 0.4rem; max-width: 100px;" required></td>
+                  <td><button type="button" class="btn-del-variant" style="color: #E53E3E; background:none; border:none; cursor:pointer;" title="Delete row">✕</button></td>
                 </tr>
                 <tr>
-                  <td><input type="text" class="form-input v-size" value="S" style="padding: 0.4rem; max-width: 80px;">
+                  <td><input type="text" class="form-input v-size" value="S" style="padding: 0.4rem; max-width: 80px;" placeholder="Size" required></td>
+                  <td>
+                    <div class="variant-color-wrap">
+                      <input type="color" class="v-color-picker" value="#5A161E" title="Choose color from palette">
+                      <input type="text" class="form-input v-color" value="Maroon" placeholder="Color name (e.g. Maroon)" style="padding: 0.4rem; min-width: 130px; flex: 1;" required>
+                    </div>
                   </td>
-                  <td><input type="text" class="form-input v-color" value="Maroon"
-                      style="padding: 0.4rem; max-width: 120px;"></td>
-                  <td><input type="number" class="form-input v-stock" value="8" min="0"
-                      style="padding: 0.4rem; max-width: 100px;"></td>
-                  <td><button type="button" class="btn-del-variant"
-                      style="color: #E53E3E; background:none; border:none; cursor:pointer;">✕</button></td>
+                  <td><input type="number" class="form-input v-stock" value="8" min="0" style="padding: 0.4rem; max-width: 100px;" required></td>
+                  <td><button type="button" class="btn-del-variant" style="color: #E53E3E; background:none; border:none; cursor:pointer;" title="Delete row">✕</button></td>
                 </tr>
                 <tr>
-                  <td><input type="text" class="form-input v-size" value="M" style="padding: 0.4rem; max-width: 80px;">
+                  <td><input type="text" class="form-input v-size" value="M" style="padding: 0.4rem; max-width: 80px;" placeholder="Size" required></td>
+                  <td>
+                    <div class="variant-color-wrap">
+                      <input type="color" class="v-color-picker" value="#5A161E" title="Choose color from palette">
+                      <input type="text" class="form-input v-color" value="Maroon" placeholder="Color name (e.g. Maroon)" style="padding: 0.4rem; min-width: 130px; flex: 1;" required>
+                    </div>
                   </td>
-                  <td><input type="text" class="form-input v-color" value="Maroon"
-                      style="padding: 0.4rem; max-width: 120px;"></td>
-                  <td><input type="number" class="form-input v-stock" value="10" min="0"
-                      style="padding: 0.4rem; max-width: 100px;"></td>
-                  <td><button type="button" class="btn-del-variant"
-                      style="color: #E53E3E; background:none; border:none; cursor:pointer;">✕</button></td>
+                  <td><input type="number" class="form-input v-stock" value="10" min="0" style="padding: 0.4rem; max-width: 100px;" required></td>
+                  <td><button type="button" class="btn-del-variant" style="color: #E53E3E; background:none; border:none; cursor:pointer;" title="Delete row">✕</button></td>
                 </tr>
               </tbody>
             </table>
@@ -871,18 +959,140 @@
         loadProductForEdit(editId);
       }
 
-      // Variant row adder
-      const vTbody = document.getElementById('variants-tbody');
-      document.getElementById('add-variant-row-btn').addEventListener('click', () => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><input type="text" class="form-input v-size" value="L" style="padding: 0.4rem; max-width: 80px;"></td>
-          <td><input type="text" class="form-input v-color" value="Maroon" style="padding: 0.4rem; max-width: 120px;"></td>
-          <td><input type="number" class="form-input v-stock" value="4" min="0" style="padding: 0.4rem; max-width: 100px;"></td>
-          <td><button type="button" class="btn-del-variant" style="color: #E53E3E; background:none; border:none; cursor:pointer;">✕</button></td>
+      // Couture Palette Definition & Swatch Color Map
+      const COUTURE_PALETTE = [
+        { name: 'Royal Maroon', hex: '#5A161E' },
+        { name: 'Velvet Wine', hex: '#722F37' },
+        { name: 'Emerald Green', hex: '#1A4D3E' },
+        { name: 'Midnight Navy', hex: '#1A2E40' },
+        { name: 'Champagne Gold', hex: '#D4AF37' },
+        { name: 'Antique Gold', hex: '#B38A55' },
+        { name: 'Desert Beige', hex: '#D9C3A5' },
+        { name: 'Ivory', hex: '#FFFFF0' },
+        { name: 'Pure White', hex: '#FFFFFF' },
+        { name: 'Classic Black', hex: '#1A1A1A' },
+        { name: 'Blush Pink', hex: '#E8C5C8' },
+        { name: 'Dusty Rose', hex: '#C08081' },
+        { name: 'Plum Purple', hex: '#4B2840' },
+        { name: 'Olive Green', hex: '#556B2F' },
+        { name: 'Sage Green', hex: '#879F84' },
+        { name: 'Mustard Yellow', hex: '#E1AD01' }
+      ];
+
+      function colorNameToHex(colorName) {
+        if (!colorName) return '#5A161E';
+        const c = colorName.trim().toLowerCase();
+        if (c.startsWith('#') && (c.length === 4 || c.length === 7)) return colorName.trim();
+        const found = COUTURE_PALETTE.find(p => p.name.toLowerCase() === c || c.includes(p.name.toLowerCase()) || p.name.toLowerCase().includes(c));
+        if (found) return found.hex;
+        if (c.includes('maroon') || c.includes('velvet') || c.includes('wine')) return '#5A161E';
+        if (c.includes('emerald') || c.includes('green')) return '#1A4D3E';
+        if (c.includes('navy') || c.includes('blue')) return '#1A2E40';
+        if (c.includes('gold') || c.includes('zari')) return '#D4AF37';
+        if (c.includes('beige') || c.includes('sand') || c.includes('tan')) return '#D9C3A5';
+        if (c.includes('white')) return '#FFFFFF';
+        if (c.includes('black')) return '#1A1A1A';
+        if (c.includes('pink') || c.includes('blush')) return '#E8C5C8';
+        if (c.includes('purple') || c.includes('plum')) return '#4B2840';
+        if (c.includes('yellow') || c.includes('mustard')) return '#E1AD01';
+        return '#B38A55';
+      }
+
+      function hexToColorName(hex) {
+        if (!hex) return '';
+        const match = COUTURE_PALETTE.find(p => p.hex.toLowerCase() === hex.toLowerCase());
+        return match ? match.name : '';
+      }
+
+      let activeVariantRow = null;
+
+      function renderPaletteChips() {
+        const container = document.getElementById('palette-chips-row');
+        if (!container) return;
+        container.innerHTML = COUTURE_PALETTE.map(item => `
+          <button type="button" class="palette-chip" data-name="${item.name}" data-hex="${item.hex}" title="Click to apply ${item.name}">
+            <span class="palette-chip-dot" style="background-color: ${item.hex};"></span>
+            <span>${item.name}</span>
+          </button>
+        `).join('');
+
+        container.querySelectorAll('.palette-chip').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const hex = btn.getAttribute('data-hex');
+            const name = btn.getAttribute('data-name');
+            applyColorToTargetRow(name, hex);
+          });
+        });
+      }
+
+      function applyColorToTargetRow(name, hex) {
+        const targetRow = activeVariantRow || vTbody.querySelector('tr');
+        if (!targetRow) return;
+        const colorInput = targetRow.querySelector('.v-color');
+        const pickerInput = targetRow.querySelector('.v-color-picker');
+        if (colorInput) colorInput.value = name;
+        if (pickerInput) pickerInput.value = hex;
+      }
+
+      function bindVariantRowEvents(tr) {
+        const colorInput = tr.querySelector('.v-color');
+        const pickerInput = tr.querySelector('.v-color-picker');
+
+        tr.addEventListener('focusin', () => {
+          activeVariantRow = tr;
+        });
+
+        if (pickerInput && colorInput) {
+          pickerInput.addEventListener('input', () => {
+            activeVariantRow = tr;
+            const suggested = hexToColorName(pickerInput.value);
+            if (suggested && (!colorInput.value.trim() || COUTURE_PALETTE.some(cp => cp.name.toLowerCase() === colorInput.value.trim().toLowerCase()))) {
+              colorInput.value = suggested;
+            } else if (!colorInput.value.trim()) {
+              colorInput.value = pickerInput.value.toUpperCase();
+            }
+          });
+
+          colorInput.addEventListener('input', () => {
+            activeVariantRow = tr;
+            const hex = colorNameToHex(colorInput.value);
+            if (hex) pickerInput.value = hex;
+          });
+        }
+      }
+
+      function createVariantRowHtml(size, color, stock) {
+        const hex = colorNameToHex(color);
+        return `
+          <tr>
+            <td><input type="text" class="form-input v-size" value="${size || ''}" style="padding: 0.4rem; max-width: 80px;" placeholder="Size" required></td>
+            <td>
+              <div class="variant-color-wrap">
+                <input type="color" class="v-color-picker" value="${hex}" title="Choose color from palette">
+                <input type="text" class="form-input v-color" value="${color || ''}" placeholder="Color name (e.g. Maroon)" style="padding: 0.4rem; min-width: 130px; flex: 1;" required>
+              </div>
+            </td>
+            <td><input type="number" class="form-input v-stock" value="${stock !== undefined ? stock : 5}" min="0" style="padding: 0.4rem; max-width: 100px;" required></td>
+            <td><button type="button" class="btn-del-variant" style="color: #E53E3E; background:none; border:none; cursor:pointer;" title="Delete row">✕</button></td>
+          </tr>
         `;
+      }
+
+      // Initialize Palette and Variant rows
+      renderPaletteChips();
+      const vTbody = document.getElementById('variants-tbody');
+      vTbody.querySelectorAll('tr').forEach(tr => bindVariantRowEvents(tr));
+
+      // Variant row adder
+      document.getElementById('add-variant-row-btn').addEventListener('click', () => {
+        const temp = document.createElement('tbody');
+        temp.innerHTML = createVariantRowHtml('L', 'Maroon', 5);
+        const tr = temp.firstElementChild;
         vTbody.appendChild(tr);
+        bindVariantRowEvents(tr);
         attachDelBtns();
+        activeVariantRow = tr;
       });
 
       function attachDelBtns() {
@@ -1108,14 +1318,8 @@
           }
 
           if (p.variants && p.variants.length > 0) {
-            vTbody.innerHTML = p.variants.map(v => `
-              <tr>
-                <td><input type="text" class="form-input v-size" value="${v.size}" style="padding: 0.4rem; max-width: 80px;"></td>
-                <td><input type="text" class="form-input v-color" value="${v.color}" style="padding: 0.4rem; max-width: 120px;"></td>
-                <td><input type="number" class="form-input v-stock" value="${v.stock_quantity}" min="0" style="padding: 0.4rem; max-width: 100px;"></td>
-                <td><button type="button" class="btn-del-variant" style="color: #E53E3E; background:none; border:none; cursor:pointer;">✕</button></td>
-              </tr>
-            `).join('');
+            vTbody.innerHTML = p.variants.map(v => createVariantRowHtml(v.size, v.color, v.stock_quantity)).join('');
+            vTbody.querySelectorAll('tr').forEach(tr => bindVariantRowEvents(tr));
             attachDelBtns();
           }
 

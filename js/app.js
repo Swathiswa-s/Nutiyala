@@ -869,9 +869,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderFeaturedProducts(filter = 'all') {
-    if (!productGrid || state.dbProducts.length === 0) return;
+    if (!productGrid) return;
+    if (!state.dbProducts || state.dbProducts.length === 0) {
+      productGrid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+          <p>No featured couture pieces available.</p>
+        </div>
+      `;
+      return;
+    }
 
-    const filtered = state.dbProducts.filter(p => {
+    // Only show products marked as featured in admin side (is_featured === 1)
+    const featuredItems = state.dbProducts.filter(p => p.is_featured === 1 || p.is_featured === true || p.is_featured === '1');
+
+    const filtered = featuredItems.filter(p => {
       if (filter === 'all') return true;
       const cat = (p.category_slug || '').toLowerCase();
       const name = (p.name || '').toLowerCase();
@@ -886,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filtered.length === 0) {
       productGrid.innerHTML = `
         <div style="grid-column: 1/-1; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
-          <p>No couture pieces found in this category.</p>
+          <p>No featured products in this category yet. You can feature items from the Admin Panel.</p>
         </div>
       `;
       return;
