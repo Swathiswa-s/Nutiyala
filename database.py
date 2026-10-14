@@ -109,9 +109,16 @@ def init_db():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
         image_url TEXT NOT NULL,
-        sort_order INTEGER NOT NULL DEFAULT 0
+        sort_order INTEGER NOT NULL DEFAULT 0,
+        color TEXT DEFAULT ''
     );
     """)
+
+    # Ensure color column exists in product_images for multi-color support
+    try:
+        cursor.execute("ALTER TABLE product_images ADD COLUMN color TEXT DEFAULT ''")
+    except Exception:
+        pass
 
     # 7. Cart & Cart Items Table
     cursor.execute("""

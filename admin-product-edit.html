@@ -638,6 +638,98 @@
     .accordion-toggle-btn:hover {
       color: var(--admin-maroon);
     }
+
+    /* Color Tabs System */
+    .color-tabs-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      overflow-x: auto;
+      padding: 0.4rem 0 0.8rem 0;
+      border-bottom: 2px solid #E2E8F0;
+      margin-bottom: 1.25rem;
+      scrollbar-width: none;
+    }
+    .color-tabs-bar::-webkit-scrollbar { display: none; }
+
+    .color-tab-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1rem;
+      background: #FFFFFF;
+      border: 1.5px solid #CBD5E0;
+      border-radius: 30px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #2D3748;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      user-select: none;
+    }
+    .color-tab-pill:hover {
+      border-color: var(--admin-maroon);
+      background: #FAF8F5;
+    }
+    .color-tab-pill.active {
+      background: var(--admin-maroon);
+      border-color: var(--admin-maroon);
+      color: #FAF4EC;
+      box-shadow: 0 4px 12px rgba(90, 22, 30, 0.25);
+    }
+    .color-tab-pill .pill-dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    }
+    .color-tab-pill .pill-count {
+      font-size: 0.68rem;
+      padding: 2px 6px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.08);
+    }
+    .color-tab-pill.active .pill-count {
+      background: rgba(216, 185, 130, 0.3);
+      color: #D8B982;
+    }
+
+    .btn-add-color-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1rem;
+      background: #FAF8F5;
+      border: 1.5px dashed var(--admin-gold);
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--admin-gold);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn-add-color-tab:hover {
+      background: var(--admin-gold);
+      color: #FFFFFF;
+    }
+
+    .palette-swatch-chip {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #FFF;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .palette-swatch-chip:hover {
+      transform: scale(1.25);
+    }
   </style>
 </head>
 
@@ -770,134 +862,120 @@
           </div>
         </div>
 
-        <!-- 3. Product Images & Photo Upload -->
-        <div class="form-section-card">
-          <div
-            style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.5rem;">
-            <h2 class="section-title" style="margin-bottom:0;"><i data-lucide="image" style="width: 16px;"></i> Product
-              Photos & Imagery</h2>
-            <span style="font-size:0.75rem; color:var(--admin-text-muted);">Direct Upload: JPG, PNG, WEBP (Max
-              10MB)</span>
-          </div>
-
-          <div class="image-upload-wrapper">
-            <p style="font-size: 0.82rem; margin-bottom: 1.2rem; color: var(--admin-text-muted); line-height: 1.5;">
-              Upload multiple images. Use the order inputs to sort them (1, 2, 3...) and select one as the Primary
-              Thumbnail. The Primary Thumbnail will be the catalog cover.</p>
-
-            <!-- Unified Gallery Grid -->
-            <input type="file" id="unified-file-input" accept="image/*" multiple style="display:none;">
-            <div class="gallery-thumbs-grid" id="unified-gallery-grid"
-              style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1.2rem;">
-
-              <!-- Upload Box placeholder (rendered by JS) -->
-
+        <!-- 3. Color Variations, Imagery & Stock Matrix -->
+        <div class="form-section-card" id="color-manager-section" style="padding: 1.5rem; background: #FFFFFF; border-radius: 8px; border: 1px solid var(--admin-border); margin-bottom: 1.8rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.6rem;">
+            <div>
+              <h2 class="section-title" style="margin-bottom: 0.2rem;"><i data-lucide="palette" style="width: 17px;"></i> Color Variations & Specific Photos</h2>
+              <p style="font-size: 0.78rem; color: var(--admin-text-muted); margin: 0;">Add each color variation. Upload its matching photos and set available sizes & stock.</p>
             </div>
-            <div id="unified-upload-status" class="upload-status-indicator" style="display:none; margin-top: 1rem;">
-            </div>
-
-            <!-- Hidden inputs to maintain compatibility with save logic -->
-            <input type="hidden" id="p-img-primary" value="assets/model-beige.jpg" required>
-            <input type="hidden" id="manual-prim-input" value="assets/model-beige.jpg">
-            <input type="hidden" id="manual-add-input" value="">
-          </div>
-        </div>
-
-        <!-- The Product Details block has been moved up -->
-
-        <div
-          style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.8rem; align-items: stretch; width: 100%; max-width: 100%;">
-          <!-- 5. Product Variants -->
-          <div class="form-section-card"
-            style="margin-bottom: 0; display: flex; flex-direction: column; min-width: 0; overflow-x: auto;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.5rem;">
-              <h2 class="section-title" style="margin-bottom: 0;"><i data-lucide="layers" style="width: 16px;"></i> Variants & Inventory Stock</h2>
-              <span style="font-size: 0.72rem; color: var(--admin-text-muted);">Choose from palette or type custom color names</span>
-            </div>
-
-            <!-- Couture Quick Color Palette Bar -->
-            <div class="color-palette-bar">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.4rem;">
-                <span style="font-size: 0.76rem; font-weight: 700; color: var(--admin-maroon); letter-spacing: 0.05em; text-transform: uppercase;">
-                  🎨 Couture Color Palette (Click swatch to apply)
-                </span>
-                <span style="font-size: 0.7rem; color: var(--admin-text-muted);">Click chip to set color on active row</span>
-              </div>
-              <div class="palette-chips-row" id="palette-chips-row">
-                <!-- Dynamically populated with palette swatches -->
-              </div>
-            </div>
-
-            <table class="variant-table" style="flex: 1;">
-              <thead>
-                <tr>
-                  <th style="width: 90px;">Size</th>
-                  <th>Color (Palette & Name)</th>
-                  <th style="width: 110px;">Stock Qty</th>
-                  <th style="width: 50px;">Action</th>
-                </tr>
-              </thead>
-              <tbody id="variants-tbody">
-                <!-- Default rows -->
-                <tr>
-                  <td><input type="text" class="form-input v-size" value="XS" style="padding: 0.4rem; max-width: 80px;" placeholder="Size" required></td>
-                  <td>
-                    <div class="variant-color-wrap">
-                      <input type="color" class="v-color-picker" value="#5A161E" title="Choose color from palette">
-                      <input type="text" class="form-input v-color" value="Maroon" placeholder="Color name (e.g. Maroon)" style="padding: 0.4rem; min-width: 130px; flex: 1;" required>
-                    </div>
-                  </td>
-                  <td><input type="number" class="form-input v-stock" value="5" min="0" style="padding: 0.4rem; max-width: 100px;" required></td>
-                  <td><button type="button" class="btn-del-variant" style="color: #E53E3E; background:none; border:none; cursor:pointer;" title="Delete row">✕</button></td>
-                </tr>
-                <tr>
-                  <td><input type="text" class="form-input v-size" value="S" style="padding: 0.4rem; max-width: 80px;" placeholder="Size" required></td>
-                  <td>
-                    <div class="variant-color-wrap">
-                      <input type="color" class="v-color-picker" value="#5A161E" title="Choose color from palette">
-                      <input type="text" class="form-input v-color" value="Maroon" placeholder="Color name (e.g. Maroon)" style="padding: 0.4rem; min-width: 130px; flex: 1;" required>
-                    </div>
-                  </td>
-                  <td><input type="number" class="form-input v-stock" value="8" min="0" style="padding: 0.4rem; max-width: 100px;" required></td>
-                  <td><button type="button" class="btn-del-variant" style="color: #E53E3E; background:none; border:none; cursor:pointer;" title="Delete row">✕</button></td>
-                </tr>
-                <tr>
-                  <td><input type="text" class="form-input v-size" value="M" style="padding: 0.4rem; max-width: 80px;" placeholder="Size" required></td>
-                  <td>
-                    <div class="variant-color-wrap">
-                      <input type="color" class="v-color-picker" value="#5A161E" title="Choose color from palette">
-                      <input type="text" class="form-input v-color" value="Maroon" placeholder="Color name (e.g. Maroon)" style="padding: 0.4rem; min-width: 130px; flex: 1;" required>
-                    </div>
-                  </td>
-                  <td><input type="number" class="form-input v-stock" value="10" min="0" style="padding: 0.4rem; max-width: 100px;" required></td>
-                  <td><button type="button" class="btn-del-variant" style="color: #E53E3E; background:none; border:none; cursor:pointer;" title="Delete row">✕</button></td>
-                </tr>
-              </tbody>
-            </table>
-            <button type="button" class="btn-add-variant" id="add-variant-row-btn" style="margin-top: 1rem;">
-              <i data-lucide="plus" style="width: 14px; height: 14px;"></i>
-              <span>+ Add Variant Row</span>
+            <button type="button" class="btn-add-color-tab" id="btn-add-color-tab">
+              <i data-lucide="plus" style="width: 14px; height: 14px;"></i> + Add Color Variation
             </button>
           </div>
 
-          <!-- 6. Status & Featured -->
-          <div class="form-section-card" style="margin-bottom: 0; display: flex; flex-direction: column; min-width: 0;">
-            <h2 class="section-title"><i data-lucide="toggle-left" style="width: 16px;"></i> Product Status & Curation
-            </h2>
-            <div class="form-group">
-              <label class="form-label" for="p-status">Product Status</label>
-              <select id="p-status" class="form-select">
-                <option value="Active">Active (Visible in boutique)</option>
-                <option value="Draft">Draft (Hidden)</option>
-                <option value="Archived">Archived</option>
-              </select>
+          <!-- Color Tabs Bar -->
+          <div class="color-tabs-bar" id="color-tabs-bar">
+            <!-- Dynamic color tabs rendered here -->
+          </div>
+
+          <!-- Active Color Configuration Card -->
+          <div id="active-color-config" style="background: #FAF8F5; border: 1px solid rgba(179,138,85,0.25); border-radius: 6px; padding: 0.85rem 1rem; margin-bottom: 1.4rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.85rem;">
+            <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+              <span style="font-size: 0.78rem; font-weight: 700; color: #350D13; text-transform: uppercase;">Active Color:</span>
+              <input type="color" id="active-color-picker" style="width: 30px; height: 30px; border: none; border-radius: 4px; cursor: pointer; background: transparent;" value="#5A161E" title="Choose color swatch">
+              <input type="text" id="active-color-name" class="form-input" style="font-weight: 600; width: 170px; padding: 0.4rem 0.65rem; font-size: 0.85rem;" value="Royal Maroon" placeholder="Color name">
+              <div id="color-palette-quick-chips" style="display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap;">
+                <!-- Quick swatches generated here -->
+              </div>
             </div>
-            <div class="form-group" style="margin-top: 1.25rem;">
-              <label class="form-label" for="p-featured">Featured Product</label>
-              <select id="p-featured" class="form-select">
-                <option value="1">Yes (Showcase on homepage & top catalog)</option>
-                <option value="0">No</option>
-              </select>
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+              <button type="button" id="btn-set-cover-color" style="font-size: 0.74rem; padding: 0.45rem 0.75rem; background: #FFFFFF; border: 1.5px solid #CBD5E0; border-radius: 4px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem;">
+                ★ Set as Primary Cover
+              </button>
+              <button type="button" id="btn-delete-color" style="font-size: 0.74rem; padding: 0.45rem 0.75rem; background: #FFF5F5; border: 1px solid #FEB2B2; color: #C53030; border-radius: 4px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem;">
+                ✕ Remove Color
+              </button>
+            </div>
+          </div>
+
+          <!-- Color Content: Split Grid for Photos and Stock -->
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem; align-items: stretch; width: 100%;" class="form-grid-2col">
+            <!-- Left: Active Color Photos -->
+            <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 6px; padding: 1.1rem; display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.4rem;">
+                <h3 style="font-size: 0.86rem; font-weight: 700; color: #2D3748; margin: 0; display: flex; align-items: center; gap: 0.4rem;">
+                  <i data-lucide="camera" style="width: 15px;"></i>
+                  <span>Photos for <span id="color-photos-label" style="color: var(--admin-maroon);">Royal Maroon</span></span>
+                </h3>
+                <span style="font-size: 0.7rem; color: var(--admin-text-muted);">Customers see these on clicking this color</span>
+              </div>
+
+              <input type="file" id="color-file-input" accept="image/*" multiple style="display:none;">
+              <div class="gallery-thumbs-grid" id="color-gallery-grid" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.85rem; flex: 1;">
+                <!-- Upload box + photos for active color -->
+              </div>
+              <div id="color-upload-status" class="upload-status-indicator" style="display:none; margin-top: 0.75rem;"></div>
+            </div>
+
+            <!-- Right: Active Color Size Stock -->
+            <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 6px; padding: 1.1rem; display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.4rem;">
+                <h3 style="font-size: 0.86rem; font-weight: 700; color: #2D3748; margin: 0; display: flex; align-items: center; gap: 0.4rem;">
+                  <i data-lucide="layers" style="width: 15px;"></i>
+                  <span>Sizes & Stock for <span id="color-stock-label" style="color: var(--admin-maroon);">Royal Maroon</span></span>
+                </h3>
+                <button type="button" id="btn-quick-fill-sizes" style="font-size: 0.7rem; padding: 3px 8px; background: #FAF8F5; border: 1px solid var(--admin-gold); color: #B38A55; border-radius: 3px; cursor: pointer; font-weight: 600;">
+                  ⚡ Fill XS-XL
+                </button>
+              </div>
+
+              <table class="variant-table" style="width: 100%; flex: 1;">
+                <thead>
+                  <tr>
+                    <th style="width: 90px;">Size</th>
+                    <th>Stock Qty</th>
+                    <th style="width: 45px; text-align: center;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="color-sizes-tbody">
+                  <!-- Size rows for active color -->
+                </tbody>
+              </table>
+
+              <button type="button" class="btn-add-variant" id="btn-add-color-size" style="margin-top: 0.85rem; width: 100%;">
+                <i data-lucide="plus" style="width: 13px; height: 13px;"></i>
+                <span>+ Add Size Row</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Hidden inputs for backward compatibility -->
+          <input type="hidden" id="p-img-primary" value="assets/model-beige.jpg" required>
+          <input type="hidden" id="manual-prim-input" value="assets/model-beige.jpg">
+          <input type="hidden" id="manual-add-input" value="">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1.8rem; width: 100%; max-width: 100%;">
+          <!-- 4. Status & Featured -->
+          <div class="form-section-card" style="margin-bottom: 0; display: flex; flex-direction: column; min-width: 0;">
+            <h2 class="section-title"><i data-lucide="toggle-left" style="width: 16px;"></i> Product Status & Curation</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;" class="form-grid-2col">
+              <div class="form-group">
+                <label class="form-label" for="p-status">Product Status</label>
+                <select id="p-status" class="form-select">
+                  <option value="Active">Active (Visible in boutique)</option>
+                  <option value="Draft">Draft (Hidden)</option>
+                  <option value="Archived">Archived</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="p-featured">Featured Product</label>
+                <select id="p-featured" class="form-select">
+                  <option value="1">Yes (Showcase on homepage & top catalog)</option>
+                  <option value="0">No</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -1004,136 +1082,398 @@
         return match ? match.name : '';
       }
 
-      let activeVariantRow = null;
-
-      function renderPaletteChips() {
-        const container = document.getElementById('palette-chips-row');
-        if (!container) return;
-        container.innerHTML = COUTURE_PALETTE.map(item => `
-          <button type="button" class="palette-chip" data-name="${item.name}" data-hex="${item.hex}" title="Click to apply ${item.name}">
-            <span class="palette-chip-dot" style="background-color: ${item.hex};"></span>
-            <span>${item.name}</span>
-          </button>
-        `).join('');
-
-        container.querySelectorAll('.palette-chip').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const hex = btn.getAttribute('data-hex');
-            const name = btn.getAttribute('data-name');
-            applyColorToTargetRow(name, hex);
-          });
-        });
-      }
-
-      function applyColorToTargetRow(name, hex) {
-        const targetRow = activeVariantRow || vTbody.querySelector('tr');
-        if (!targetRow) return;
-        const colorInput = targetRow.querySelector('.v-color');
-        const pickerInput = targetRow.querySelector('.v-color-picker');
-        if (colorInput) colorInput.value = name;
-        if (pickerInput) pickerInput.value = hex;
-      }
-
-      function bindVariantRowEvents(tr) {
-        const colorInput = tr.querySelector('.v-color');
-        const pickerInput = tr.querySelector('.v-color-picker');
-
-        tr.addEventListener('focusin', () => {
-          activeVariantRow = tr;
-        });
-
-        if (pickerInput && colorInput) {
-          pickerInput.addEventListener('input', () => {
-            activeVariantRow = tr;
-            const suggested = hexToColorName(pickerInput.value);
-            if (suggested && (!colorInput.value.trim() || COUTURE_PALETTE.some(cp => cp.name.toLowerCase() === colorInput.value.trim().toLowerCase()))) {
-              colorInput.value = suggested;
-            } else if (!colorInput.value.trim()) {
-              colorInput.value = pickerInput.value.toUpperCase();
-            }
-          });
-
-          colorInput.addEventListener('input', () => {
-            activeVariantRow = tr;
-            const hex = colorNameToHex(colorInput.value);
-            if (hex) pickerInput.value = hex;
-          });
+      // State: Multi-color variation manager
+      let colorsData = [
+        {
+          name: 'Royal Maroon',
+          hex: '#5A161E',
+          isPrimary: true,
+          images: [
+            { url: 'assets/model-beige.jpg', order: 1 }
+          ],
+          sizes: [
+            { size: 'S', stock: 5 },
+            { size: 'M', stock: 5 },
+            { size: 'L', stock: 5 }
+          ]
         }
-      }
-
-      function createVariantRowHtml(size, color, stock) {
-        const hex = colorNameToHex(color);
-        return `
-          <tr>
-            <td><input type="text" class="form-input v-size" value="${size || ''}" style="padding: 0.4rem; max-width: 80px;" placeholder="Size" required></td>
-            <td>
-              <div class="variant-color-wrap">
-                <input type="color" class="v-color-picker" value="${hex}" title="Choose color from palette">
-                <input type="text" class="form-input v-color" value="${color || ''}" placeholder="Color name (e.g. Maroon)" style="padding: 0.4rem; min-width: 130px; flex: 1;" required>
-              </div>
-            </td>
-            <td><input type="number" class="form-input v-stock" value="${stock !== undefined ? stock : 5}" min="0" style="padding: 0.4rem; max-width: 100px;" required></td>
-            <td><button type="button" class="btn-del-variant" style="color: #E53E3E; background:none; border:none; cursor:pointer;" title="Delete row">✕</button></td>
-          </tr>
-        `;
-      }
-
-      // Initialize Palette and Variant rows
-      renderPaletteChips();
-      const vTbody = document.getElementById('variants-tbody');
-      vTbody.querySelectorAll('tr').forEach(tr => bindVariantRowEvents(tr));
-
-      // Variant row adder
-      document.getElementById('add-variant-row-btn').addEventListener('click', () => {
-        const temp = document.createElement('tbody');
-        temp.innerHTML = createVariantRowHtml('L', 'Maroon', 5);
-        const tr = temp.firstElementChild;
-        vTbody.appendChild(tr);
-        bindVariantRowEvents(tr);
-        attachDelBtns();
-        activeVariantRow = tr;
-      });
-
-      function attachDelBtns() {
-        document.querySelectorAll('.btn-del-variant').forEach(b => {
-          b.onclick = () => {
-            if (vTbody.children.length > 1) b.closest('tr').remove();
-          };
-        });
-      }
-      attachDelBtns();
-
-      // Unified Image Gallery State
-      let galleryImages = [
-        { url: 'assets/model-beige.jpg', order: 1, isPrimary: true }
       ];
+      let activeColorIndex = 0;
 
-      const unifiedFileInput = document.getElementById('unified-file-input');
-      const unifiedGalleryGrid = document.getElementById('unified-gallery-grid');
-      const unifiedUploadStatus = document.getElementById('unified-upload-status');
+      // DOM Elements
+      const colorTabsBar = document.getElementById('color-tabs-bar');
+      const activeColorPicker = document.getElementById('active-color-picker');
+      const activeColorName = document.getElementById('active-color-name');
+      const quickChipsContainer = document.getElementById('color-palette-quick-chips');
+      const btnSetCoverColor = document.getElementById('btn-set-cover-color');
+      const btnDeleteColor = document.getElementById('btn-delete-color');
+      const btnAddColorTab = document.getElementById('btn-add-color-tab');
+      const colorPhotosLabel = document.getElementById('color-photos-label');
+      const colorStockLabel = document.getElementById('color-stock-label');
+      const colorFileInput = document.getElementById('color-file-input');
+      const colorGalleryGrid = document.getElementById('color-gallery-grid');
+      const colorUploadStatus = document.getElementById('color-upload-status');
+      const colorSizesTbody = document.getElementById('color-sizes-tbody');
+      const btnAddColorSize = document.getElementById('btn-add-color-size');
+      const btnQuickFillSizes = document.getElementById('btn-quick-fill-sizes');
+
+      // Backward compatibility hidden inputs
       const pImgPrimaryHidden = document.getElementById('p-img-primary');
       const manualPrimInput = document.getElementById('manual-prim-input');
       const manualAddInput = document.getElementById('manual-add-input');
 
-      async function handleUnifiedFiles(files) {
+      // Render Quick Swatches
+      function renderQuickChips() {
+        if (!quickChipsContainer) return;
+        const quickPalette = COUTURE_PALETTE.slice(0, 10);
+        quickChipsContainer.innerHTML = quickPalette.map(item => `
+          <button type="button" class="palette-swatch-chip" data-name="${item.name}" data-hex="${item.hex}" title="Switch active color to ${item.name}" style="background-color: ${item.hex};">
+          </button>
+        `).join('');
+
+        quickChipsContainer.querySelectorAll('.palette-swatch-chip').forEach(chip => {
+          chip.addEventListener('click', () => {
+            const hex = chip.getAttribute('data-hex');
+            const name = chip.getAttribute('data-name');
+            updateActiveColorIdentity(name, hex);
+          });
+        });
+      }
+
+      function updateActiveColorIdentity(name, hex) {
+        if (!colorsData[activeColorIndex]) return;
+        colorsData[activeColorIndex].name = name;
+        colorsData[activeColorIndex].hex = hex;
+        activeColorPicker.value = hex;
+        activeColorName.value = name;
+        colorPhotosLabel.textContent = name;
+        colorPhotosLabel.style.color = hex;
+        colorStockLabel.textContent = name;
+        colorStockLabel.style.color = hex;
+        renderTabsOnly();
+      }
+
+      function renderTabsOnly() {
+        if (!colorTabsBar) return;
+        colorTabsBar.innerHTML = colorsData.map((c, idx) => {
+          const isActive = idx === activeColorIndex;
+          const photoCount = c.images ? c.images.length : 0;
+          const sizeCount = c.sizes ? c.sizes.length : 0;
+          return `
+            <div class="color-tab-pill ${isActive ? 'active' : ''}" data-index="${idx}">
+              <span class="color-tab-swatch" style="background-color: ${c.hex};"></span>
+              <span style="font-weight: ${isActive ? '700' : '600'}; font-size: 0.82rem;">${c.name}</span>
+              <span class="color-tab-badge">${photoCount} photo${photoCount === 1 ? '' : 's'}</span>
+              ${c.isPrimary ? '<span class="color-tab-star">★ Cover</span>' : ''}
+            </div>
+          `;
+        }).join('');
+
+        colorTabsBar.querySelectorAll('.color-tab-pill').forEach(pill => {
+          pill.addEventListener('click', () => {
+            const idx = parseInt(pill.getAttribute('data-index'), 10);
+            if (!isNaN(idx) && idx !== activeColorIndex) {
+              activeColorIndex = idx;
+              renderColorManager();
+            }
+          });
+        });
+      }
+
+      function renderColorManager() {
+        if (activeColorIndex >= colorsData.length) activeColorIndex = 0;
+        const cur = colorsData[activeColorIndex];
+        if (!cur) return;
+
+        // Render Tabs
+        renderTabsOnly();
+
+        // Update Configuration Card
+        activeColorPicker.value = cur.hex || '#5A161E';
+        activeColorName.value = cur.name || 'Maroon';
+        colorPhotosLabel.textContent = cur.name;
+        colorPhotosLabel.style.color = cur.hex;
+        colorStockLabel.textContent = cur.name;
+        colorStockLabel.style.color = cur.hex;
+
+        if (cur.isPrimary) {
+          btnSetCoverColor.style.borderColor = 'var(--admin-gold)';
+          btnSetCoverColor.style.color = 'var(--admin-gold)';
+          btnSetCoverColor.innerHTML = '★ Primary Cover Color';
+        } else {
+          btnSetCoverColor.style.borderColor = '#CBD5E0';
+          btnSetCoverColor.style.color = '#4A5568';
+          btnSetCoverColor.innerHTML = 'Set as Primary Cover';
+        }
+
+        // Render Photos for Active Color
+        renderActiveColorPhotos();
+
+        // Render Sizes for Active Color
+        renderActiveColorSizes();
+
+        // Synchronize legacy hidden inputs
+        syncCompatibilityInputs();
+      }
+
+      function renderActiveColorPhotos() {
+        const cur = colorsData[activeColorIndex];
+        if (!cur) return;
+
+        const cardsHtml = (cur.images || []).map((img, imgIdx) => `
+          <div class="gallery-thumb-card" style="aspect-ratio: 4/5; display:flex; flex-direction:column; background:#fff; border: 2px solid ${cur.isPrimary && imgIdx === 0 ? 'var(--admin-maroon)' : 'transparent'}; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-radius: 4px; overflow:hidden;">
+            <div style="position:relative; flex:1; overflow:hidden; background:#320C10;">
+              <img src="${img.url.startsWith('/') ? img.url : '/' + img.url}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='assets/model-beige.jpg'">
+              <button type="button" class="btn-del-thumb" onclick="window.removeColorImage(${imgIdx})" title="Remove photo" style="opacity:1; background:#E53E3E; border-radius:50%; width:22px; height:22px; top:5px; right:5px; display:flex; align-items:center; justify-content:center; color:#fff; border:none; cursor:pointer; position:absolute; z-index:10; font-size:12px;">✕</button>
+              ${cur.isPrimary && imgIdx === 0 ? '<span style="position:absolute; top:5px; left:5px; background:var(--admin-maroon); color:#fff; font-size:0.58rem; padding:2px 5px; border-radius:3px; font-weight:bold; letter-spacing:0.04em;">MAIN COVER</span>' : ''}
+            </div>
+            <div style="padding: 0.45rem 0.6rem; border-top:1px solid var(--admin-border); display:flex; align-items:center; justify-content:space-between; background:#FAF8F5;">
+              <span style="font-size:0.72rem; color:var(--admin-text-muted); font-weight:600;">Order:</span>
+              <input type="number" value="${img.order || (imgIdx + 1)}" onchange="window.updateColorImgOrder(${imgIdx}, this.value)" style="width:40px; padding:2px 4px; border:1px solid #ccc; border-radius:3px; font-size:0.75rem; text-align:center;">
+            </div>
+          </div>
+        `).join('');
+
+        colorGalleryGrid.innerHTML = `
+          <div class="gallery-add-card" id="color-add-placeholder" style="aspect-ratio: 4/5; min-height: 160px; padding: 0.8rem; cursor:pointer; border: 1.5px dashed rgba(179, 138, 85, 0.5); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #FAF8F5; transition: border-color 0.2s;">
+            <i data-lucide="upload-cloud" style="width:32px; height:32px; color:var(--admin-gold); margin-bottom: 0.4rem;"></i>
+            <span style="text-align: center; font-size:0.72rem; line-height:1.4; color: #4A5568;">Drag & Drop or <br><strong style="color:var(--admin-maroon); text-decoration:underline; font-size:0.78rem;">Upload Photo</strong></span>
+          </div>
+          ${cardsHtml}
+        `;
+        if (window.lucide) lucide.createIcons();
+
+        const placeholder = document.getElementById('color-add-placeholder');
+        if (placeholder) {
+          placeholder.onclick = () => colorFileInput.click();
+          placeholder.addEventListener('dragover', (e) => { e.preventDefault(); placeholder.style.borderColor = 'var(--admin-maroon)'; });
+          placeholder.addEventListener('dragleave', () => { placeholder.style.borderColor = 'rgba(179, 138, 85, 0.5)'; });
+          placeholder.addEventListener('drop', (e) => {
+            e.preventDefault();
+            placeholder.style.borderColor = 'rgba(179, 138, 85, 0.5)';
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+              handleColorFiles(e.dataTransfer.files);
+            }
+          });
+        }
+      }
+
+      function renderActiveColorSizes() {
+        const cur = colorsData[activeColorIndex];
+        if (!cur) return;
+        if (!cur.sizes || cur.sizes.length === 0) {
+          cur.sizes = [
+            { size: 'S', stock: 5 },
+            { size: 'M', stock: 5 },
+            { size: 'L', stock: 5 }
+          ];
+        }
+
+        colorSizesTbody.innerHTML = cur.sizes.map((s, sIdx) => `
+          <tr>
+            <td>
+              <input type="text" class="form-input" value="${s.size || ''}" style="padding: 0.4rem; max-width: 80px;" placeholder="Size (e.g. M)" oninput="window.updateColorSizeVal(${sIdx}, 'size', this.value)" required>
+            </td>
+            <td>
+              <input type="number" class="form-input" value="${s.stock !== undefined ? s.stock : 5}" min="0" style="padding: 0.4rem; max-width: 100px;" placeholder="Stock" oninput="window.updateColorSizeVal(${sIdx}, 'stock', this.value)" required>
+            </td>
+            <td style="text-align: center;">
+              <button type="button" onclick="window.removeColorSize(${sIdx})" style="color: #E53E3E; background:none; border:none; cursor:pointer; font-size: 14px;" title="Remove size">✕</button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Window helper methods for active color item mutations
+      window.removeColorImage = function(imgIdx) {
+        const cur = colorsData[activeColorIndex];
+        if (!cur || !cur.images) return;
+        cur.images.splice(imgIdx, 1);
+        renderColorManager();
+      };
+
+      window.updateColorImgOrder = function(imgIdx, newOrder) {
+        const cur = colorsData[activeColorIndex];
+        if (!cur || !cur.images || !cur.images[imgIdx]) return;
+        cur.images[imgIdx].order = parseInt(newOrder) || 1;
+        cur.images.sort((a, b) => (a.order || 0) - (b.order || 0));
+        renderColorManager();
+      };
+
+      window.updateColorSizeVal = function(sIdx, field, val) {
+        const cur = colorsData[activeColorIndex];
+        if (!cur || !cur.sizes || !cur.sizes[sIdx]) return;
+        if (field === 'size') {
+          cur.sizes[sIdx].size = val.trim();
+        } else if (field === 'stock') {
+          cur.sizes[sIdx].stock = parseInt(val) || 0;
+        }
+      };
+
+      window.removeColorSize = function(sIdx) {
+        const cur = colorsData[activeColorIndex];
+        if (!cur || !cur.sizes) return;
+        if (cur.sizes.length <= 1) {
+          alert('At least one size row is required for this color.');
+          return;
+        }
+        cur.sizes.splice(sIdx, 1);
+        renderActiveColorSizes();
+      };
+
+      // Add Size Row Button
+      btnAddColorSize.addEventListener('click', () => {
+        const cur = colorsData[activeColorIndex];
+        if (!cur) return;
+        if (!cur.sizes) cur.sizes = [];
+        cur.sizes.push({ size: 'XL', stock: 5 });
+        renderActiveColorSizes();
+      });
+
+      // Quick Fill Sizes XS-XL
+      btnQuickFillSizes.addEventListener('click', () => {
+        const cur = colorsData[activeColorIndex];
+        if (!cur) return;
+        cur.sizes = [
+          { size: 'XS', stock: 5 },
+          { size: 'S', stock: 5 },
+          { size: 'M', stock: 5 },
+          { size: 'L', stock: 5 },
+          { size: 'XL', stock: 5 }
+        ];
+        renderActiveColorSizes();
+      });
+
+      // Synchronize compatibility inputs
+      function syncCompatibilityInputs() {
+        // Collect all images across all colors
+        const allImgs = [];
+        colorsData.forEach(c => {
+          (c.images || []).forEach(img => {
+            if (img.url && !allImgs.includes(img.url)) allImgs.push(img.url);
+          });
+        });
+
+        // Find primary cover color and its first image
+        const coverColor = colorsData.find(c => c.isPrimary) || colorsData[0];
+        let primUrl = 'assets/model-beige.jpg';
+        if (coverColor && coverColor.images && coverColor.images.length > 0) {
+          primUrl = coverColor.images[0].url;
+        } else if (allImgs.length > 0) {
+          primUrl = allImgs[0];
+        }
+
+        if (pImgPrimaryHidden) pImgPrimaryHidden.value = primUrl;
+        if (manualPrimInput) manualPrimInput.value = primUrl;
+        if (manualAddInput) {
+          const others = allImgs.filter(u => u !== primUrl);
+          manualAddInput.value = others.join(',');
+        }
+      }
+
+      // Add Color Variation Tab
+      btnAddColorTab.addEventListener('click', () => {
+        // Find next palette color not currently in colorsData
+        const existingNames = colorsData.map(c => c.name.toLowerCase());
+        const nextPaletteItem = COUTURE_PALETTE.find(p => !existingNames.includes(p.name.toLowerCase())) || {
+          name: `Color ${colorsData.length + 1}`,
+          hex: '#B38A55'
+        };
+
+        colorsData.push({
+          name: nextPaletteItem.name,
+          hex: nextPaletteItem.hex,
+          isPrimary: false,
+          images: [],
+          sizes: [
+            { size: 'S', stock: 5 },
+            { size: 'M', stock: 5 },
+            { size: 'L', stock: 5 }
+          ]
+        });
+
+        activeColorIndex = colorsData.length - 1;
+        renderColorManager();
+      });
+
+      // Set Active Color as Primary Cover
+      btnSetCoverColor.addEventListener('click', () => {
+        colorsData.forEach((c, idx) => {
+          c.isPrimary = (idx === activeColorIndex);
+        });
+        renderColorManager();
+      });
+
+      // Delete Active Color
+      btnDeleteColor.addEventListener('click', () => {
+        if (colorsData.length <= 1) {
+          alert('Your creation must have at least one color variation.');
+          return;
+        }
+        const curName = colorsData[activeColorIndex].name;
+        if (confirm(`Remove the "${curName}" color variation and its uploaded photos?`)) {
+          const wasPrimary = colorsData[activeColorIndex].isPrimary;
+          colorsData.splice(activeColorIndex, 1);
+          if (wasPrimary && colorsData.length > 0) {
+            colorsData[0].isPrimary = true;
+          }
+          if (activeColorIndex >= colorsData.length) {
+            activeColorIndex = colorsData.length - 1;
+          }
+          renderColorManager();
+        }
+      });
+
+      // Name & Hex Live Updates
+      activeColorName.addEventListener('input', (e) => {
+        const val = e.target.value.trim() || 'Custom Color';
+        colorsData[activeColorIndex].name = val;
+        colorPhotosLabel.textContent = val;
+        colorStockLabel.textContent = val;
+        renderTabsOnly();
+      });
+
+      activeColorPicker.addEventListener('input', (e) => {
+        const hex = e.target.value;
+        colorsData[activeColorIndex].hex = hex;
+        colorPhotosLabel.style.color = hex;
+        colorStockLabel.style.color = hex;
+        const suggested = hexToColorName(hex);
+        if (suggested && (!activeColorName.value.trim() || COUTURE_PALETTE.some(cp => cp.name.toLowerCase() === activeColorName.value.trim().toLowerCase()))) {
+          activeColorName.value = suggested;
+          colorsData[activeColorIndex].name = suggested;
+          colorPhotosLabel.textContent = suggested;
+          colorStockLabel.textContent = suggested;
+        }
+        renderTabsOnly();
+      });
+
+      // Upload Handler for Active Color
+      colorFileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+          handleColorFiles(e.target.files);
+        }
+      });
+
+      async function handleColorFiles(files) {
         const fileArr = Array.from(files);
-        showStatus(unifiedUploadStatus, 'uploading', `Uploading ${fileArr.length} photo(s)...`);
+        showStatus(colorUploadStatus, 'uploading', `Uploading ${fileArr.length} photo(s) for ${colorsData[activeColorIndex].name}...`);
 
         for (const file of fileArr) {
           try {
             const data = await uploadUnifiedFile(file);
-            galleryImages.push({
+            if (!colorsData[activeColorIndex].images) colorsData[activeColorIndex].images = [];
+            colorsData[activeColorIndex].images.push({
               url: data.url,
-              order: galleryImages.length + 1,
-              isPrimary: galleryImages.length === 0
+              order: colorsData[activeColorIndex].images.length + 1
             });
           } catch (err) {
             console.error('Failed to upload', file.name, err);
           }
         }
-        showStatus(unifiedUploadStatus, 'success', `Successfully uploaded ${fileArr.length} photo(s).`);
-        renderUnifiedGallery();
+        showStatus(colorUploadStatus, 'success', `Successfully uploaded ${fileArr.length} photo(s).`);
+        setTimeout(() => { if (colorUploadStatus) colorUploadStatus.style.display = 'none'; }, 2800);
+        renderColorManager();
       }
 
       function uploadUnifiedFile(file) {
@@ -1157,114 +1497,6 @@
         });
       }
 
-      function renderUnifiedGallery() {
-        galleryImages.sort((a, b) => a.order - b.order);
-
-        const primaryImg = galleryImages.find(img => img.isPrimary);
-        if (primaryImg) {
-          pImgPrimaryHidden.value = primaryImg.url;
-          manualPrimInput.value = primaryImg.url;
-        } else {
-          pImgPrimaryHidden.value = '';
-          manualPrimInput.value = '';
-        }
-
-        const additionalUrls = galleryImages.filter(img => !img.isPrimary).map(img => img.url);
-        manualAddInput.value = additionalUrls.join(',');
-
-        const cardsHtml = galleryImages.map((img, idx) => `
-          <div class="gallery-thumb-card" style="aspect-ratio: 4/5; display:flex; flex-direction:column; background:#fff; border: 2px solid ${img.isPrimary ? 'var(--admin-maroon)' : 'transparent'}; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-radius: 4px; overflow:hidden;">
-            <div style="position:relative; flex:1; overflow:hidden; background:#320C10;">
-              <img src="${img.url.startsWith('/') ? img.url : '/' + img.url}" style="width:100%; height:100%; object-fit:cover;">
-              <button type="button" class="btn-del-thumb" onclick="window.removeUnifiedImage(${idx})" title="Remove photo" style="opacity:1; background:#E53E3E; border-radius:50%; width:24px; height:24px; top:6px; right:6px; display:flex; align-items:center; justify-content:center; color:#fff; border:none; cursor:pointer; position:absolute; z-index:10;">✕</button>
-              ${img.isPrimary ? '<span style="position:absolute; top:6px; left:6px; background:var(--admin-maroon); color:#fff; font-size:0.6rem; padding:3px 6px; border-radius:3px; font-weight:bold; letter-spacing:0.05em;">PRIMARY</span>' : ''}
-            </div>
-            <div style="padding: 0.6rem; border-top:1px solid var(--admin-border); display:flex; flex-direction:column; gap:0.5rem; background:#FAF8F5;">
-              <label style="font-size:0.75rem; display:flex; align-items:center; justify-content:space-between; color:var(--admin-text-main); font-weight:600;">
-                Order
-                <input type="number" class="order-input" value="${img.order}" onchange="window.updateUnifiedOrder(${idx}, this.value)" style="width:45px; padding:3px 5px; border:1px solid #ccc; border-radius:3px; font-size:0.8rem; text-align:center; font-family:var(--font-admin);">
-              </label>
-              <label style="font-size:0.75rem; display:flex; align-items:center; gap:0.4rem; cursor:pointer; color:var(--admin-text-main); font-weight:500;">
-                <input type="radio" name="primary_selection" ${img.isPrimary ? 'checked' : ''} onchange="window.setUnifiedPrimary(${idx})" style="accent-color:var(--admin-maroon); width:14px; height:14px;"> Main Image
-              </label>
-            </div>
-          </div>
-        `).join('');
-
-        unifiedGalleryGrid.innerHTML = `
-          <div class="gallery-add-card" id="unified-add-placeholder" onclick="document.getElementById('unified-file-input').click()" style="aspect-ratio: 4/5; min-height: 200px; padding: 1rem; cursor:pointer;">
-            <i data-lucide="upload-cloud" style="width:36px; height:36px; color:var(--admin-gold); margin-bottom: 0.5rem;"></i>
-            <span style="text-align: center; font-size:0.75rem; line-height:1.4;">Drag & Drop or <br><strong style="color:var(--admin-maroon); text-decoration:underline; font-size:0.8rem;">Click to Upload</strong></span>
-          </div>
-          ${cardsHtml}
-        `;
-        if (window.lucide) lucide.createIcons();
-
-        // Initialize SortableJS
-        if (window.gallerySortable) { window.gallerySortable.destroy(); }
-        window.gallerySortable = new Sortable(unifiedGalleryGrid, {
-          animation: 150,
-          filter: '.gallery-add-card',
-          onEnd: function (evt) {
-            // Re-calculate orders based on DOM position
-            const cards = unifiedGalleryGrid.querySelectorAll('.gallery-thumb-card');
-            const newOrderImages = [];
-
-            // Rebuild the galleryImages array based on new DOM order
-            cards.forEach((card, index) => {
-              const url = card.querySelector('img').src.split(window.location.host)[1].replace(/^\//, '');
-              const imgObj = galleryImages.find(img => img.url === url || img.url === '/' + url);
-              if (imgObj) {
-                imgObj.order = index + 1;
-                newOrderImages.push(imgObj);
-              }
-            });
-
-            galleryImages = newOrderImages;
-            renderUnifiedGallery();
-          }
-        });
-
-        const newPlaceholder = document.getElementById('unified-add-placeholder');
-        newPlaceholder.addEventListener('dragover', (e) => { e.preventDefault(); newPlaceholder.style.border = '2px dashed var(--admin-maroon)'; });
-        newPlaceholder.addEventListener('dragleave', () => { newPlaceholder.style.border = '1.5px dashed rgba(179, 138, 85, 0.45)'; });
-        newPlaceholder.addEventListener('drop', (e) => {
-          e.preventDefault();
-          newPlaceholder.style.border = '1.5px dashed rgba(179, 138, 85, 0.45)';
-          if (e.dataTransfer.files && e.dataTransfer.files.length > 0) handleUnifiedFiles(e.dataTransfer.files);
-        });
-      }
-
-      window.removeUnifiedImage = function (index) {
-        const wasPrimary = galleryImages[index].isPrimary;
-        galleryImages.splice(index, 1);
-        if (wasPrimary && galleryImages.length > 0) {
-          galleryImages[0].isPrimary = true;
-        }
-        renderUnifiedGallery();
-      };
-
-      window.updateUnifiedOrder = function (index, newOrder) {
-        galleryImages[index].order = parseInt(newOrder) || 0;
-        renderUnifiedGallery();
-      };
-
-      window.setUnifiedPrimary = function (index) {
-        galleryImages.forEach((img, i) => { img.isPrimary = (i === index); });
-        renderUnifiedGallery();
-      };
-
-      // Add event listener to file input directly since it gets re-created when setting innerHTML? No, it's actually statically placed.
-      // Wait, the file input is INSIDE unifiedGalleryGrid which I'm replacing with innerHTML!
-      // I should place the file input outside the grid so it isn't destroyed!
-      // Since it's outside the script tag, I will just append the event listener dynamically or keep it outside. 
-      // Actually, my innerHTML replaces the input type="file". I will make sure the placeholder click uses the global unifiedFileInput if it exists, or I'll re-render it inside innerHTML and reattach the change event.
-      document.body.addEventListener('change', (e) => {
-        if (e.target.id === 'unified-file-input' && e.target.files.length > 0) {
-          handleUnifiedFiles(e.target.files);
-        }
-      });
-
       function showStatus(el, type, msg) {
         if (!el) return;
         el.className = `upload-status-indicator ${type}`;
@@ -1276,7 +1508,9 @@
         if (window.lucide) lucide.createIcons();
       }
 
-      renderUnifiedGallery();
+      // Initialize quick swatches and color tabs
+      renderQuickChips();
+      renderColorManager();
 
       async function loadProductForEdit(id) {
         try {
@@ -1308,22 +1542,100 @@
           document.getElementById('p-status').value = p.status || 'Active';
           document.getElementById('p-featured').value = p.is_featured ? '1' : '0';
 
-          if (p.images && p.images.length > 0) {
-            galleryImages = p.images.map((img, idx) => ({
-              url: img.image_url,
-              order: idx + 1,
-              isPrimary: idx === 0
-            }));
-            renderUnifiedGallery();
-          }
+          // Organize variants & images into colorsData
+          const colorMap = new Map();
 
+          // 1. Scan variants for colors
           if (p.variants && p.variants.length > 0) {
-            vTbody.innerHTML = p.variants.map(v => createVariantRowHtml(v.size, v.color, v.stock_quantity)).join('');
-            vTbody.querySelectorAll('tr').forEach(tr => bindVariantRowEvents(tr));
-            attachDelBtns();
+            p.variants.forEach(v => {
+              const cName = (v.color || 'Royal Maroon').trim();
+              if (!colorMap.has(cName)) {
+                colorMap.set(cName, {
+                  name: cName,
+                  hex: colorNameToHex(cName),
+                  isPrimary: colorMap.size === 0,
+                  images: [],
+                  sizes: []
+                });
+              }
+              colorMap.get(cName).sizes.push({
+                size: v.size,
+                stock: v.stock_quantity
+              });
+            });
           }
 
-        } catch (err) { }
+          // 2. Scan images for colors or fallback
+          if (p.images && p.images.length > 0) {
+            p.images.forEach((img, idx) => {
+              const imgColor = (img.color || '').trim();
+              if (imgColor && colorMap.has(imgColor)) {
+                colorMap.get(imgColor).images.push({
+                  url: img.image_url,
+                  order: img.sort_order || (idx + 1)
+                });
+              } else if (imgColor) {
+                // Image has a color not yet in variants
+                if (!colorMap.has(imgColor)) {
+                  colorMap.set(imgColor, {
+                    name: imgColor,
+                    hex: colorNameToHex(imgColor),
+                    isPrimary: colorMap.size === 0,
+                    images: [],
+                    sizes: [{ size: 'Free Size', stock: 5 }]
+                  });
+                }
+                colorMap.get(imgColor).images.push({
+                  url: img.image_url,
+                  order: img.sort_order || (idx + 1)
+                });
+              } else {
+                // Colorless legacy image - assign to first color
+                const firstColorObj = colorMap.values().next().value;
+                if (firstColorObj) {
+                  firstColorObj.images.push({
+                    url: img.image_url,
+                    order: img.sort_order || (idx + 1)
+                  });
+                }
+              }
+            });
+          }
+
+          // If product had no variants or colors, create default tab with existing images
+          if (colorMap.size === 0) {
+            const defaultImgs = (p.images || []).map((img, idx) => ({
+              url: img.image_url,
+              order: img.sort_order || (idx + 1)
+            }));
+            if (defaultImgs.length === 0 && p.primary_image_url) {
+              defaultImgs.push({ url: p.primary_image_url, order: 1 });
+            }
+            colorsData = [{
+              name: 'Royal Maroon',
+              hex: '#5A161E',
+              isPrimary: true,
+              images: defaultImgs,
+              sizes: [
+                { size: 'S', stock: 5 },
+                { size: 'M', stock: 5 },
+                { size: 'L', stock: 5 }
+              ]
+            }];
+          } else {
+            colorsData = Array.from(colorMap.values());
+            // Ensure at least one tab is marked primary
+            if (!colorsData.some(c => c.isPrimary)) {
+              colorsData[0].isPrimary = true;
+            }
+          }
+
+          activeColorIndex = 0;
+          renderColorManager();
+
+        } catch (err) {
+          console.error('Failed to load product for edit', err);
+        }
       }
 
       // Submit Form
@@ -1352,27 +1664,78 @@
         const status = overrideStatus || document.getElementById('p-status').value;
         const is_featured = document.getElementById('p-featured').value === '1';
 
-        // Gather all uploaded images: primary cover first, then gallery angles
+        // Flatten colorsData into images and variants
         const images = [];
-        const primImg = document.getElementById('p-img-primary').value.trim();
-        if (primImg) images.push(primImg);
-
-        const addImgs = document.getElementById('manual-add-input').value.split(',').map(s => s.trim()).filter(Boolean);
-        addImgs.forEach(img => {
-          if (img && !images.includes(img)) images.push(img);
-        });
-
         const variants = [];
-        vTbody.querySelectorAll('tr').forEach(tr => {
-          const s = tr.querySelector('.v-size').value.trim();
-          const c = tr.querySelector('.v-color').value.trim();
-          const stk = parseInt(tr.querySelector('.v-stock').value) || 0;
-          if (s && c) variants.push({ size: s, color: c, stock_quantity: stk });
+
+        // Identify primary cover color
+        const coverColor = colorsData.find(c => c.isPrimary) || colorsData[0];
+
+        // 1. Process cover color images first so primary_image_url gets set to the cover
+        if (coverColor && coverColor.images) {
+          coverColor.images.forEach((img, idx) => {
+            if (img.url) {
+              images.push({
+                url: img.url,
+                color: coverColor.name,
+                sort_order: img.order || (idx + 1)
+              });
+            }
+          });
+        }
+
+        // 2. Process other colors images
+        colorsData.forEach(c => {
+          if (c !== coverColor && c.images) {
+            c.images.forEach((img, idx) => {
+              if (img.url) {
+                images.push({
+                  url: img.url,
+                  color: c.name,
+                  sort_order: img.order || (idx + 1)
+                });
+              }
+            });
+          }
         });
+
+        // 3. Process variants from all colors
+        colorsData.forEach(c => {
+          if (c.sizes && c.sizes.length > 0) {
+            c.sizes.forEach(s => {
+              if (s.size && s.size.trim()) {
+                variants.push({
+                  size: s.size.trim(),
+                  color: c.name,
+                  stock_quantity: parseInt(s.stock) || 0
+                });
+              }
+            });
+          }
+        });
+
+        // Ensure at least one image is saved
+        if (images.length === 0) {
+          images.push({
+            url: 'assets/model-beige.jpg',
+            color: coverColor ? coverColor.name : 'Royal Maroon',
+            sort_order: 1
+          });
+        }
+
+        // Ensure at least one variant is saved
+        if (variants.length === 0) {
+          variants.push({
+            size: 'Free Size',
+            color: coverColor ? coverColor.name : 'Royal Maroon',
+            stock_quantity: 5
+          });
+        }
 
         const payload = {
           name, code, category_id, brand, price, discount_price, description,
-          fabric, care_instructions, fit_style, length, status, is_featured, images, variants
+          fabric, care_instructions, fit_style, length, status, is_featured,
+          images, variants
         };
 
         const method = editId ? 'PUT' : 'POST';
@@ -1387,7 +1750,7 @@
           const data = await res.json();
           if (!res.ok) throw new Error(data.error || 'Failed to save product');
 
-          alert(editId ? 'Product updated successfully.' : 'Product created successfully with uploaded imagery.');
+          alert(editId ? 'Product updated successfully.' : 'Product created successfully with color variations.');
           window.location.href = '/admin/products';
         } catch (err) {
           alert('Error: ' + err.message);

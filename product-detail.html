@@ -939,18 +939,31 @@
             return '/' + url.replace(/^\/+/, '');
           }
 
+          function getImagesForColor(targetColor) {
+            if (!p.images || !p.images.length) {
+              return [{ image_url: '/assets/category-single.jpg', color: '' }];
+            }
+            if (!targetColor) return p.images;
+            const target = String(targetColor).trim().toLowerCase();
+            const colorSpecific = p.images.filter(img => img.color && String(img.color).trim().toLowerCase() === target);
+            if (colorSpecific.length > 0) return colorSpecific;
+            return p.images;
+          }
+
+          const initialImages = getImagesForColor(selectedColor);
+
           container.innerHTML = `
             <!-- Left: Gallery -->
             <div class="pdp-gallery-col">
               <div class="gallery-thumbs-col" id="pdp-thumbs">
-                ${p.images.map((img, idx) => `
+                ${initialImages.map((img, idx) => `
                   <button class="thumb-btn ${idx === 0 ? 'active' : ''}" data-index="${idx}" data-src="${formatImgUrl(img.image_url)}">
                     <img src="${formatImgUrl(img.image_url)}" alt="${p.name} thumb" class="thumb-img" onerror="this.src='/assets/category-single.jpg'">
                   </button>
                 `).join('')}
               </div>
               <div class="main-image-pod">
-                <img id="pdp-main-img" src="${formatImgUrl(p.images[0].image_url)}" alt="${p.name}" class="main-product-img" onerror="this.src='/assets/category-single.jpg'">
+                <img id="pdp-main-img" src="${formatImgUrl(initialImages[0].image_url)}" alt="${p.name}" class="main-product-img" onerror="this.src='/assets/category-single.jpg'">
               </div>
             </div>
 
@@ -1055,14 +1068,32 @@
 
           if (window.lucide) lucide.createIcons();
 
-          // Setup Gallery thumbnails
-          document.querySelectorAll('.thumb-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-              document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
-              btn.classList.add('active');
-              document.getElementById('pdp-main-img').src = formatImgUrl(btn.dataset.src);
+          // Render Gallery For Active Color
+          function renderGalleryForColor(targetColor) {
+            const activeImages = getImagesForColor(targetColor);
+            const thumbsContainer = document.getElementById('pdp-thumbs');
+            const mainImg = document.getElementById('pdp-main-img');
+            if (!thumbsContainer || !mainImg || !activeImages.length) return;
+
+            thumbsContainer.innerHTML = activeImages.map((img, idx) => `
+              <button class="thumb-btn ${idx === 0 ? 'active' : ''}" data-index="${idx}" data-src="${formatImgUrl(img.image_url)}">
+                <img src="${formatImgUrl(img.image_url)}" alt="${p.name} thumb" class="thumb-img" onerror="this.src='/assets/category-single.jpg'">
+              </button>
+            `).join('');
+
+            mainImg.src = formatImgUrl(activeImages[0].image_url);
+
+            thumbsContainer.querySelectorAll('.thumb-btn').forEach(btn => {
+              btn.addEventListener('click', () => {
+                thumbsContainer.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                mainImg.src = formatImgUrl(btn.dataset.src);
+              });
             });
-          });
+          }
+
+          // Initial Gallery thumbnail listeners
+          renderGalleryForColor(selectedColor);
 
           // Size Guide Modal
           const modal = document.getElementById('size-guide-modal');
@@ -1137,6 +1168,9 @@
               btn.classList.add('active');
               selectedColor = btn.dataset.color;
               document.getElementById('lbl-color').textContent = selectedColor;
+
+              // Swap gallery images to matching color photos
+              renderGalleryForColor(selectedColor);
 
               // Update size pills out-of-stock classes
               document.querySelectorAll('#size-pills-row .var-pill').forEach(sBtn => {

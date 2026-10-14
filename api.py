@@ -355,10 +355,10 @@ def handle_get_product_detail(handler, slug_or_id):
     prod = dict(row)
 
     # Fetch Images
-    cursor.execute("SELECT id, image_url, sort_order FROM product_images WHERE product_id = ? ORDER BY sort_order ASC, id ASC", (prod['id'],))
+    cursor.execute("SELECT id, image_url, sort_order, COALESCE(color, '') as color FROM product_images WHERE product_id = ? ORDER BY sort_order ASC, id ASC", (prod['id'],))
     prod['images'] = [dict(img) for img in cursor.fetchall()]
     if not prod['images']:
-        prod['images'] = [{'image_url': 'assets/model-beige.jpg', 'sort_order': 0}]
+        prod['images'] = [{'image_url': 'assets/model-beige.jpg', 'sort_order': 0, 'color': ''}]
 
     # Fetch Variants
     cursor.execute("SELECT id, size, color, stock_quantity FROM product_variants WHERE product_id = ? ORDER BY id ASC", (prod['id'],))
@@ -1083,9 +1083,14 @@ def handle_admin_create_product(handler):
 
     # Insert images
     for idx, img in enumerate(images):
-        img_url = (img.get('image_url', '') if isinstance(img, dict) else str(img)).strip()
+        if isinstance(img, dict):
+            img_url = (img.get('image_url') or img.get('url') or '').strip()
+            color = (img.get('color') or '').strip()
+        else:
+            img_url = str(img).strip()
+            color = ''
         if img_url:
-            cursor.execute("INSERT INTO product_images (product_id, image_url, sort_order) VALUES (?, ?, ?)", (product_id, img_url, idx))
+            cursor.execute("INSERT INTO product_images (product_id, image_url, sort_order, color) VALUES (?, ?, ?, ?)", (product_id, img_url, idx, color))
 
     # Insert variants
     for v in variants:
@@ -1128,9 +1133,14 @@ def handle_admin_update_product(handler, product_id):
     if images:
         cursor.execute("DELETE FROM product_images WHERE product_id = ?", (product_id,))
         for idx, img in enumerate(images):
-            img_url = (img.get('image_url', '') if isinstance(img, dict) else str(img)).strip()
+            if isinstance(img, dict):
+                img_url = (img.get('image_url') or img.get('url') or '').strip()
+                color = (img.get('color') or '').strip()
+            else:
+                img_url = str(img).strip()
+                color = ''
             if img_url:
-                cursor.execute("INSERT INTO product_images (product_id, image_url, sort_order) VALUES (?, ?, ?)", (product_id, img_url, idx))
+                cursor.execute("INSERT INTO product_images (product_id, image_url, sort_order, color) VALUES (?, ?, ?, ?)", (product_id, img_url, idx, color))
 
     if variants:
         cursor.execute("DELETE FROM product_variants WHERE product_id = ?", (product_id,))
