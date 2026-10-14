@@ -696,10 +696,30 @@
             body: JSON.stringify({ email, password })
           });
 
-          const data = await response.json();
-          if (!response.ok) {
-            throw new Error(data.error || 'Authentication failed. Please verify credentials.');
+          let data = null;
+          const contentType = response.headers.get('content-type') || '';
+          if (contentType.includes('application/json')) {
+            try { data = await response.json(); } catch(e) {}
           }
+
+          if (!response.ok) {
+            let msg = (data && data.error) ? data.error : null;
+            if (!msg) {
+              if (response.status === 404) {
+                msg = 'Backend server API not found (HTTP 404). Please ensure the Python server is running.';
+              } else if (response.status >= 500) {
+                msg = `Server temporarily unavailable (HTTP ${response.status}). Please try again shortly.`;
+              } else {
+                msg = `Authentication request failed (HTTP ${response.status}).`;
+              }
+            }
+            throw new Error(msg);
+          }
+
+          if (!data || !data.user) {
+            throw new Error('Received unexpected response format from server.');
+          }
+
           loggedInUser = data.user;
         } catch (err) {
           const isNetError = err.name === 'TypeError' || (err.message && err.message.includes('fetch'));

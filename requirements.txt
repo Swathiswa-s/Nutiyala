@@ -1,0 +1,3 @@
+# Nutiyala Couture Production Dependencies
+# The platform is engineered to run on pure Python 3 standard library
+# (http.server, sqlite3, urllib, json, secrets, hash, mimetypes)

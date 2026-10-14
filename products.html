@@ -1596,7 +1596,14 @@
 
         try {
           const res = await fetch(getApiUrl(`/api/products?${buildQuery()}`));
-          const data = await res.json();
+          let data = null;
+          const contentType = res.headers.get('content-type') || '';
+          if (res.ok && contentType.includes('application/json')) {
+            try { data = await res.json(); } catch(e) {}
+          }
+          if (!res.ok || !data) {
+            throw new Error(`Failed to load products: HTTP ${res.status}`);
+          }
           state.allProducts = data.products || [];
           state.totalProducts = state.allProducts.length;
 
@@ -1624,12 +1631,12 @@
             <div class="state-box">
               <i data-lucide="alert-triangle" style="width:36px;height:36px;color:#9B1C1C;margin-bottom:1rem;"></i>
               <h3>Connection Error</h3>
-              <p>Unable to reach the atelier database server. Please ensure the local server is running at <strong>http://localhost:5173</strong> and refresh your browser.</p>
+              <p>Unable to reach the atelier database server. Please ensure the backend server is running and refresh your browser.</p>
               <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
-                <a href="http://localhost:5173/products.html" class="reset-btn" style="text-decoration:none; display:inline-flex; align-items:center;">Open via Local Server (Port 5173)</a>
-                <button class="reset-btn" onclick="location.reload()" style="background: transparent; color: var(--maroon); border: 1px solid var(--maroon);">Retry</button>
+                <button class="reset-btn" onclick="location.reload()" style="cursor:pointer;">Retry Connection</button>
               </div>
-            </div>`;
+            </div>
+          `;
           if (window.lucide) lucide.createIcons();
         }
       }

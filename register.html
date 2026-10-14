@@ -477,9 +477,28 @@
             body: JSON.stringify({ name, email, mobile, password, confirm_password })
           });
 
-          const data = await res.json();
+          let data = null;
+          const contentType = res.headers.get('content-type') || '';
+          if (contentType.includes('application/json')) {
+            try { data = await res.json(); } catch(e) {}
+          }
+
           if (!res.ok) {
-            throw new Error(data.error || 'Failed to create account.');
+            let msg = (data && data.error) ? data.error : null;
+            if (!msg) {
+              if (res.status === 404) {
+                msg = 'Backend server API not found (HTTP 404). Please ensure the Python server is running.';
+              } else if (res.status >= 500) {
+                msg = `Server temporarily unavailable (HTTP ${res.status}). Please try again shortly.`;
+              } else {
+                msg = `Request failed (HTTP ${res.status}).`;
+              }
+            }
+            throw new Error(msg);
+          }
+
+          if (!data || !data.user) {
+            throw new Error('Received unexpected response format from server.');
           }
           registeredUser = data.user;
         } catch (err) {
@@ -495,7 +514,7 @@
             };
           } else {
             errorAlert.style.display = 'flex';
-            errorText.textContent = err.message;
+            errorText.textContent = err.message || 'An unexpected error occurred.';
             submitBtn.disabled = false;
             submitBtn.innerHTML = `<span>CREATE ACCOUNT</span><i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>`;
             if (window.lucide) lucide.createIcons();
