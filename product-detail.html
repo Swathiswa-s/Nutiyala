@@ -950,7 +950,25 @@
             return p.images;
           }
 
+          function getColorDetails(targetColor) {
+            if (!p.color_details || !p.color_details.length || !targetColor) return null;
+            const target = String(targetColor).trim().toLowerCase();
+            return p.color_details.find(cd => cd.color_name && String(cd.color_name).trim().toLowerCase() === target) || null;
+          }
+
+          function getTitleForColor(targetColor) {
+            const cd = getColorDetails(targetColor);
+            return (cd && cd.title && cd.title.trim()) ? cd.title.trim() : p.name;
+          }
+
+          function getDescForColor(targetColor) {
+            const cd = getColorDetails(targetColor);
+            return (cd && cd.description && cd.description.trim()) ? cd.description.trim() : (p.description || 'Artisanal haute couture tailored exclusively for you.');
+          }
+
           const initialImages = getImagesForColor(selectedColor);
+          const initialTitle = getTitleForColor(selectedColor);
+          const initialDesc = getDescForColor(selectedColor);
 
           container.innerHTML = `
             <!-- Left: Gallery -->
@@ -972,8 +990,8 @@
               
               <!-- Title & Desc -->
               <div class="pdp-header-section">
-                <h1 class="pdp-title">${p.name}</h1>
-                <p class="pdp-short-desc">${p.description || 'Artisanal haute couture tailored exclusively for you.'}</p>
+                <h1 class="pdp-title" id="pdp-title">${initialTitle}</h1>
+                <p class="pdp-short-desc" id="pdp-desc">${initialDesc}</p>
               </div>
 
               <!-- Meta: Fabric -->
@@ -1168,6 +1186,12 @@
               btn.classList.add('active');
               selectedColor = btn.dataset.color;
               document.getElementById('lbl-color').textContent = selectedColor;
+
+              // Update Title & Storytelling Description for the selected color
+              const titleEl = document.getElementById('pdp-title');
+              const descEl = document.getElementById('pdp-desc');
+              if (titleEl) titleEl.textContent = getTitleForColor(selectedColor);
+              if (descEl) descEl.textContent = getDescForColor(selectedColor);
 
               // Swap gallery images to matching color photos
               renderGalleryForColor(selectedColor);

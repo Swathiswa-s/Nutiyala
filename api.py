@@ -371,6 +371,10 @@ def handle_get_product_detail(handler, slug_or_id):
     prod['sizes'] = sorted(list(set(v['size'] for v in prod['variants'])))
     prod['colors'] = sorted(list(set(v['color'] for v in prod['variants'])))
 
+    # Fetch Color-Specific Metadata (Titles, Descriptions, Hex Swatches)
+    cursor.execute("SELECT id, color_name, color_hex, title, description, is_primary FROM product_colors WHERE product_id = ?", (prod['id'],))
+    prod['color_details'] = [dict(c) for c in cursor.fetchall()]
+
     conn.close()
     return send_json(handler, {'product': prod}, 200)
 
@@ -1056,6 +1060,7 @@ def handle_admin_create_product(handler):
     is_featured = 1 if data.get('is_featured') else 0
     images = data.get('images', [])
     variants = data.get('variants', [])
+    colors = data.get('colors', [])
 
     if not name or not code or not category_id or price <= 0:
         return send_json(handler, {'error': 'Name, product code, category, and price are required.'}, 400)
@@ -1099,6 +1104,19 @@ def handle_admin_create_product(handler):
         stock = int(v.get('stock_quantity', 0))
         cursor.execute("INSERT INTO product_variants (product_id, size, color, stock_quantity) VALUES (?, ?, ?, ?)", (product_id, size, color, stock))
 
+    # Insert color details (custom title, description, swatch)
+    for c in colors:
+        c_name = (c.get('color_name') or c.get('name') or '').strip()
+        c_hex = (c.get('color_hex') or c.get('hex') or '').strip()
+        c_title = (c.get('title') or '').strip()
+        c_desc = (c.get('description') or '').strip()
+        c_primary = 1 if c.get('is_primary') or c.get('isPrimary') else 0
+        if c_name:
+            cursor.execute("""
+            INSERT OR REPLACE INTO product_colors (product_id, color_name, color_hex, title, description, is_primary)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """, (product_id, c_name, c_hex, c_title, c_desc, c_primary))
+
     conn.commit()
     conn.close()
     return send_json(handler, {'message': 'Product created successfully.', 'product_id': product_id}, 201)
@@ -1119,6 +1137,7 @@ def handle_admin_update_product(handler, product_id):
     is_featured = 1 if data.get('is_featured') else 0
     images = data.get('images', [])
     variants = data.get('variants', [])
+    colors = data.get('colors', [])
 
     conn = database.get_db()
     cursor = conn.cursor()
@@ -1149,6 +1168,20 @@ def handle_admin_update_product(handler, product_id):
             color = v.get('color', 'Classic')
             stock = int(v.get('stock_quantity', 0))
             cursor.execute("INSERT INTO product_variants (product_id, size, color, stock_quantity) VALUES (?, ?, ?, ?)", (product_id, size, color, stock))
+
+    if colors:
+        cursor.execute("DELETE FROM product_colors WHERE product_id = ?", (product_id,))
+        for c in colors:
+            c_name = (c.get('color_name') or c.get('name') or '').strip()
+            c_hex = (c.get('color_hex') or c.get('hex') or '').strip()
+            c_title = (c.get('title') or '').strip()
+            c_desc = (c.get('description') or '').strip()
+            c_primary = 1 if c.get('is_primary') or c.get('isPrimary') else 0
+            if c_name:
+                cursor.execute("""
+                INSERT INTO product_colors (product_id, color_name, color_hex, title, description, is_primary)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """, (product_id, c_name, c_hex, c_title, c_desc, c_primary))
 
     conn.commit()
     conn.close()

@@ -120,6 +120,20 @@ def init_db():
     except Exception:
         pass
 
+    # 6b. Product Colors (Color-specific titles, descriptions, and swatches)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS product_colors (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+        color_name TEXT NOT NULL,
+        color_hex TEXT DEFAULT '',
+        title TEXT DEFAULT '',
+        description TEXT DEFAULT '',
+        is_primary INTEGER DEFAULT 0,
+        UNIQUE(product_id, color_name)
+    );
+    """)
+
     # 7. Cart & Cart Items Table
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS cart (
