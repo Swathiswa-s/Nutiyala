@@ -1089,7 +1089,7 @@
           hex: '#5A161E',
           isPrimary: true,
           images: [
-            { url: 'assets/model-beige.jpg', order: 1 }
+            { url: 'assets/model-beige.jpg', order: 1, isPrimary: true }
           ],
           sizes: [
             { size: 'S', stock: 5 },
@@ -1221,15 +1221,21 @@
         if (!cur) return;
 
         const cardsHtml = (cur.images || []).map((img, imgIdx) => `
-          <div class="gallery-thumb-card" style="aspect-ratio: 4/5; display:flex; flex-direction:column; background:#fff; border: 2px solid ${cur.isPrimary && imgIdx === 0 ? 'var(--admin-maroon)' : 'transparent'}; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-radius: 4px; overflow:hidden;">
+          <div class="gallery-thumb-card" style="aspect-ratio: 4/5; display:flex; flex-direction:column; background:#fff; border: 2px solid ${img.isPrimary ? 'var(--admin-maroon)' : 'transparent'}; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-radius: 4px; overflow:hidden;">
             <div style="position:relative; flex:1; overflow:hidden; background:#320C10;">
               <img src="${img.url.startsWith('/') ? img.url : '/' + img.url}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='assets/model-beige.jpg'">
               <button type="button" class="btn-del-thumb" onclick="window.removeColorImage(${imgIdx})" title="Remove photo" style="opacity:1; background:#E53E3E; border-radius:50%; width:22px; height:22px; top:5px; right:5px; display:flex; align-items:center; justify-content:center; color:#fff; border:none; cursor:pointer; position:absolute; z-index:10; font-size:12px;">✕</button>
-              ${cur.isPrimary && imgIdx === 0 ? '<span style="position:absolute; top:5px; left:5px; background:var(--admin-maroon); color:#fff; font-size:0.58rem; padding:2px 5px; border-radius:3px; font-weight:bold; letter-spacing:0.04em;">MAIN COVER</span>' : ''}
+              ${img.isPrimary ? '<span style="position:absolute; top:5px; left:5px; background:var(--admin-maroon); color:#fff; font-size:0.58rem; padding:2px 6px; border-radius:3px; font-weight:bold; letter-spacing:0.04em;">MAIN COVER</span>' : ''}
             </div>
-            <div style="padding: 0.45rem 0.6rem; border-top:1px solid var(--admin-border); display:flex; align-items:center; justify-content:space-between; background:#FAF8F5;">
-              <span style="font-size:0.72rem; color:var(--admin-text-muted); font-weight:600;">Order:</span>
-              <input type="number" value="${img.order || (imgIdx + 1)}" onchange="window.updateColorImgOrder(${imgIdx}, this.value)" style="width:40px; padding:2px 4px; border:1px solid #ccc; border-radius:3px; font-size:0.75rem; text-align:center;">
+            <div style="padding: 0.5rem 0.6rem; border-top:1px solid var(--admin-border); display:flex; flex-direction:column; gap:0.35rem; background:#FAF8F5;">
+              <label style="font-size:0.72rem; display:flex; align-items:center; justify-content:space-between; color:var(--admin-text-main); font-weight:600;">
+                <span>Order:</span>
+                <input type="number" value="${img.order || (imgIdx + 1)}" onchange="window.updateColorImgOrder(${imgIdx}, this.value)" style="width:40px; padding:2px 4px; border:1px solid #ccc; border-radius:3px; font-size:0.75rem; text-align:center;">
+              </label>
+              <label style="font-size:0.74rem; display:flex; align-items:center; gap:0.4rem; cursor:pointer; color:var(--admin-text-main); font-weight:600;">
+                <input type="radio" name="main_product_image" ${img.isPrimary ? 'checked' : ''} onchange="window.setAsMainProductImage(${imgIdx})" style="accent-color:var(--admin-maroon); width:14px; height:14px; cursor:pointer;">
+                <span>Main Image</span>
+              </label>
             </div>
           </div>
         `).join('');
@@ -1285,10 +1291,45 @@
       }
 
       // Window helper methods for active color item mutations
+      window.setAsMainProductImage = function(imgIdx) {
+        const cur = colorsData[activeColorIndex];
+        if (!cur || !cur.images || !cur.images[imgIdx]) return;
+
+        // Reset isPrimary across all photos in all colors
+        colorsData.forEach(c => {
+          (c.images || []).forEach(img => {
+            img.isPrimary = false;
+          });
+        });
+
+        // Set this specific photo as the primary main cover image
+        cur.images[imgIdx].isPrimary = true;
+
+        // Also mark this color variation as the primary cover color
+        colorsData.forEach((c, idx) => {
+          c.isPrimary = (idx === activeColorIndex);
+        });
+
+        renderColorManager();
+      };
+
       window.removeColorImage = function(imgIdx) {
         const cur = colorsData[activeColorIndex];
         if (!cur || !cur.images) return;
+        const wasPrimary = cur.images[imgIdx].isPrimary;
         cur.images.splice(imgIdx, 1);
+        if (wasPrimary) {
+          // If the removed image was primary, set the next available image as primary
+          let found = false;
+          for (const c of colorsData) {
+            if (c.images && c.images.length > 0) {
+              c.images[0].isPrimary = true;
+              c.isPrimary = true;
+              found = true;
+              break;
+            }
+          }
+        }
         renderColorManager();
       };
 
@@ -1348,25 +1389,31 @@
       function syncCompatibilityInputs() {
         // Collect all images across all colors
         const allImgs = [];
+        let mainImgUrl = '';
+
         colorsData.forEach(c => {
           (c.images || []).forEach(img => {
             if (img.url && !allImgs.includes(img.url)) allImgs.push(img.url);
+            if (img.isPrimary && !mainImgUrl) mainImgUrl = img.url;
           });
         });
 
-        // Find primary cover color and its first image
-        const coverColor = colorsData.find(c => c.isPrimary) || colorsData[0];
-        let primUrl = 'assets/model-beige.jpg';
-        if (coverColor && coverColor.images && coverColor.images.length > 0) {
-          primUrl = coverColor.images[0].url;
-        } else if (allImgs.length > 0) {
-          primUrl = allImgs[0];
+        // Fallback to cover color's first image or first available
+        if (!mainImgUrl) {
+          const coverColor = colorsData.find(c => c.isPrimary) || colorsData[0];
+          if (coverColor && coverColor.images && coverColor.images.length > 0) {
+            mainImgUrl = coverColor.images[0].url;
+          } else if (allImgs.length > 0) {
+            mainImgUrl = allImgs[0];
+          } else {
+            mainImgUrl = 'assets/model-beige.jpg';
+          }
         }
 
-        if (pImgPrimaryHidden) pImgPrimaryHidden.value = primUrl;
-        if (manualPrimInput) manualPrimInput.value = primUrl;
+        if (pImgPrimaryHidden) pImgPrimaryHidden.value = mainImgUrl;
+        if (manualPrimInput) manualPrimInput.value = mainImgUrl;
         if (manualAddInput) {
-          const others = allImgs.filter(u => u !== primUrl);
+          const others = allImgs.filter(u => u !== mainImgUrl);
           manualAddInput.value = others.join(',');
         }
       }
@@ -1569,11 +1616,15 @@
           if (p.images && p.images.length > 0) {
             p.images.forEach((img, idx) => {
               const imgColor = (img.color || '').trim();
+              const isMain = p.primary_image_url ? (img.image_url === p.primary_image_url) : (idx === 0);
+              const imgObj = {
+                url: img.image_url,
+                order: img.sort_order || (idx + 1),
+                isPrimary: isMain
+              };
+
               if (imgColor && colorMap.has(imgColor)) {
-                colorMap.get(imgColor).images.push({
-                  url: img.image_url,
-                  order: img.sort_order || (idx + 1)
-                });
+                colorMap.get(imgColor).images.push(imgObj);
               } else if (imgColor) {
                 // Image has a color not yet in variants
                 if (!colorMap.has(imgColor)) {
@@ -1585,18 +1636,12 @@
                     sizes: [{ size: 'Free Size', stock: 5 }]
                   });
                 }
-                colorMap.get(imgColor).images.push({
-                  url: img.image_url,
-                  order: img.sort_order || (idx + 1)
-                });
+                colorMap.get(imgColor).images.push(imgObj);
               } else {
                 // Colorless legacy image - assign to first color
                 const firstColorObj = colorMap.values().next().value;
                 if (firstColorObj) {
-                  firstColorObj.images.push({
-                    url: img.image_url,
-                    order: img.sort_order || (idx + 1)
-                  });
+                  firstColorObj.images.push(imgObj);
                 }
               }
             });
@@ -1604,12 +1649,16 @@
 
           // If product had no variants or colors, create default tab with existing images
           if (colorMap.size === 0) {
-            const defaultImgs = (p.images || []).map((img, idx) => ({
-              url: img.image_url,
-              order: img.sort_order || (idx + 1)
-            }));
+            const defaultImgs = (p.images || []).map((img, idx) => {
+              const isMain = p.primary_image_url ? (img.image_url === p.primary_image_url) : (idx === 0);
+              return {
+                url: img.image_url,
+                order: img.sort_order || (idx + 1),
+                isPrimary: isMain
+              };
+            });
             if (defaultImgs.length === 0 && p.primary_image_url) {
-              defaultImgs.push({ url: p.primary_image_url, order: 1 });
+              defaultImgs.push({ url: p.primary_image_url, order: 1, isPrimary: true });
             }
             colorsData = [{
               name: 'Royal Maroon',
@@ -1628,6 +1677,23 @@
             if (!colorsData.some(c => c.isPrimary)) {
               colorsData[0].isPrimary = true;
             }
+          }
+
+          // Ensure exactly one photo is marked isPrimary across all tabs
+          let foundPrimaryImg = false;
+          for (const c of colorsData) {
+            for (const img of (c.images || [])) {
+              if (img.isPrimary && !foundPrimaryImg) {
+                foundPrimaryImg = true;
+                c.isPrimary = true;
+              } else {
+                img.isPrimary = false;
+              }
+            }
+          }
+          if (!foundPrimaryImg && colorsData[0] && colorsData[0].images && colorsData[0].images.length > 0) {
+            colorsData[0].images[0].isPrimary = true;
+            colorsData[0].isPrimary = true;
           }
 
           activeColorIndex = 0;
@@ -1668,35 +1734,46 @@
         const images = [];
         const variants = [];
 
-        // Identify primary cover color
-        const coverColor = colorsData.find(c => c.isPrimary) || colorsData[0];
+        // 1. Find the explicitly selected Main Image (via radio button)
+        let mainImgObj = null;
+        let mainImgColorName = '';
 
-        // 1. Process cover color images first so primary_image_url gets set to the cover
-        if (coverColor && coverColor.images) {
-          coverColor.images.forEach((img, idx) => {
-            if (img.url) {
-              images.push({
-                url: img.url,
-                color: coverColor.name,
-                sort_order: img.order || (idx + 1)
-              });
-            }
+        for (const c of colorsData) {
+          const found = (c.images || []).find(img => img.isPrimary && img.url);
+          if (found) {
+            mainImgObj = found;
+            mainImgColorName = c.name;
+            break;
+          }
+        }
+
+        // Fallback if not found: take the first image from the cover color or first available
+        const coverColor = colorsData.find(c => c.isPrimary) || colorsData[0];
+        if (!mainImgObj && coverColor && coverColor.images && coverColor.images.length > 0) {
+          mainImgObj = coverColor.images[0];
+          mainImgColorName = coverColor.name;
+        }
+
+        // Push selected Main Image first so primary_image_url gets set for homepage/catalog
+        if (mainImgObj && mainImgObj.url) {
+          images.push({
+            url: mainImgObj.url,
+            color: mainImgColorName,
+            sort_order: 1
           });
         }
 
-        // 2. Process other colors images
+        // 2. Append all other photos across all color tabs
         colorsData.forEach(c => {
-          if (c !== coverColor && c.images) {
-            c.images.forEach((img, idx) => {
-              if (img.url) {
-                images.push({
-                  url: img.url,
-                  color: c.name,
-                  sort_order: img.order || (idx + 1)
-                });
-              }
-            });
-          }
+          (c.images || []).forEach((img, idx) => {
+            if (img.url && (!mainImgObj || img.url !== mainImgObj.url || c.name !== mainImgColorName)) {
+              images.push({
+                url: img.url,
+                color: c.name,
+                sort_order: img.order || (images.length + 1)
+              });
+            }
+          });
         });
 
         // 3. Process variants from all colors
