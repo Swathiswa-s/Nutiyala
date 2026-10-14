@@ -932,18 +932,25 @@
           const currentPrice = hasDiscount ? p.discount_price : p.price;
           const initialStock = getVariantStock(selectedSize, selectedColor);
 
+          function formatImgUrl(url) {
+            if (!url) return '/assets/category-single.jpg';
+            url = String(url).trim();
+            if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url;
+            return '/' + url.replace(/^\/+/, '');
+          }
+
           container.innerHTML = `
             <!-- Left: Gallery -->
             <div class="pdp-gallery-col">
               <div class="gallery-thumbs-col" id="pdp-thumbs">
                 ${p.images.map((img, idx) => `
-                  <button class="thumb-btn ${idx === 0 ? 'active' : ''}" data-index="${idx}" data-src="${img.image_url}">
-                    <img src="/${img.image_url}" alt="${p.name} thumb" class="thumb-img">
+                  <button class="thumb-btn ${idx === 0 ? 'active' : ''}" data-index="${idx}" data-src="${formatImgUrl(img.image_url)}">
+                    <img src="${formatImgUrl(img.image_url)}" alt="${p.name} thumb" class="thumb-img" onerror="this.src='/assets/category-single.jpg'">
                   </button>
                 `).join('')}
               </div>
               <div class="main-image-pod">
-                <img id="pdp-main-img" src="/${p.images[0].image_url}" alt="${p.name}" class="main-product-img">
+                <img id="pdp-main-img" src="${formatImgUrl(p.images[0].image_url)}" alt="${p.name}" class="main-product-img" onerror="this.src='/assets/category-single.jpg'">
               </div>
             </div>
 
@@ -1053,7 +1060,7 @@
             btn.addEventListener('click', () => {
               document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
               btn.classList.add('active');
-              document.getElementById('pdp-main-img').src = '/' + btn.dataset.src;
+              document.getElementById('pdp-main-img').src = formatImgUrl(btn.dataset.src);
             });
           });
 

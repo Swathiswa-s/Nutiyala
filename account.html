@@ -1361,9 +1361,11 @@
 
                 <!-- Order Items -->
                 <div class="order-items-table">
-                  ${(ord.items || []).map(itm => `
+                  ${(ord.items || []).map(itm => {
+                    const itmImg = itm.product_image ? (itm.product_image.startsWith('http') ? itm.product_image : '/' + itm.product_image.replace(/^\/+/, '')) : '/assets/model-beige.jpg';
+                    return `
                     <div class="order-item-row">
-                      <img src="/${itm.product_image || 'assets/model-beige.jpg'}" alt="${itm.product_name}" class="order-item-thumb">
+                      <img src="${itmImg}" alt="${itm.product_name}" class="order-item-thumb" onerror="this.src='/assets/model-beige.jpg'">
                       <div style="flex: 1;">
                         <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: #3E0F15;">${itm.product_name}</h4>
                         <div style="font-size: 0.78rem; color: #7A686B;">Code: ${itm.product_code} • Size: ${itm.size} • Color: ${itm.color}</div>
@@ -1373,7 +1375,7 @@
                         <div style="font-size: 0.78rem; color: #7A686B;">Qty: ${itm.quantity}</div>
                       </div>
                     </div>
-                  `).join('')}
+                  `; }).join('')}
                 </div>
               </div>
             `;
@@ -1408,10 +1410,12 @@
             return;
           }
 
-          container.innerHTML = items.map(p => `
+          container.innerHTML = items.map(p => {
+            const pImg = p.primary_image ? (p.primary_image.startsWith('http') ? p.primary_image : '/' + p.primary_image.replace(/^\/+/, '')) : '/assets/model-beige.jpg';
+            return `
             <div class="wish-card">
               <a href="/products/${p.slug}">
-                <img src="/${p.primary_image || 'assets/model-beige.jpg'}" alt="${p.name}" class="wish-card-img">
+                <img src="${pImg}" alt="${p.name}" class="wish-card-img" onerror="this.src='/assets/model-beige.jpg'">
               </a>
               <div class="wish-card-info">
                 <div>

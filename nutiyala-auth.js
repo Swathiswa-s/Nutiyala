@@ -54,11 +54,11 @@
       if (currentUser) {
         if (currentUser.account_type === 'ADMIN') {
           if (loginText) loginText.textContent = 'ADMIN';
-          accountBtn.setAttribute('title', 'Admin Atelier Portal');
-          accountBtn.setAttribute('href', adminUrl);
+          accountBtn.setAttribute('title', `Admin: ${currentUser.name}`);
+          accountBtn.setAttribute('href', '#admin-profile');
           accountBtn.onclick = (e) => {
             e.preventDefault();
-            window.location.href = adminUrl;
+            openAccountFlyout();
           };
         } else {
           const firstName = currentUser.name ? currentUser.name.split(' ')[0].toUpperCase() : 'ACCOUNT';
@@ -623,9 +623,106 @@
     const flyout = document.getElementById('my-account-flyout');
     if (flyout) {
       if (currentUser) {
-        document.getElementById('flyout-name').textContent = currentUser.name;
-        document.getElementById('flyout-email').textContent = currentUser.email;
-        document.getElementById('flyout-avatar').textContent = currentUser.name[0].toUpperCase();
+        document.getElementById('flyout-name').textContent = currentUser.name || 'User';
+        document.getElementById('flyout-email').textContent = currentUser.email || '';
+        document.getElementById('flyout-avatar').textContent = (currentUser.name && currentUser.name[0]) ? currentUser.name[0].toUpperCase() : 'U';
+
+        const flyoutTitle = flyout.querySelector('.flyout-title');
+        const flyoutNav = flyout.querySelector('.flyout-nav-list');
+
+        if (currentUser.account_type === 'ADMIN') {
+          if (flyoutTitle) flyoutTitle.textContent = 'ADMINISTRATOR SESSION';
+          if (flyoutNav) {
+            flyoutNav.innerHTML = `
+              <li>
+                <a href="${adminUrl}" class="flyout-nav-link" style="font-weight:600; color:#350D13;">
+                  <i data-lucide="layout-dashboard"></i>
+                  <span>Admin Dashboard</span>
+                </a>
+              </li>
+              <li>
+                <a href="admin-orders.html" class="flyout-nav-link">
+                  <i data-lucide="package"></i>
+                  <span>Orders & Dispatches</span>
+                </a>
+              </li>
+              <li>
+                <a href="admin-product-edit.html" class="flyout-nav-link">
+                  <i data-lucide="plus-circle"></i>
+                  <span>Add New Creation</span>
+                </a>
+              </li>
+              <li>
+                <a href="admin-inventory.html" class="flyout-nav-link">
+                  <i data-lucide="boxes"></i>
+                  <span>Inventory & Stock</span>
+                </a>
+              </li>
+              <li>
+                <a href="admin-details.html" class="flyout-nav-link">
+                  <i data-lucide="settings"></i>
+                  <span>Admin Details & Footer</span>
+                </a>
+              </li>
+              <li class="flyout-divider"></li>
+              <li>
+                <button class="flyout-logout-btn" id="flyout-logout-btn" style="background: rgba(229,62,62,0.1); border-radius: 4px; padding: 0.65rem 0.75rem; color:#C53030; width:100%;">
+                  <i data-lucide="log-out"></i>
+                  <span style="font-weight:700;">Logout Admin</span>
+                </button>
+              </li>
+            `;
+            document.getElementById('flyout-logout-btn')?.addEventListener('click', async () => {
+              try { await fetch('/api/auth/logout', { method: 'POST' }); } catch(e){}
+              localStorage.removeItem('nutiyala_token');
+              localStorage.removeItem('nutiyala_user');
+              window.location.href = homeUrl;
+            });
+          }
+        } else {
+          if (flyoutTitle) flyoutTitle.textContent = 'MY ACCOUNT';
+          if (flyoutNav) {
+            flyoutNav.innerHTML = `
+              <li>
+                <a href="account.html#profile" class="flyout-nav-link">
+                  <i data-lucide="user"></i>
+                  <span>Profile</span>
+                </a>
+              </li>
+              <li>
+                <a href="account.html#orders" class="flyout-nav-link">
+                  <i data-lucide="package"></i>
+                  <span>My Orders</span>
+                </a>
+              </li>
+              <li>
+                <a href="account.html#wishlist" class="flyout-nav-link">
+                  <i data-lucide="heart"></i>
+                  <span>Wishlist</span>
+                </a>
+              </li>
+              <li>
+                <a href="account.html#addresses" class="flyout-nav-link">
+                  <i data-lucide="map-pin"></i>
+                  <span>Saved Addresses</span>
+                </a>
+              </li>
+              <li class="flyout-divider"></li>
+              <li>
+                <button class="flyout-logout-btn" id="flyout-logout-btn">
+                  <i data-lucide="log-out"></i>
+                  <span>Logout</span>
+                </button>
+              </li>
+            `;
+            document.getElementById('flyout-logout-btn')?.addEventListener('click', async () => {
+              try { await fetch('/api/auth/logout', { method: 'POST' }); } catch(e){}
+              localStorage.removeItem('nutiyala_token');
+              localStorage.removeItem('nutiyala_user');
+              window.location.href = homeUrl;
+            });
+          }
+        }
       }
       flyout.classList.add('open');
       flyout.setAttribute('aria-hidden', 'false');

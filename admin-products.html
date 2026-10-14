@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/css/admin-responsive.css">
   <style>
     :root {
       --admin-bg: #F4F6F9;
@@ -326,12 +327,19 @@
         }
       }
 
+      function safeImg(u) {
+        if (!u) return '/assets/model-beige.jpg';
+        u = String(u).trim();
+        if (u.startsWith('http://') || u.startsWith('https://')) return u;
+        return '/' + u.replace(/^\/+/, '');
+      }
+
       function renderRows(products) {
         const tbody = document.getElementById('products-table-body');
         tbody.innerHTML = products.map(p => `
           <tr>
             <td>
-              <img src="/${p.primary_image || 'assets/model-beige.jpg'}" alt="${p.name}" class="prod-thumb">
+              <img src="${safeImg(p.primary_image)}" alt="${p.name}" class="prod-thumb" onerror="this.src='/assets/model-beige.jpg'">
             </td>
             <td>
               <strong>${p.name}</strong>
@@ -386,5 +394,6 @@
       }
     });
   </script>
+  <script src="/js/admin-header.js"></script>
 </body>
 </html>

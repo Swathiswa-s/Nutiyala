@@ -1,0 +1,408 @@
+/* ==========================================================================
+   NUTIYALA COUTURE • ADMIN PORTAL COMPREHENSIVE MOBILE RESPONSIVE ENGINE
+   Applies consistent luxury aesthetic and mobile-friendly layouts across
+   all admin pages: Dashboard, Product Edit, Orders, Inventory, Customers, etc.
+   ========================================================================== */
+
+/* ── General Responsive Adjustments ── */
+@media (max-width: 992px) {
+  body {
+    flex-direction: column !important;
+    min-height: 100vh !important;
+    overflow-x: hidden !important;
+  }
+
+  .admin-layout {
+    flex-direction: column !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  /* ── Sidebar: Converts to Sticky Mobile Header & Tab Bar ── */
+  .admin-sidebar {
+    width: 100% !important;
+    height: auto !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    border-right: none !important;
+    border-bottom: 1.5px solid rgba(216, 185, 130, 0.3) !important;
+    background: #24090C !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  .admin-brand {
+    padding: 0.75rem 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .admin-brand-logo {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .admin-brand-text {
+    font-size: 0.95rem !important;
+  }
+
+  .admin-brand-badge {
+    font-size: 0.58rem !important;
+  }
+
+  .sidebar-nav {
+    padding: 0.45rem 0.65rem !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 0.4rem !important;
+    scrollbar-width: none !important;
+  }
+
+  .sidebar-nav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .nav-header-title {
+    display: none !important;
+  }
+
+  .admin-nav-item {
+    padding: 0.45rem 0.75rem !important;
+    font-size: 0.75rem !important;
+    white-space: nowrap !important;
+    border-radius: 4px !important;
+    border-left: none !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #CBD5E0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  .admin-nav-item i,
+  .admin-nav-item svg {
+    width: 14px !important;
+    height: 14px !important;
+    color: var(--admin-gold, #C59A45) !important;
+  }
+
+  .admin-nav-item.active,
+  .admin-nav-item:hover {
+    background: #3B1218 !important;
+    color: #FAF4EC !important;
+    border: 1px solid rgba(216, 185, 130, 0.4) !important;
+    font-weight: 600 !important;
+  }
+
+  .sidebar-footer {
+    display: none !important;
+  }
+
+  /* ── Main Content Area ── */
+  .admin-main {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 !important;
+    overflow-x: hidden !important;
+  }
+
+  .admin-topbar {
+    height: auto !important;
+    min-height: 54px !important;
+    padding: 0.65rem 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0.65rem !important;
+    position: static !important;
+    background: #FFFFFF !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+  }
+
+  .topbar-title {
+    font-size: 1.05rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .topbar-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+  }
+
+  .admin-content-area,
+  .admin-content {
+    padding: 1rem 0.85rem 2rem 0.85rem !important;
+    gap: 1.25rem !important;
+  }
+
+  /* ── Form Section Cards (Add/Edit Product, Details, etc.) ── */
+  .form-section-card {
+    padding: 1.25rem 1rem !important;
+    margin-bottom: 1rem !important;
+    border-radius: 6px !important;
+  }
+
+  .product-info-grid,
+  .form-grid-2col,
+  .form-row-2,
+  .form-row-3 {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  .form-group {
+    width: 100% !important;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 0.9rem !important;
+    padding: 0.65rem 0.75rem !important;
+  }
+
+  /* Form Actions */
+  .form-actions-bar {
+    flex-direction: column-reverse !important;
+    gap: 0.6rem !important;
+    width: 100% !important;
+    padding: 1rem !important;
+  }
+
+  .form-actions-bar button,
+  .form-actions-bar a {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 0.75rem !important;
+    font-size: 0.84rem !important;
+  }
+
+  /* ── Stats Grid ── */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .stat-card {
+    padding: 1rem 0.85rem !important;
+  }
+
+  .stat-value {
+    font-size: 1.4rem !important;
+  }
+
+  /* ── Tables & Lists (Orders, Inventory, Customers) ── */
+  .table-card,
+  .table-card-body,
+  .orders-table-wrapper {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-width: 100% !important;
+    border-radius: 6px !important;
+  }
+
+  .admin-table,
+  .variant-table {
+    min-width: 560px !important;
+  }
+
+  /* ── Gallery Grid on Mobile ── */
+  .gallery-thumbs-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .unified-thumb-card {
+    width: 100% !important;
+  }
+
+  /* ── SMS & Action Cards ── */
+  .sms-config-card {
+    padding: 1.15rem 1rem !important;
+  }
+
+  .sms-stats-row {
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .gallery-thumbs-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ADMIN TOPBAR PROFILE DROPDOWN COMPONENT (TOUCH-FRIENDLY & ACCESSIBLE)
+   ══════════════════════════════════════════════════════════════════════════ */
+.admin-profile-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #FAF6F0;
+  border: 1.5px solid rgba(179, 138, 85, 0.4);
+  padding: 4px 10px 4px 6px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  user-select: none;
+}
+
+.admin-profile-btn:hover {
+  background: #F4EBE1;
+  border-color: #B38A55;
+}
+
+.admin-profile-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #350D13;
+  color: #D8B982;
+  font-weight: 700;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.admin-profile-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #350D13;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Dropdown Menu Modal */
+.admin-profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  width: 270px;
+  max-width: calc(100vw - 24px);
+  background: #FAF6F0;
+  border: 1px solid rgba(179, 138, 85, 0.45);
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(18, 4, 6, 0.35);
+  z-index: 99999;
+  overflow: hidden;
+  display: none;
+  animation: adminDropdownFade 0.2s ease forwards;
+}
+
+.product-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.catalog-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.catalog-actions-bar .search-input {
+  max-width: 100%;
+}
+
+.admin-profile-dropdown.show {
+  display: block;
+}
+
+@keyframes adminDropdownFade {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.admin-profile-dropdown-header {
+  padding: 0.85rem 1rem;
+  background: #320C10;
+  color: #FAF4EC;
+  border-bottom: 1px solid rgba(216, 185, 130, 0.3);
+}
+
+.admin-dropdown-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #FAF6F0;
+  line-height: 1.2;
+}
+
+.admin-dropdown-badge {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(216, 185, 130, 0.2);
+  color: #D8B982;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.admin-profile-dropdown-links {
+  padding: 0.5rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.admin-dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 0.75rem;
+  color: #350D13;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.admin-dropdown-link:hover {
+  background: rgba(179, 138, 85, 0.15);
+  color: #B38A55;
+}
+
+.admin-dropdown-link.logout-link {
+  color: #9B1C1C;
+  font-weight: 700;
+  border-top: 1px solid rgba(179, 138, 85, 0.2);
+  margin-top: 0.3rem;
+  padding-top: 0.7rem;
+}
+
+.admin-dropdown-link.logout-link:hover {
+  background: #FDF2F2;
+  color: #E53E3E;
+}

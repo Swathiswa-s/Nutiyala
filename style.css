@@ -611,6 +611,56 @@ body.admin-bar-active .top-announcement-bar {
   margin-top: 40px;
 }
 
+@media (max-width: 768px) {
+  .nutiyala-admin-bar {
+    height: 42px;
+  }
+  .admin-bar-inner {
+    padding: 0 0.85rem !important;
+    gap: 0.75rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .admin-bar-inner::-webkit-scrollbar {
+    display: none;
+  }
+  .admin-badge {
+    font-size: 0.65rem;
+    white-space: nowrap;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+  .admin-quick-links {
+    gap: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .admin-quick-links a,
+  .admin-bar-link-btn {
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+  .admin-logout-btn {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  body.admin-bar-active .site-header {
+    top: 42px;
+  }
+  body.admin-bar-active .site-header.scrolled {
+    top: 42px !important;
+  }
+  body.admin-bar-active.has-active-offer .site-header:not(.scrolled) {
+    top: calc(42px + var(--announcement-bar-height, 56px));
+  }
+  body.admin-bar-active .top-announcement-bar {
+    margin-top: 42px;
+  }
+}
+
 /* Sidebar Admin Section */
 .sidebar-admin-section {
   margin-top: 1.2rem;
@@ -4612,9 +4662,12 @@ img[src*="model-maroon"] {
   position: relative;
   z-index: 10;
   width: 320px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
   background: #FAF6F0;
   border: 1px solid rgba(179, 138, 85, 0.35);
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   animation: flyoutSlideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -4679,6 +4732,9 @@ img[src*="model-maroon"] {
 
 .account-flyout-body {
   padding: 1.2rem 1.4rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
 }
 
 .flyout-title {

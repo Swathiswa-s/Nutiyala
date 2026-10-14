@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/css/admin-responsive.css">
   <style>
     :root {
       --admin-bg: #F4F6F9;
@@ -691,13 +692,20 @@
 
           // Low Stock
           const lowTbody = document.getElementById('low-stock-tbody');
+          function safeImg(u) {
+            if (!u) return '/assets/model-beige.jpg';
+            u = String(u).trim();
+            if (u.startsWith('http://') || u.startsWith('https://')) return u;
+            return '/' + u.replace(/^\/+/, '');
+          }
+
           if (data.low_stock_products.length === 0) {
             lowTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #2E7D32;">All inventory items healthy.</td></tr>`;
           } else {
             lowTbody.innerHTML = data.low_stock_products.map(p => `
               <tr>
                 <td>
-                  <img src="/${p.image || 'assets/model-beige.jpg'}" class="thumb-mini">
+                  <img src="${safeImg(p.image)}" class="thumb-mini" onerror="this.src='/assets/model-beige.jpg'">
                   <strong>${p.name}</strong>
                 </td>
                 <td>${p.size} / ${p.color}</td>
@@ -719,7 +727,7 @@
             bsTbody.innerHTML = data.best_selling_products.map(b => `
               <tr>
                 <td>
-                  <img src="/${b.product_image || 'assets/model-beige.jpg'}" class="thumb-mini">
+                  <img src="${safeImg(b.product_image)}" class="thumb-mini" onerror="this.src='/assets/model-beige.jpg'">
                   <strong>${b.product_name}</strong>
                 </td>
                 <td>${b.product_code}</td>
@@ -747,5 +755,6 @@
       }
     });
   </script>
+  <script src="/js/admin-header.js"></script>
 </body>
 </html>

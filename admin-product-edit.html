@@ -11,6 +11,7 @@
     rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <link rel="stylesheet" href="/css/admin-responsive.css">
   <style>
     :root {
       --admin-bg: #F4F6F9;
@@ -704,8 +705,7 @@
     <div class="admin-content-area">
       <form id="product-form" style="display: flex; flex-direction: column; gap: 1.8rem;">
 
-        <div
-          style="display: grid; grid-template-columns: 1fr 1fr; gap:0px; align-items: stretch; width: 100%; max-width: 100%;">
+        <div class="product-info-grid" style="align-items: stretch; width: 100%; max-width: 100%;">
           <!-- 1. Product Information & Price -->
           <div class="form-section-card" style="margin-bottom: 0; min-width: 0;">
             <h2 class="section-title"><i data-lucide="info" style="width: 16px;"></i> Product Information</h2>
@@ -1395,6 +1395,7 @@
       }
     });
   </script>
+  <script src="/js/admin-header.js"></script>
 </body>
 
 </html>
